@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { MakeGuessComponent } from './make-guess/make-guess.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MakeGuessComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
