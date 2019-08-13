@@ -1,1 +1,3 @@
-{{ id }}
+<span *ngIf="game | async">gamer</span>
+<span *ngIf="!(game | async)">!gamer</span>
+{{ game | async | json }}

@@ -22,4 +22,11 @@ export class GameService {
       .then(_ => _.id);
     return gameRef;
   }
+
+  get(gameId: string) {
+    return this.afs
+      .collection('games')
+      .doc(gameId)
+      .valueChanges();
+  }
 }
