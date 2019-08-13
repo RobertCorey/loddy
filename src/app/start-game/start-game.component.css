@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.start-game-button {
+  height: 50vh;
+  width: 80vw;
+  font-size: 20vh;
+  text-overflow: ellipsis;
+}
