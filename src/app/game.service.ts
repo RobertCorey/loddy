@@ -44,8 +44,5 @@ export class GameService {
       .update({
         players: firestore.FieldValue.arrayUnion(player)
       });
-    // this.gameDoc.update({
-    // players: firebase.firestore.FieldValue.arrayUnion('greater_virginia')
-    // });
   }
 }
