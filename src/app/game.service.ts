@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument
+} from '@angular/fire/firestore';
+import firebase from 'firebase/firebase';
 import { Game } from './types/Game';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
+  game: Observable<Game>;
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   async create() {
@@ -28,5 +35,17 @@ export class GameService {
       .collection('games')
       .doc(gameId)
       .valueChanges();
+  }
+
+  join(gameId: string, player) {
+    this.afs
+      .collection('games')
+      .doc(gameId)
+      .update({
+        players: firestore.FieldValue.arrayUnion(player)
+      });
+    // this.gameDoc.update({
+    // players: firebase.firestore.FieldValue.arrayUnion('greater_virginia')
+    // });
   }
 }
