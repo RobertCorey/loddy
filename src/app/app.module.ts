@@ -10,6 +10,7 @@ import { StartGameComponent } from './start-game/start-game.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GameComponent } from './game/game.component';
+import { JoinGameFormComponent } from './join-game-form/join-game-form.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -24,7 +25,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, StartGameComponent, GameComponent],
+  declarations: [AppComponent, StartGameComponent, GameComponent, JoinGameFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
