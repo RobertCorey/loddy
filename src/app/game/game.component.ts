@@ -17,7 +17,7 @@ export class GameComponent implements OnInit {
     private gameService: GameService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.$game = this.gameService.get(this.id);
   }

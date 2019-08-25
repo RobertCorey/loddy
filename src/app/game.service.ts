@@ -15,7 +15,7 @@ import { firestore } from 'firebase';
   providedIn: 'root'
 })
 export class GameService {
-  game: Observable<Game>;
+  gameRef: any;
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   async create() {
@@ -31,18 +31,19 @@ export class GameService {
     return gameRef;
   }
 
-  get(gameId: string): Observable<Game> {
+  get(gameRef: string): Observable<Game> {
+    this.gameRef = gameRef;
     return this.afs
       .collection('games')
-      .doc(gameId)
+      .doc(this.gameRef)
       .valueChanges()
       .pipe(map((x: Game) => x));
   }
 
-  join(gameId: string, player) {
+  join(player) {
     this.afs
       .collection('games')
-      .doc(gameId)
+      .doc(this.gameRef)
       .update({
         players: firestore.FieldValue.arrayUnion(player)
       });

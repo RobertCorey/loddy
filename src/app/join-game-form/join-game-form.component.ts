@@ -7,9 +7,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./join-game-form.component.css']
 })
 export class JoinGameFormComponent {
-  name = new FormControl('');
+  name: FormControl = new FormControl('');
   constructor() {}
-  onSubmit(formData) {
-    console.log(formData);
+  onSubmit() {
+    console.log(this.name.value);
   }
 }
