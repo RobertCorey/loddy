@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
+import { Observable } from 'rxjs';
+import { Game } from '../types/Game';
 
 @Component({
   selector: 'app-game',
@@ -9,7 +11,7 @@ import { GameService } from '../game.service';
 })
 export class GameComponent implements OnInit {
   public id;
-  public game;
+  public $game: Observable<Game>;
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService
@@ -17,6 +19,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.game = this.gameService.get(this.id);
+    this.$game = this.gameService.get(this.id);
   }
 }

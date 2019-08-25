@@ -1,2 +1,8 @@
-<input type="text" />
-{{ game | async | json }}
+<span *ngIf="$game | async as game; else loading">
+  {{ game.status }}
+  {{ game | json }}
+</span>
+
+<ng-template #loading>
+  Loading...
+</ng-template>

@@ -8,6 +8,7 @@ import firebase from 'firebase/firebase';
 import { Game } from './types/Game';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { firestore } from 'firebase';
 
 @Injectable({
@@ -30,11 +31,12 @@ export class GameService {
     return gameRef;
   }
 
-  get(gameId: string) {
+  get(gameId: string): Observable<Game> {
     return this.afs
       .collection('games')
       .doc(gameId)
-      .valueChanges();
+      .valueChanges()
+      .pipe(map((x: Game) => x));
   }
 
   join(gameId: string, player) {
