@@ -21,4 +21,8 @@ export class GameComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.$game = this.gameService.get(this.id);
   }
+
+  get hasPlayerJoined(): boolean {
+    return !!this.gameService.playerID;
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-join-game-form',
@@ -8,8 +9,8 @@ import { FormControl } from '@angular/forms';
 })
 export class JoinGameFormComponent {
   name: FormControl = new FormControl('');
-  constructor() {}
+  constructor(private gameService: GameService) {}
   onSubmit() {
-    console.log(this.name.value);
+    this.gameService.join({ name: this.name.value });
   }
 }

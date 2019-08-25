@@ -1,0 +1,15 @@
+:host {
+  display: grid;
+  grid-template-columns: 50vw 20vw;
+}
+input {
+  width: 50vw;
+  height: 30vh;
+  font-size: 28vh;
+  margin-right: 5vw;
+}
+
+button {
+  width: 20vw;
+  height: 30vh;
+}
