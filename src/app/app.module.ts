@@ -11,6 +11,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GameComponent } from './game/game.component';
 import { JoinGameFormComponent } from './join-game-form/join-game-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -25,13 +26,19 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, StartGameComponent, GameComponent, JoinGameFormComponent],
+  declarations: [
+    AppComponent,
+    StartGameComponent,
+    GameComponent,
+    JoinGameFormComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    ReactiveFormsModule
   ],
   providers: [AngularFirestore],
   bootstrap: [AppComponent]
