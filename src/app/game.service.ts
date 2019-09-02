@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Game } from './types/Game';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { firestore } from 'firebase';
 
 import * as shortid from 'shortid';
@@ -15,6 +15,7 @@ import * as shortid from 'shortid';
 export class GameService {
   gameRef: any;
   playerID: string;
+  lastGameState: Game;
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   async create() {
@@ -36,11 +37,18 @@ export class GameService {
       .collection('games')
       .doc(this.gameRef)
       .valueChanges()
-      .pipe(map((x: Game) => x));
+      .pipe(
+        map((x: Game) => x),
+        tap(game => (this.lastGameState = game))
+      );
   }
 
   join(player: { name: string }) {
-    const playerWithId = { ...player, id: shortid.generate() };
+    const playerWithId = {
+      ...player,
+      id: shortid.generate(),
+      host: !this.lastGameState.players.length
+    };
     this.playerID = playerWithId.id;
     return this.afs
       .collection('games')
@@ -48,5 +56,9 @@ export class GameService {
       .update({
         players: firestore.FieldValue.arrayUnion(playerWithId)
       });
+  }
+
+  startGame() {
+    this.afs.collection('games').doc(this.gameRef);
   }
 }
