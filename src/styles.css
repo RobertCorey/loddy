@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --main-color: #c51f5d;
+  --secondary-color: white;
+  --dark-mode: #243447;
+}
+
+* {
+  font-family: "Lexend Zetta", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--dark-mode);
+  color: var(--secondary-color);
+}
+
+button {
+  height: 3rem;
+  margin-top: 1rem;
+  color: var(--secondary-color);
+  background-color: var(--main-color);
+  border: 0;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  color: var(--main-color);
+}
