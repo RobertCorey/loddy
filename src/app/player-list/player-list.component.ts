@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IPlayer } from '../types/IPlayer';
 
 @Component({
   selector: 'app-player-list',
@@ -6,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-list.component.css']
 })
 export class PlayerListComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  @Input()
+  public players: IPlayer[];
+  constructor() {}
+  ngOnInit() {}
 }

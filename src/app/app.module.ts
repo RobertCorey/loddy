@@ -13,6 +13,7 @@ import { GameComponent } from './game/game.component';
 import { JoinGameFormComponent } from './join-game-form/join-game-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PlayerListComponent } from './player-list/player-list.component';
+import { MockComponent } from './mock/mock.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
   {
     path: 'game/:id',
     component: GameComponent
+  },
+  {
+    path: 'mock',
+    component: MockComponent
   }
 ];
 
@@ -32,7 +37,8 @@ const appRoutes: Routes = [
     StartGameComponent,
     GameComponent,
     JoinGameFormComponent,
-    PlayerListComponent
+    PlayerListComponent,
+    MockComponent
   ],
   imports: [
     BrowserModule,
