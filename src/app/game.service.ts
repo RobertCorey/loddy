@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Game } from './types/Game';
+import { IGame } from './types/Game';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -15,11 +15,11 @@ import * as shortid from 'shortid';
 export class GameService {
   gameRef: any;
   playerID: string;
-  lastGameState: Game;
+  lastGameState: IGame;
   constructor(private afs: AngularFirestore, private router: Router) {}
 
   async create() {
-    const game: Game = {
+    const game: IGame = {
       createdAt: Date.now(),
       players: [],
       status: 'LOBBY'
@@ -31,14 +31,14 @@ export class GameService {
     return gameRef;
   }
 
-  get(gameRef: string): Observable<Game> {
+  get(gameRef: string): Observable<IGame> {
     this.gameRef = gameRef;
     return this.afs
       .collection('games')
       .doc(this.gameRef)
       .valueChanges()
       .pipe(
-        map((x: Game) => x),
+        map((x: IGame) => x),
         tap(game => (this.lastGameState = game))
       );
   }

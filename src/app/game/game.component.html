@@ -1,6 +1,6 @@
 <span *ngIf="$game | async as game; else loading">
   <app-join-game-form *ngIf="!hasPlayerJoined"></app-join-game-form>
-  <br />
+
   {{ game.status }}
   {{ game | json }}
 </span>
