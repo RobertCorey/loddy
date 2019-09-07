@@ -25,4 +25,8 @@ export class GameComponent implements OnInit {
   get hasPlayerJoined(): boolean {
     return !!this.gameService.localPlayer;
   }
+
+  get isLocalPlayerHost(): boolean {
+    return this.gameService.localPlayer.host;
+  }
 }
