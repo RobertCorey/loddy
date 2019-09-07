@@ -1,0 +1,2 @@
+player list component
+start game button  

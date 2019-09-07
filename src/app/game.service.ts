@@ -14,9 +14,12 @@ import * as shortid from 'shortid';
 })
 export class GameService {
   gameRef: any;
+  localPlayer: any;
   playerID: string;
   lastGameState: IGame;
-  constructor(private afs: AngularFirestore, private router: Router) {}
+  constructor(private afs: AngularFirestore, private router: Router) {
+    (window as any).gs = this;
+  }
 
   async create() {
     const game: IGame = {
@@ -33,14 +36,19 @@ export class GameService {
 
   get(gameRef: string): Observable<IGame> {
     this.gameRef = gameRef;
-    return this.afs
-      .collection('games')
-      .doc(this.gameRef)
+    return this.getCollection()
       .valueChanges()
       .pipe(
         map((x: IGame) => x),
         tap(game => (this.lastGameState = game))
       );
+  }
+
+  getCollection() {
+    if (!this.gameRef) {
+      throw new Error('no game ref');
+    }
+    return this.afs.collection('games').doc(this.gameRef);
   }
 
   join(player: { name: string }) {
@@ -49,15 +57,12 @@ export class GameService {
       id: shortid.generate(),
       host: !this.lastGameState.players.length
     };
-    this.playerID = playerWithId.id;
-    return this.afs
-      .collection('games')
-      .doc(this.gameRef)
+    return this.getCollection()
       .update({
         players: firestore.FieldValue.arrayUnion(playerWithId)
-      });
+      })
+      .then(_ => (this.localPlayer = playerWithId));
   }
-
   startGame() {
     this.afs.collection('games').doc(this.gameRef);
   }
