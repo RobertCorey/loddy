@@ -12,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { GameComponent } from './game/game.component';
 import { JoinGameFormComponent } from './join-game-form/join-game-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PlayerListComponent } from './player-list/player-list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
     AppComponent,
     StartGameComponent,
     GameComponent,
-    JoinGameFormComponent
+    JoinGameFormComponent,
+    PlayerListComponent
   ],
   imports: [
     BrowserModule,

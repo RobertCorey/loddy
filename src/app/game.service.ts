@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IGame } from './types/Game';
+import { IPlayer } from './types/IPlayer';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -14,8 +15,7 @@ import * as shortid from 'shortid';
 })
 export class GameService {
   gameRef: any;
-  localPlayer: any;
-  playerID: string;
+  localPlayer: IPlayer;
   lastGameState: IGame;
   constructor(private afs: AngularFirestore, private router: Router) {
     (window as any).gs = this;
@@ -27,11 +27,17 @@ export class GameService {
       players: [],
       status: 'LOBBY'
     };
-    const gameRef = await this.afs
+    return await this.afs
       .collection('games')
       .add(game)
       .then(_ => _.id);
-    return gameRef;
+  }
+
+  getCollection() {
+    if (!this.gameRef) {
+      throw new Error('no game ref');
+    }
+    return this.afs.collection('games').doc(this.gameRef);
   }
 
   get(gameRef: string): Observable<IGame> {
@@ -42,13 +48,6 @@ export class GameService {
         map((x: IGame) => x),
         tap(game => (this.lastGameState = game))
       );
-  }
-
-  getCollection() {
-    if (!this.gameRef) {
-      throw new Error('no game ref');
-    }
-    return this.afs.collection('games').doc(this.gameRef);
   }
 
   join(player: { name: string }) {
@@ -62,8 +61,5 @@ export class GameService {
         players: firestore.FieldValue.arrayUnion(playerWithId)
       })
       .then(_ => (this.localPlayer = playerWithId));
-  }
-  startGame() {
-    this.afs.collection('games').doc(this.gameRef);
   }
 }

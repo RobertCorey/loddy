@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import { Observable } from 'rxjs';
-import { Game } from '../types/Game';
+import { IGame } from '../types/Game';
 
 @Component({
   selector: 'app-game',
@@ -11,7 +11,7 @@ import { Game } from '../types/Game';
 })
 export class GameComponent implements OnInit {
   public id;
-  public $game: Observable<Game>;
+  public $game: Observable<IGame>;
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService
@@ -23,6 +23,6 @@ export class GameComponent implements OnInit {
   }
 
   get hasPlayerJoined(): boolean {
-    return !!this.gameService.playerID;
+    return !!this.gameService.localPlayer;
   }
 }
