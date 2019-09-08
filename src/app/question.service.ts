@@ -1,11 +1,15 @@
+import * as shuffle from 'lodash.shuffle';
+import * as samp from 'lodash.sample';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
-import { map, take, tap, share } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { IQuestion } from './types/IQuestion';
+import { map, take, tap, share, reduce } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { IQuestion, getXMockQuestions } from './types/IQuestion';
+import { IPlayer } from './types/IPlayer';
+import { IGameQuestion } from './types/IGameQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +26,7 @@ export class QuestionService {
     return this.afs.collection('questions').doc(this.documentId);
   }
 
-  private getQuestions() {
+  private getQuestions(): Observable<IQuestion[]> {
     if (this.questions) {
       return of(this.questions);
     } else {
@@ -38,5 +42,33 @@ export class QuestionService {
           })
         );
     }
+  }
+
+  public getGameQuestions(
+    players: IPlayer[],
+    numberOfQuestions: number = 10
+  ): Observable<IGameQuestion[]> {
+    const compileQuestion = (question: string, playerName: string) =>
+      question.replace('#player', playerName);
+
+    const assignBrainsToQuestions = (
+      questions: IQuestion[],
+      players: IPlayer[]
+    ): IGameQuestion[] => {
+      return questions.map((question, index) => {
+        question.text = compileQuestion(question.text, samp(players).name);
+        const brainId = players[index % players.length].id;
+        return { ...question, brainId };
+      });
+    };
+    return this.getQuestions().pipe(
+      map(shuffle),
+      map((shuffledQuestions: IQuestion[]) =>
+        shuffledQuestions.slice(0, numberOfQuestions)
+      ),
+      map((shuffledQuestions: IQuestion[]) =>
+        assignBrainsToQuestions(shuffledQuestions, players)
+      )
+    );
   }
 }
