@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IGame } from './types/Game';
+import { IGame } from './types/IGame';
 import { IPlayer } from './types/IPlayer';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import { Observable } from 'rxjs';
-import { IGame } from '../types/Game';
+import { IGame } from '../types/IGame';
 
 @Component({
   selector: 'app-game',
