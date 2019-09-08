@@ -21,9 +21,11 @@ export class QuestionService {
     this.documentId = 's9MSZSgZzN6gMUYTmVmA';
     this.getQuestions();
   }
-
+  getCollection() {
+    return this.afs.collection('questions');
+  }
   getDocument(): AngularFirestoreDocument<unknown> {
-    return this.afs.collection('questions').doc(this.documentId);
+    return this.getCollection().doc(this.documentId);
   }
 
   private getQuestions(): Observable<IQuestion[]> {
@@ -61,6 +63,7 @@ export class QuestionService {
         return { ...question, brainId };
       });
     };
+
     return this.getQuestions().pipe(
       map(shuffle),
       map((shuffledQuestions: IQuestion[]) =>
@@ -70,5 +73,9 @@ export class QuestionService {
         assignBrainsToQuestions(shuffledQuestions, players)
       )
     );
+  }
+
+  public addQuestion(text: string, unit: string) {
+    this.getCollection().add({ text, unit });
   }
 }
