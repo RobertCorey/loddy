@@ -7,8 +7,8 @@ import { QuestionService } from '../question.service';
   styleUrls: ['./question-testing.component.css']
 })
 export class QuestionTestingComponent implements OnInit {
-  constructor(qs: QuestionService) {
-    (window as any).qs = this;
+  constructor(private qs: QuestionService) {
+    (window as any).qs = this.qs;
   }
 
   ngOnInit() {}
