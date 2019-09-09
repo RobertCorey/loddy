@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import { Observable } from 'rxjs';
-import { IGame } from '../types/Game';
+import { IGame } from '../types/IGame';
 
 @Component({
   selector: 'app-game',
@@ -24,5 +24,9 @@ export class GameComponent implements OnInit {
 
   get hasPlayerJoined(): boolean {
     return !!this.gameService.localPlayer;
+  }
+
+  get isLocalPlayerHost(): boolean {
+    return this.gameService.localPlayer.host;
   }
 }

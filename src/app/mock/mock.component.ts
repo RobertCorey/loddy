@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { mockPlayerList1, mockPlayerList3 } from '../types/IPlayer';
+import { QuestionService } from '../question.service';
 
 @Component({
   selector: 'app-mock',
@@ -10,11 +11,14 @@ export class MockComponent implements OnInit {
   public a: any;
   public b: any;
   public c: any;
-  constructor() {}
+  constructor(private qs: QuestionService) {}
 
   ngOnInit() {
     this.a = mockPlayerList1;
     this.b = mockPlayerList3;
     this.c = [];
+    this.qs
+      .getGameQuestions(mockPlayerList3)
+      .subscribe(res => console.log(res));
   }
 }

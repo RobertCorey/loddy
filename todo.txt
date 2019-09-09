@@ -4,3 +4,14 @@ player list component
   x needed to start the game
   current player hilighted
 start game button  
+
+Lobby state
+  PLAYERS can join game
+  HOST can start game
+Question state
+  PLAYERS can answer questions
+
+questions: [{
+  question: string,
+  asigneeID: string 
+}]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IGame } from './types/Game';
+import { IGame } from './types/IGame';
 import { IPlayer } from './types/IPlayer';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -33,7 +33,7 @@ export class GameService {
       .then(_ => _.id);
   }
 
-  getCollection() {
+  getDocument() {
     if (!this.gameRef) {
       throw new Error('no game ref');
     }
@@ -42,7 +42,7 @@ export class GameService {
 
   get(gameRef: string): Observable<IGame> {
     this.gameRef = gameRef;
-    return this.getCollection()
+    return this.getDocument()
       .valueChanges()
       .pipe(
         map((x: IGame) => x),
@@ -56,7 +56,7 @@ export class GameService {
       id: shortid.generate(),
       host: !this.lastGameState.players.length
     };
-    return this.getCollection()
+    return this.getDocument()
       .update({
         players: firestore.FieldValue.arrayUnion(playerWithId)
       })
