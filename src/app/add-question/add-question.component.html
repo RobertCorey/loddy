@@ -1,5 +1,14 @@
 <header>Add Your Own Question!</header>
-<textarea cols="30" rows="10" placeholder="Enter Question Here"></textarea>
+<textarea
+  cols="30"
+  rows="10"
+  [formControl]="questionText"
+  placeholder="Enter Question Here"
+></textarea>
 <br />
-<input type="text" placeholder="Enter Unit here I.E Pounds, Hours, Ducks" />
-<button (submit)="submitQuestion()">Submit Question</button>
+<input
+  type="text"
+  [formControl]="unitText"
+  placeholder="Enter Unit here I.E Pounds, Hours, Ducks"
+/>
+<button (click)="submitQuestion()">Submit Question</button>
