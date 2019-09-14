@@ -77,7 +77,7 @@ export class QuestionService {
   }
 
   public addQuestion(text: string, unit: string) {
-    this.getDocument().update({
+    return this.getDocument().update({
       questions: firestore.FieldValue.arrayUnion({ text, unit })
     });
   }

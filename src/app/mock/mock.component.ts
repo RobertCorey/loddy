@@ -17,8 +17,5 @@ export class MockComponent implements OnInit {
     this.a = mockPlayerList1;
     this.b = mockPlayerList3;
     this.c = [];
-    this.qs
-      .getGameQuestions(mockPlayerList3)
-      .subscribe(res => console.log(res));
   }
 }
