@@ -1,14 +1,16 @@
 <header>Add Your Own Question!</header>
-<textarea
-  cols="30"
-  rows="10"
-  [formControl]="questionText"
-  placeholder="Enter Question Here"
-></textarea>
-<br />
-<input
-  type="text"
-  [formControl]="unitText"
-  placeholder="Enter Unit here I.E Pounds, Hours, Ducks"
-/>
-<button (click)="submitQuestion()">Submit Question</button>
+<form [formGroup]="addQuestionForm" (ngSubmit)="submitQuestion()">
+  <textarea
+    cols="30"
+    rows="10"
+    formControlName="questionText"
+    placeholder="Enter Question Here"
+  ></textarea>
+  <br />
+  <input
+    type="text"
+    formControlName="unitText"
+    placeholder="Enter Unit here I.E Pounds, Hours, Ducks"
+  />
+  <button type="submit">Submit Question</button>
+</form>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-add-question',
@@ -8,15 +9,20 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./add-question.component.css']
 })
 export class AddQuestionComponent implements OnInit {
-  questionText: FormControl = new FormControl('');
-  unitText: FormControl = new FormControl('');
+  addQuestionForm = new FormGroup({
+    questionText: new FormControl(''),
+    unitText: new FormControl('')
+  });
   constructor(private qs: QuestionService) {}
 
   ngOnInit() {}
 
   submitQuestion() {
-    this.qs.addQuestion(this.questionText.value, this.unitText.value);
-    console.log(this.questionText.value);
-    console.log(this.unitText.value);
+    this.addQuestionForm.disable();
+    const values = this.addQuestionForm.value;
+    this.qs.addQuestion(values.questionText, values.unitText).then(() => {
+      this.addQuestionForm.enable();
+      this.addQuestionForm.reset();
+    });
   }
 }
