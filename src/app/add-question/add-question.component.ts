@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-add-question',
