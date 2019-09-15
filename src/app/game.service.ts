@@ -9,15 +9,20 @@ import { map, tap } from 'rxjs/operators';
 import { firestore } from 'firebase';
 
 import * as shortid from 'shortid';
+import { QuestionService } from './question.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   gameRef: any;
-  localPlayer: IPlayer = { host: true, id: 'df3i9DemI', name: 'rrr' };
+  localPlayer: IPlayer;
   lastGameState: IGame;
-  constructor(private afs: AngularFirestore, private router: Router) {
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+    private qs: QuestionService
+  ) {
     (window as any).gs = this;
   }
 
@@ -64,6 +69,17 @@ export class GameService {
   }
 
   startLobby() {
-    this.getDocument().update({ status: 'BRAIN_QUESTIONS' } as Partial<IGame>);
+    this.qs
+      .getGameQuestions(
+        this.lastGameState.players,
+        this.lastGameState.players.length * 3
+      )
+      .subscribe(questions => {
+        this.getDocument().update({
+          status: 'BRAIN_QUESTIONS',
+          questions,
+          answers: []
+        } as Partial<IGame>);
+      });
   }
 }
