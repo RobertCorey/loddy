@@ -15,7 +15,7 @@ import * as shortid from 'shortid';
 })
 export class GameService {
   gameRef: any;
-  localPlayer: IPlayer;
+  localPlayer: IPlayer = { host: true, id: 'df3i9DemI', name: 'rrr' };
   lastGameState: IGame;
   constructor(private afs: AngularFirestore, private router: Router) {
     (window as any).gs = this;
@@ -61,5 +61,9 @@ export class GameService {
         players: firestore.FieldValue.arrayUnion(playerWithId)
       })
       .then(_ => (this.localPlayer = playerWithId));
+  }
+
+  startLobby() {
+    this.getDocument().update({ status: 'BRAIN_QUESTIONS' } as Partial<IGame>);
   }
 }

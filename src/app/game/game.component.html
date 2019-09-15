@@ -1,15 +1,17 @@
-<span *ngIf="$game | async as game; else loading">
-  <span *ngIf="game.status === 'LOBBY'">
+<span *ngIf="$game | async as rawGame; else loading">
+  <span *ngIf="rawGame.status === 'LOBBY'">
     <app-join-game-form
       *ngIf="!hasPlayerJoined; else lobby"
     ></app-join-game-form>
     <ng-template #lobby>
       Lobby
-      <app-player-list [players]="game.players"></app-player-list>
-      Start Game
+      <app-player-list [players]="rawGame.players"></app-player-list>
+      <button *ngIf="canPlayerStartGame" class="button" (click)="startLobby()">
+        Start Game
+      </button>
     </ng-template>
-    {{ game.status }}
-    {{ game | json }}
+    {{ rawGame.status }}
+    {{ rawGame | json }}
   </span>
 </span>
 

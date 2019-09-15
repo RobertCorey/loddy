@@ -1,7 +1,7 @@
 import { IPlayer } from './IPlayer';
 
 export interface IGame {
-  status: 'LOBBY' | 'IN_PROGRESS' | 'FINISHED';
+  status: 'LOBBY' | 'BRAIN_QUESTIONS' | 'IN_PROGRESS' | 'FINISHED';
   createdAt: number;
   players: IPlayer[];
 }

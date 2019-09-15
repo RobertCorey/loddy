@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import { Observable } from 'rxjs';
 import { IGame } from '../types/IGame';
+import { Game } from '../types/Game';
 
 @Component({
   selector: 'app-game',
@@ -12,6 +13,7 @@ import { IGame } from '../types/IGame';
 export class GameComponent implements OnInit {
   public id;
   public $game: Observable<IGame>;
+  public game: Game;
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService
@@ -20,6 +22,7 @@ export class GameComponent implements OnInit {
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.$game = this.gameService.get(this.id);
+    this.$game.subscribe(game => (this.game = new Game(game)));
   }
 
   get hasPlayerJoined(): boolean {
@@ -28,5 +31,13 @@ export class GameComponent implements OnInit {
 
   get isLocalPlayerHost(): boolean {
     return this.gameService.localPlayer.host;
+  }
+
+  get canPlayerStartGame(): boolean {
+    return this.game.canGameBeStarted && this.isLocalPlayerHost;
+  }
+
+  startLobby() {
+    this.gameService.startLobby();
   }
 }
