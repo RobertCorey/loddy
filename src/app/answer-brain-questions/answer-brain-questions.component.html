@@ -1,1 +1,6 @@
-<p>answer-brain-questions works!</p>
+<header>Answer these questions as best you know</header>
+<sub>Don't worry it doesn't affect your score</sub> <br />
+{{ currentQuestion.text }} ? <input type="text" [formControl]="answerInput" />
+{{ currentQuestion.unit }} <br />
+
+<button class="button" (click)="submit()">Submit</button>

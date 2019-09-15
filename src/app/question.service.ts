@@ -61,7 +61,7 @@ export class QuestionService {
       return questions.map((question, index) => {
         question.text = compileQuestion(question.text, samp(players).name);
         const brainId = players[index % players.length].id;
-        return { ...question, brainId };
+        return { ...question, brainId, id: index.toString() };
       });
     };
 
