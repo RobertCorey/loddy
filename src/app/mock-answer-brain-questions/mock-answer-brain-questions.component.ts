@@ -7,7 +7,7 @@ import { IGameQuestion, getXMockGameQuestions } from '../types/IGameQuestion';
   styleUrls: ['./mock-answer-brain-questions.component.css']
 })
 export class MockAnswerBrainQuestionsComponent implements OnInit {
-  public gameQuestions: IGameQuestion[] = getXMockGameQuestions(10).map(q => ({
+  public gameQuestions: IGameQuestion[] = getXMockGameQuestions(3).map(q => ({
     ...q,
     brainId: '1'
   }));
