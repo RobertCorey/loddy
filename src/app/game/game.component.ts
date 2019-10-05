@@ -48,6 +48,14 @@ export class GameComponent implements OnInit {
     return this.game.getPlayersBrainQuestions(this.localPlayer.id);
   }
 
+  get currentQuestion(): IGameQuestion {
+    return this.game.currentQuestion;
+  }
+
+  get localPlayerIsBrain(): boolean {
+    return this.game.isPlayerBrain(this.localPlayer.id);
+  }
+
   startLobby() {
     this.gameService.startLobby();
   }

@@ -25,6 +25,7 @@ export class GameService {
     private qs: QuestionService
   ) {
     (window as any).gs = this;
+    // this.localPlayer = { host: true, id: 'sjBCtt6T0', name: 'rob' };
   }
 
   async create() {
@@ -107,9 +108,6 @@ export class GameService {
         }
       });
   }
-  /**
-   * If every question has an answer where the answerpl
-   */
   handleBrainQuestionsStatus(game: IGame) {
     const numberOfQuestionsWithBrainAnswers = game.questions.filter(question =>
       game.answers.some(
@@ -119,7 +117,10 @@ export class GameService {
       )
     ).length;
     if (numberOfQuestionsWithBrainAnswers === game.questions.length) {
-      this.getDocument().update({ status: 'GAME_LOOP' } as Partial<IGame>);
+      this.getDocument().update({
+        status: 'GAME_LOOP',
+        activeQuestionId: game.questions[0].id
+      } as Partial<IGame>);
     }
   }
 }

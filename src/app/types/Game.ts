@@ -1,4 +1,6 @@
 import { IGame } from './IGame';
+import { debug } from 'util';
+import { IPlayer } from './IPlayer';
 export class Game {
   constructor(private _game: IGame) {}
 
@@ -15,5 +17,19 @@ export class Game {
     return this._game.questions.filter(
       question => question.brainId === playerId
     );
+  }
+
+  get currentQuestion() {
+    const question = this._game.questions.find(
+      q => q.id === this._game.activeQuestionId
+    );
+    return question;
+  }
+
+  isPlayerBrain(playerId: string): boolean {
+    return this.currentQuestion.brainId === playerId;
+  }
+  getPlayerById(playerID): IPlayer {
+    return this._game.players.find(p => p.id === playerID);
   }
 }

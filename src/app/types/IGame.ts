@@ -13,6 +13,7 @@ export interface IGame {
   players: IPlayer[];
   questions?: IGameQuestion[];
   answers?: IAnswer[];
+  activeQuestionId?: string;
 }
 
 export const IGameBrainQuestionsAllAnswered: IGame = {
