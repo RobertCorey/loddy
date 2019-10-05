@@ -14,6 +14,7 @@ export interface IGame {
   questions?: IGameQuestion[];
   answers?: IAnswer[];
   activeQuestionId?: string;
+  answeredQuestions?: string[];
 }
 
 export const IGameBrainQuestionsAllAnswered: IGame = {

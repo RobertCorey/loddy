@@ -11,6 +11,7 @@ import { firestore } from 'firebase';
 import * as shortid from 'shortid';
 import { QuestionService } from './question.service';
 import { IAnswer } from './types/IAnswer';
+import { Game } from './types/Game';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class GameService {
       throw new Error('no game ref');
     }
     return this.afs.collection('games').doc(this.gameRef);
+  }
+
+  update(partialGame: Partial<IGame>) {
+    return this.getDocument().update(partialGame);
   }
 
   get(gameRef: string): Observable<IGame> {
@@ -102,12 +107,34 @@ export class GameService {
           case 'BRAIN_QUESTIONS':
             this.handleBrainQuestionsStatus(game);
             break;
-
+          case 'GAME_LOOP':
+            this.handleGameLoopStatus(game);
+            break;
           default:
             break;
         }
       });
   }
+
+  handleGameLoopStatus(game: IGame) {
+    const gameInstance = new Game(game);
+    const playersLeftCount = gameInstance.getPlayersYetToAnswerQuestion()
+      .length;
+    if (playersLeftCount === 0) {
+      this.getDocument().update({
+        answeredQuestions: firestore.FieldValue.arrayUnion(
+          game.activeQuestionId
+        )
+      });
+      const nextQuestionId = gameInstance.getNextQuestionId();
+      if (nextQuestionId) {
+        this.update({ activeQuestionId: nextQuestionId });
+      } else {
+        this.update({ status: 'FINISHED' });
+      }
+    }
+  }
+
   handleBrainQuestionsStatus(game: IGame) {
     const numberOfQuestionsWithBrainAnswers = game.questions.filter(question =>
       game.answers.some(
@@ -119,7 +146,8 @@ export class GameService {
     if (numberOfQuestionsWithBrainAnswers === game.questions.length) {
       this.getDocument().update({
         status: 'GAME_LOOP',
-        activeQuestionId: game.questions[0].id
+        activeQuestionId: game.questions[0].id,
+        answeredQuestions: []
       } as Partial<IGame>);
     }
   }

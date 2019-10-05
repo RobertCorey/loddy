@@ -43,4 +43,14 @@ export class Game {
     ).map(a => a.playerId);
     return this._game.players.filter(p => !answerPlayerId.includes(p.id));
   }
+  getNextQuestionId(): string | false {
+    const potentialQuestions = this._game.questions.filter(
+      q => !this._game.answeredQuestions.includes(q.id)
+    );
+    if (potentialQuestions.length > 0) {
+      return potentialQuestions[0].id;
+    } else {
+      return false;
+    }
+  }
 }
