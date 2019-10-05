@@ -13,15 +13,11 @@ import { GameService } from '../game.service';
 export class AnswerBrainQuestionsComponent implements OnInit {
   @Input()
   public questions: IGameQuestion[];
-  @Input()
-  public playerId: string;
   public answerInput = new FormControl('');
   private answers: IAnswer[] = [];
   constructor(private gs: GameService) {}
 
-  ngOnInit() {
-    console.log(this.questions);
-  }
+  ngOnInit() {}
 
   get unansweredQuestionsExist(): boolean {
     return this.answers.length < this.questions.length;
@@ -32,12 +28,17 @@ export class AnswerBrainQuestionsComponent implements OnInit {
   }
 
   submit() {
-    this.answers.push({
-      playerId: this.playerId,
-      questionId: this.currentQuestion.id,
-      text: this.answerInput.value
-    });
+    this.answers = [
+      ...this.answers,
+      {
+        playerId: this.currentQuestion.brainId,
+        questionId: this.currentQuestion.id,
+        text: this.answerInput.value
+      }
+    ];
     this.answerInput.reset();
-    console.log(this);
+    if (!this.unansweredQuestionsExist) {
+      this.gs.addAnswer(this.answers);
+    }
   }
 }
