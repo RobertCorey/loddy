@@ -81,6 +81,9 @@ export class GameService {
           questions,
           answers: []
         } as Partial<IGame>);
+        if (this.localPlayer.host) {
+          this.initGameRunner();
+        }
       });
   }
 
@@ -88,5 +91,35 @@ export class GameService {
     return this.getDocument().update({
       answers: firestore.FieldValue.arrayUnion(...answers)
     });
+  }
+
+  initGameRunner() {
+    this.getDocument()
+      .valueChanges()
+      .subscribe((game: IGame) => {
+        switch (game.status) {
+          case 'BRAIN_QUESTIONS':
+            this.handleBrainQuestionsStatus(game);
+            break;
+
+          default:
+            break;
+        }
+      });
+  }
+  /**
+   * If every question has an answer where the answerpl
+   */
+  handleBrainQuestionsStatus(game: IGame) {
+    const numberOfQuestionsWithBrainAnswers = game.questions.filter(question =>
+      game.answers.some(
+        answer =>
+          answer.playerId === question.brainId &&
+          question.id === answer.questionId
+      )
+    ).length;
+    if (numberOfQuestionsWithBrainAnswers === game.questions.length) {
+      this.getDocument().update({ status: 'GAME_LOOP' } as Partial<IGame>);
+    }
   }
 }
