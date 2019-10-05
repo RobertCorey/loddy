@@ -86,7 +86,7 @@ export class GameService {
 
   addAnswer(answers: IAnswer[]) {
     return this.getDocument().update({
-      answers: firestore.FieldValue.arrayUnion(answers)
+      answers: firestore.FieldValue.arrayUnion(...answers)
     });
   }
 }
