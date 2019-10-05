@@ -10,6 +10,7 @@ import { firestore } from 'firebase';
 
 import * as shortid from 'shortid';
 import { QuestionService } from './question.service';
+import { IAnswer } from './types/IAnswer';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +82,11 @@ export class GameService {
           answers: []
         } as Partial<IGame>);
       });
+  }
+
+  addAnswer(answers: IAnswer[]) {
+    return this.getDocument().update({
+      answers: firestore.FieldValue.arrayUnion(...answers)
+    });
   }
 }

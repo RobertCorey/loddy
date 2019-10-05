@@ -16,6 +16,8 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { MockComponent } from './mock/mock.component';
 import { QuestionTestingComponent } from './question-testing/question-testing.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
+import { AnswerBrainQuestionsComponent } from './answer-brain-questions/answer-brain-questions.component';
+import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -31,7 +33,11 @@ const appRoutes: Routes = [
     path: 'mock',
     component: MockComponent
   },
-  { path: 'mock/questions', component: QuestionTestingComponent }
+  { path: 'mock/questions', component: QuestionTestingComponent },
+  {
+    path: 'mock/answerbrainquestions',
+    component: MockAnswerBrainQuestionsComponent
+  }
 ];
 
 @NgModule({
@@ -43,7 +49,9 @@ const appRoutes: Routes = [
     PlayerListComponent,
     MockComponent,
     QuestionTestingComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    AnswerBrainQuestionsComponent,
+    MockAnswerBrainQuestionsComponent
   ],
   imports: [
     BrowserModule,

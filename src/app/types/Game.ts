@@ -10,4 +10,10 @@ export class Game {
     const host = this._game.players.find(player => player.host);
     return host.id === playerId;
   }
+
+  getPlayersBrainQuestions(playerId: string) {
+    return this._game.questions.filter(
+      question => question.brainId === playerId
+    );
+  }
 }
