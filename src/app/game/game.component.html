@@ -15,7 +15,9 @@
   </span>
   <span *ngIf="rawGame.status === 'BRAIN_QUESTIONS'">
     let's brain up gamers!
-    <app-answer-brain-questions [questions]=""></app-answer-brain-questions>
+    <app-answer-brain-questions
+      [questions]="brainQuestions"
+    ></app-answer-brain-questions>
   </span>
 </span>
 

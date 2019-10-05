@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { IGame } from '../types/IGame';
 import { Game } from '../types/Game';
 import { IPlayer } from '../types/IPlayer';
+import { IQuestion } from '../types/IQuestion';
+import { IGameQuestion } from '../types/IGameQuestion';
 
 @Component({
   selector: 'app-game',
@@ -40,6 +42,10 @@ export class GameComponent implements OnInit {
 
   get localPlayer(): IPlayer {
     return this.gameService.localPlayer;
+  }
+
+  get brainQuestions(): IGameQuestion[] {
+    return this.game.getPlayersBrainQuestions(this.localPlayer.id);
   }
 
   startLobby() {

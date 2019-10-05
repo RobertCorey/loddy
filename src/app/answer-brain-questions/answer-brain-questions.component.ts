@@ -5,6 +5,10 @@ import { IGameQuestion } from '../types/IGameQuestion';
 import { FormControl } from '@angular/forms';
 import { GameService } from '../game.service';
 
+/**
+ * this should probably be a dumb component that takes in questions and repls with the user then broadcasts the answers
+ * up to the smart component which hits whatever api with them
+ */
 @Component({
   selector: 'app-answer-brain-questions',
   templateUrl: './answer-brain-questions.component.html',

@@ -12,6 +12,8 @@ export class Game {
   }
 
   getPlayersBrainQuestions(playerId: string) {
-    this._game.questions.filter(question => question.brainId === playerId);
+    return this._game.questions.filter(
+      question => question.brainId === playerId
+    );
   }
 }
