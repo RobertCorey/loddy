@@ -30,6 +30,19 @@
       You answered this question as the brain so you don't do anything this
       round. that's boring. all games have boring parts
     </span>
+    <br />
+    <span>
+      <table class="table">
+        <tr>
+          <th>Players Yet To Answer</th>
+        </tr>
+        <tr *ngFor="let player of game.getPlayersYetToAnswerQuestion()">
+          <td>
+            {{ player.name }}
+          </td>
+        </tr>
+      </table>
+    </span>
   </span>
 </span>
 

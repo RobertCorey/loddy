@@ -32,4 +32,15 @@ export class Game {
   getPlayerById(playerID): IPlayer {
     return this._game.players.find(p => p.id === playerID);
   }
+
+  getAnswersByQuestionId(questionId) {
+    return this._game.answers.filter(a => a.questionId === questionId);
+  }
+
+  getPlayersYetToAnswerQuestion() {
+    const answerPlayerId = this.getAnswersByQuestionId(
+      this.currentQuestion.id
+    ).map(a => a.playerId);
+    return this._game.players.filter(p => !answerPlayerId.includes(p.id));
+  }
 }
