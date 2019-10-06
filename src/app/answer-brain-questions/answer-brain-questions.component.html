@@ -1,11 +1,11 @@
-<span *ngIf="unansweredQuestionsExist; else finished">
+<span *ngIf="active; else finished">
   <header>Answer these questions as best you know</header>
-  <sub>Don't worry it doesn't affect your score</sub> <br />
-  {{ currentQuestion.text }} ? <br />
-  <input type="text" [formControl]="answerInput" /> {{ currentQuestion.unit }}
+  <sub>Don't worry it doesn't affect your score</sub>
   <br />
-
-  <button class="button" (click)="submit()">Submit</button>
+  <app-answer-question-form
+    [questions]="questions"
+    (answerEmitter)="submit($event)"
+  ></app-answer-question-form>
 </span>
 <ng-template #finished>
   <header>Finished being the brain</header>

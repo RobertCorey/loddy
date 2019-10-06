@@ -1,14 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IQuestion } from '../types/IQuestion';
-import { IAnswer } from '../types/IAnswer';
 import { IGameQuestion } from '../types/IGameQuestion';
-import { FormControl } from '@angular/forms';
 import { GameService } from '../game.service';
+import { IAnswer } from '../types/IAnswer';
 
-/**
- * this should probably be a dumb component that takes in questions and repls with the user then broadcasts the answers
- * up to the smart component which hits whatever api with them
- */
 @Component({
   selector: 'app-answer-brain-questions',
   templateUrl: './answer-brain-questions.component.html',
@@ -17,32 +11,15 @@ import { GameService } from '../game.service';
 export class AnswerBrainQuestionsComponent implements OnInit {
   @Input()
   public questions: IGameQuestion[];
-  public answerInput = new FormControl('');
-  private answers: IAnswer[] = [];
+  public active = true;
   constructor(private gs: GameService) {}
 
-  ngOnInit() {}
-
-  get unansweredQuestionsExist(): boolean {
-    return this.answers.length < this.questions.length;
+  ngOnInit() {
+    this.gs.gameRef = '0Akbp8AGAfMsc9pX8WeS';
   }
 
-  get currentQuestion(): IGameQuestion {
-    return this.questions[this.answers.length];
-  }
-
-  submit() {
-    this.answers = [
-      ...this.answers,
-      {
-        playerId: this.currentQuestion.brainId,
-        questionId: this.currentQuestion.id,
-        text: this.answerInput.value
-      }
-    ];
-    this.answerInput.reset();
-    if (!this.unansweredQuestionsExist) {
-      this.gs.addAnswer(this.answers);
-    }
+  submit(answers: IAnswer[]) {
+    this.active = false;
+    this.gs.addAnswer(answers);
   }
 }

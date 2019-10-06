@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IGameQuestion } from '../types/IGameQuestion';
 import { FormControl } from '@angular/forms';
 import { IAnswer } from '../types/IAnswer';
-import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-answer-question-form',
@@ -12,9 +11,11 @@ import { GameService } from '../game.service';
 export class AnswerQuestionFormComponent implements OnInit {
   @Input()
   public questions: IGameQuestion[];
+  @Output()
+  answerEmitter = new EventEmitter<IAnswer[]>();
   public answerInput = new FormControl('');
   private answers: IAnswer[] = [];
-  constructor(private gs: GameService) {}
+  constructor() {}
 
   ngOnInit() {}
 
@@ -37,7 +38,7 @@ export class AnswerQuestionFormComponent implements OnInit {
     ];
     this.answerInput.reset();
     if (!this.unansweredQuestionsExist) {
-      this.gs.addAnswer(this.answers);
+      this.answerEmitter.emit(this.answers);
     }
   }
 }
