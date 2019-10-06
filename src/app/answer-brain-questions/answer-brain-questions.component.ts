@@ -14,9 +14,7 @@ export class AnswerBrainQuestionsComponent implements OnInit {
   public active = true;
   constructor(private gs: GameService) {}
 
-  ngOnInit() {
-    this.gs.gameRef = '0Akbp8AGAfMsc9pX8WeS';
-  }
+  ngOnInit() {}
 
   submit(answers: IAnswer[]) {
     this.active = false;
