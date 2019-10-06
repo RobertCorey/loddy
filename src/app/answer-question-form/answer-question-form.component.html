@@ -1,0 +1,9 @@
+<span *ngIf="unansweredQuestionsExist; else finished">
+  {{ currentQuestion.text }} ? <br />
+  <input type="text" [formControl]="answerInput" /> {{ currentQuestion.unit }}
+  <br />
+  <button class="button" (click)="submit()">Submit</button>
+</span>
+<ng-template #finished>
+  Waiting...
+</ng-template>
