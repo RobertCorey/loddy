@@ -18,6 +18,7 @@ import { QuestionTestingComponent } from './question-testing/question-testing.co
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AnswerBrainQuestionsComponent } from './answer-brain-questions/answer-brain-questions.component';
 import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
+import { AnswerQuestionFormComponent } from './answer-question-form/answer-question-form.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
     QuestionTestingComponent,
     AddQuestionComponent,
     AnswerBrainQuestionsComponent,
-    MockAnswerBrainQuestionsComponent
+    MockAnswerBrainQuestionsComponent,
+    AnswerQuestionFormComponent
   ],
   imports: [
     BrowserModule,
