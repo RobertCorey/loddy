@@ -1,1 +1,1 @@
-Answer Question form
+Hide answer form if everything has already been answered
