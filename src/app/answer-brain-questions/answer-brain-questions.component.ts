@@ -20,4 +20,7 @@ export class AnswerBrainQuestionsComponent implements OnInit {
     this.active = false;
     this.gs.addAnswer(answers);
   }
+  get localPlayerId() {
+    return this.gs.localPlayer.id;
+  }
 }
