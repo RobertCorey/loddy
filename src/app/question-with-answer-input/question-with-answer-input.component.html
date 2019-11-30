@@ -1,0 +1,10 @@
+<div class="title">
+  {{ question }}
+</div>
+<input
+  type="tel"
+  class="answer-input"
+  [formControl]="answerInput"
+  placeholder="Enter a number here"
+/>
+<button (click)="emitAnswer()">Answer</button>
