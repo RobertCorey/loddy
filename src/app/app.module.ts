@@ -21,29 +21,6 @@ import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions
 import { AnswerQuestionFormComponent } from './answer-question-form/answer-question-form.component';
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
 
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/start', pathMatch: 'full' },
-  {
-    path: 'start',
-    component: StartGameComponent
-  },
-  {
-    path: 'game/:id',
-    component: GameComponent,
-    children: []
-  },
-  {
-    path: 'mock',
-    component: MockComponent
-  },
-  { path: 'mock/questions', component: QuestionTestingComponent },
-  {
-    path: 'mock/answerbrainquestions',
-    component: MockAnswerBrainQuestionsComponent
-  },
-  { path: 'mock/qwai', component: QuestionWithAnswerInputComponent }
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +39,6 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: false }),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule
