@@ -19,6 +19,7 @@ import { AddQuestionComponent } from './add-question/add-question.component';
 import { AnswerBrainQuestionsComponent } from './answer-brain-questions/answer-brain-questions.component';
 import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
 import { AnswerQuestionFormComponent } from './answer-question-form/answer-question-form.component';
+import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'game/:id',
-    component: GameComponent
+    component: GameComponent,
+    children: []
   },
   {
     path: 'mock',
@@ -38,7 +40,8 @@ const appRoutes: Routes = [
   {
     path: 'mock/answerbrainquestions',
     component: MockAnswerBrainQuestionsComponent
-  }
+  },
+  { path: 'mock/qwai', component: QuestionWithAnswerInputComponent }
 ];
 
 @NgModule({
@@ -53,7 +56,8 @@ const appRoutes: Routes = [
     AddQuestionComponent,
     AnswerBrainQuestionsComponent,
     MockAnswerBrainQuestionsComponent,
-    AnswerQuestionFormComponent
+    AnswerQuestionFormComponent,
+    QuestionWithAnswerInputComponent
   ],
   imports: [
     BrowserModule,

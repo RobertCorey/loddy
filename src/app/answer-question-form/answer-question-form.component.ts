@@ -11,6 +11,8 @@ import { IAnswer } from '../types/IAnswer';
 export class AnswerQuestionFormComponent implements OnInit {
   @Input()
   public questions: IGameQuestion[];
+  @Input()
+  private playerId: string;
   @Output()
   answerEmitter = new EventEmitter<IAnswer[]>();
   public answerInput = new FormControl('');
@@ -31,7 +33,7 @@ export class AnswerQuestionFormComponent implements OnInit {
     this.answers = [
       ...this.answers,
       {
-        playerId: this.currentQuestion.brainId,
+        playerId: this.playerId,
         questionId: this.currentQuestion.id,
         text: this.answerInput.value
       }
@@ -39,6 +41,7 @@ export class AnswerQuestionFormComponent implements OnInit {
     this.answerInput.reset();
     if (!this.unansweredQuestionsExist) {
       this.answerEmitter.emit(this.answers);
+      this.answers = [];
     }
   }
 }

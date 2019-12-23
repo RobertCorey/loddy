@@ -1,1 +1,4 @@
-Answer Question form
+Hide answer form if everything has already been answered
+add score screen
+
+answer-question should be converted to be a dumb component. It is taking too much state

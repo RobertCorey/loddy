@@ -25,11 +25,18 @@
     answer:
     <br />
     "{{ currentQuestion.text }}"
-    <span *ngIf="localPlayerIsBrain">
+    <span *ngIf="localPlayerIsBrain; else notBrain">
       <br />
       You answered this question as the brain so you don't do anything this
       round. that's boring. all games have boring parts
     </span>
+    <ng-template #notBrain>
+      <app-answer-question-form
+        [questions]="[currentQuestion]"
+        [playerId]="localPlayer.id"
+        (answerEmitter)="addAnswers($event)"
+      ></app-answer-question-form>
+    </ng-template>
     <br />
     <span>
       <table class="table">

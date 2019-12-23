@@ -59,4 +59,9 @@ export class GameComponent implements OnInit {
   startLobby() {
     this.gameService.startLobby();
   }
+
+  addAnswers(answers) {
+    console.log(answers);
+    this.gameService.addAnswer(answers);
+  }
 }
