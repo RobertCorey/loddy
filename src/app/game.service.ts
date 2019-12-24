@@ -51,7 +51,11 @@ export class GameService {
   update(partialGame: Partial<IGame>) {
     return this.getDocument().update(partialGame);
   }
-
+  /**
+   * This sets the gameRef for the service (state)
+   * and then uses it to return a live stream of the game document
+   * @param gameRef id of the current game in progress
+   */
   get(gameRef: string): Observable<IGame> {
     this.gameRef = gameRef;
     return this.getDocument()

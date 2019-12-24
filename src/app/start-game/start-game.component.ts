@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 import { Router } from '@angular/router';
+import { StateMockerService } from '../state-mocker.service';
 
 @Component({
   selector: 'app-start-game',
@@ -8,7 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./start-game.component.css']
 })
 export class StartGameComponent implements OnInit {
-  constructor(private router: Router, private gameService: GameService) {}
+  constructor(
+    private router: Router,
+    private gameService: GameService,
+    private stateMockerService: StateMockerService
+  ) {}
 
   ngOnInit() {}
 
