@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
 import { IGame } from './types/IGame';
 import { IPlayer } from './types/IPlayer';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { firestore } from 'firebase';
 
 import * as shortid from 'shortid';
 import { QuestionService } from './question.service';
 import { IAnswer } from './types/IAnswer';
 import { Game } from './types/Game';
+import { GameCollectionService } from './services/game-collection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,50 +18,9 @@ export class GameService {
   localPlayer: IPlayer;
   lastGameState: IGame;
   constructor(
-    private afs: AngularFirestore,
-    private router: Router,
-    private qs: QuestionService
-  ) {
-    (window as any).gs = this;
-    // this.localPlayer = { host: true, id: 'sjBCtt6T0', name: 'rob' };
-  }
-
-  async create() {
-    const game: IGame = {
-      createdAt: Date.now(),
-      players: [],
-      status: 'LOBBY'
-    };
-    return await this.afs
-      .collection('games')
-      .add(game)
-      .then(_ => _.id);
-  }
-
-  getDocument() {
-    if (!this.gameRef) {
-      throw new Error('no game ref');
-    }
-    return this.afs.collection('games').doc(this.gameRef);
-  }
-
-  update(partialGame: Partial<IGame>) {
-    return this.getDocument().update(partialGame);
-  }
-  /**
-   * This sets the gameRef for the service (state)
-   * and then uses it to return a live stream of the game document
-   * @param gameRef id of the current game in progress
-   */
-  get(gameRef: string): Observable<IGame> {
-    this.gameRef = gameRef;
-    return this.getDocument()
-      .valueChanges()
-      .pipe(
-        map((x: IGame) => x),
-        tap(game => (this.lastGameState = game))
-      );
-  }
+    private qs: QuestionService,
+    private gameCollectionService: GameCollectionService
+  ) {}
 
   join(player: { name: string }) {
     const playerWithId = {

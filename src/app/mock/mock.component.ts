@@ -4,6 +4,7 @@ import { QuestionService } from '../question.service';
 import { GameService } from '../game.service';
 import { StateMockerService } from '../state-mocker.service';
 import { IGameBrainQuestionsAllAnswered } from '../types/IGame';
+import { GameCollectionService } from '../services/game-collection.service';
 
 @Component({
   selector: 'app-mock',
@@ -17,16 +18,17 @@ export class MockComponent implements OnInit {
   constructor(
     private qs: QuestionService,
     private gs: GameService,
-    private sm: StateMockerService
+    private sm: StateMockerService,
+    private gcs: GameCollectionService
   ) {
-    (window as any).gs = this.gs;
-    (window as any).sm = this.sm;
+    // (window as any).gs = this.gs;
+    // (window as any).sm = this.sm;
   }
 
   ngOnInit() {
-    this.a = mockPlayerList1;
-    this.b = mockPlayerList3;
-    this.c = [];
-    this.gs.handleBrainQuestionsStatus(IGameBrainQuestionsAllAnswered);
+    // this.a = mockPlayerList1;
+    // this.b = mockPlayerList3;
+    // this.c = [];
+    // this.gs.handleBrainQuestionsStatus(IGameBrainQuestionsAllAnswered);
   }
 }
