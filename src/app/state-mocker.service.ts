@@ -4,6 +4,7 @@ import { Game } from './types/Game';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { brainQuestionsStart } from 'src/mocks/game/brain-questions-start';
 import { Router } from '@angular/router';
+import { onePersonLeftToAnswer } from 'src/mocks/game/one-person-left-to-answer';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,14 @@ export class StateMockerService {
   }
 
   async setupMockState(gameState, localPlayer) {
+    await this.router.navigate(['']);
     const gameRef = await this.afs.collection('games').add(gameState);
     this.gs.gameRef = gameRef.id;
     this.gs.localPlayer = localPlayer;
 
     this.router.navigate(['game', gameRef.id]);
   }
+
   answerBrainQuestionsInitial() {
     const localPlayer = {
       name: 'a',
@@ -37,5 +40,14 @@ export class StateMockerService {
       host: true
     };
     this.setupMockState(brainQuestionsStart, localPlayer);
+  }
+
+  async onePersonLeftToAnswer() {
+    console.log('hurrr');
+    await this.setupMockState(
+      onePersonLeftToAnswer,
+      onePersonLeftToAnswer.players[2]
+    );
+    this.gs.initGameRunner();
   }
 }
