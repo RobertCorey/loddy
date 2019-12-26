@@ -2,11 +2,10 @@
   <header>Answer these questions as best you know</header>
   <sub>Don't worry it doesn't affect your score</sub>
   <br />
-  <app-answer-question-form
-    [questions]="questions"
-    [playerId]="localPlayerId"
-    (answerEmitter)="submit($event)"
-  ></app-answer-question-form>
+  <app-question-with-answer-input
+    [question]=""
+    (answerEmitter)="handleAnswer($event)"
+  ></app-question-with-answer-input>
 </span>
 <ng-template #finished>
   <header>Finished being the brain</header>
