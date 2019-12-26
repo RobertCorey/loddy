@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { AngularFirestore } from '@angular/fire/firestore';
-import { IGame } from './types/IGame';
-import { IPlayer } from './types/IPlayer';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { firestore } from 'firebase';
+import { AngularFirestore } from "@angular/fire/firestore";
+import { IGame } from "./types/IGame";
+import { IPlayer } from "./types/IPlayer";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { firestore } from "firebase";
 
-import * as shortid from 'shortid';
-import { QuestionService } from './question.service';
-import { IAnswer } from './types/IAnswer';
-import { Game } from './types/Game';
+import * as shortid from "shortid";
+import { QuestionService } from "./question.service";
+import { IAnswer } from "./types/IAnswer";
+import { Game } from "./types/Game";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class GameService {
   gameRef: any;
@@ -33,19 +33,19 @@ export class GameService {
     const game: IGame = {
       createdAt: Date.now(),
       players: [],
-      status: 'LOBBY'
+      status: "LOBBY"
     };
     return await this.afs
-      .collection('games')
+      .collection("games")
       .add(game)
       .then(_ => _.id);
   }
 
   getDocument() {
     if (!this.gameRef) {
-      throw new Error('no game ref');
+      throw new Error("no game ref");
     }
-    return this.afs.collection('games').doc(this.gameRef);
+    return this.afs.collection("games").doc(this.gameRef);
   }
 
   update(partialGame: Partial<IGame>) {
@@ -70,7 +70,8 @@ export class GameService {
     const playerWithId = {
       ...player,
       id: shortid.generate(),
-      host: !this.lastGameState.players.length
+      host: !this.lastGameState.players.length,
+      score: 0
     };
     return this.getDocument()
       .update({
@@ -87,7 +88,7 @@ export class GameService {
       )
       .subscribe(questions => {
         this.getDocument().update({
-          status: 'BRAIN_QUESTIONS',
+          status: "BRAIN_QUESTIONS",
           questions,
           answers: []
         } as Partial<IGame>);
@@ -108,16 +109,28 @@ export class GameService {
       .valueChanges()
       .subscribe((game: IGame) => {
         switch (game.status) {
-          case 'BRAIN_QUESTIONS':
+          case "BRAIN_QUESTIONS":
             this.handleBrainQuestionsStatus(game);
             break;
-          case 'GAME_LOOP':
+          case "GAME_LOOP":
             this.handleGameLoopStatus(game);
+            break;
+          case "SCORE_SCREEN":
+            this.handleScoreScreenStatus(game);
             break;
           default:
             break;
         }
       });
+  }
+
+  handleScoreScreenStatus(game: IGame) {
+    const gameInstance = new Game(game);
+    let answers = gameInstance.getAnswersByQuestionId(game.activeQuestionId);
+    console.log(answers);
+
+    //get players answers to cu
+    //update player scores on firebase
   }
 
   handleGameLoopStatus(game: IGame) {
@@ -130,12 +143,19 @@ export class GameService {
           game.activeQuestionId
         )
       });
-      const nextQuestionId = gameInstance.getNextQuestionId();
-      if (nextQuestionId) {
-        this.update({ activeQuestionId: nextQuestionId });
-      } else {
-        this.update({ status: 'FINISHED' });
-      }
+
+      this.update({ status: "SCORE_SCREEN" });
+      //15 seconds
+      let waitTime = 15000;
+      setTimeout(() => {
+        const nextQuestionId = gameInstance.getNextQuestionId();
+        if (nextQuestionId) {
+          this.update({ status: "GAME_LOOP" });
+          this.update({ activeQuestionId: nextQuestionId });
+        } else {
+          this.update({ status: "FINISHED" });
+        }
+      }, waitTime);
     }
   }
 
@@ -149,7 +169,7 @@ export class GameService {
     ).length;
     if (numberOfQuestionsWithBrainAnswers === game.questions.length) {
       this.getDocument().update({
-        status: 'GAME_LOOP',
+        status: "GAME_LOOP",
         activeQuestionId: game.questions[0].id,
         answeredQuestions: []
       } as Partial<IGame>);
