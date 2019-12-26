@@ -53,4 +53,12 @@ export class Game {
       return false;
     }
   }
+  /**return players with updated score */
+  calculateScore(): IPlayer[] {
+    const answers = this.getAnswersByQuestionId(this.currentQuestion);
+    //get brain answer
+    //compare other answers to brain answers
+    //assign score based off how close they are
+    return [];
+  }
 }
