@@ -1,4 +1,4 @@
-<span *ngIf="active; else finished">
+<!-- <span *ngIf="active; else finished">
   <header>Answer these questions as best you know</header>
   <sub>Don't worry it doesn't affect your score</sub>
   <br />
@@ -7,7 +7,20 @@
     (answerEmitter)="handleAnswer($event)"
   ></app-question-with-answer-input>
 </span>
+hello
+<ng-template *ngIf="currentQuestion$ | async as question; else finished">
+  {{ question | json }}
+  <app-question-with-answer-input
+  [question]="question"
+  ></app-question-with-answer-input>
+</ng-template>
 <ng-template #finished>
   <header>Finished being the brain</header>
   <sub>Waiting for other players to finish 😴</sub>
 </ng-template>
+-->
+<ng-container *ngIf="currentQuestion$ | async as question">
+  <app-question-with-answer-input
+    [question]="question.text"
+  ></app-question-with-answer-input>
+</ng-container>

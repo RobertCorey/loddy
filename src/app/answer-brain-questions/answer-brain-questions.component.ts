@@ -2,6 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IGameQuestion } from '../types/IGameQuestion';
 import { GameService } from '../game.service';
 import { IAnswer } from '../types/IAnswer';
+import { PlayerService } from '../services/player.service';
+import { GameCollectionService } from '../services/game-collection.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { IQuestion } from '../types/IQuestion';
 
 @Component({
   selector: 'app-answer-brain-questions',
@@ -9,31 +14,40 @@ import { IAnswer } from '../types/IAnswer';
   styleUrls: ['./answer-brain-questions.component.css']
 })
 export class AnswerBrainQuestionsComponent implements OnInit {
-  @Input()
-  public questions: IGameQuestion[];
-  public active = true;
-  private answers: IAnswer[] = [];
-  constructor(private gs: GameService) {}
+  private unansweredBrainQuestions$;
+  public currentQuestion$: Observable<IQuestion>;
+  constructor(
+    private gs: GameService,
+    private playerService: PlayerService,
+    private gameCollectionService: GameCollectionService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.playerService.player = {
+      name: 'a',
+      id: 'u1jO_U1P',
+      host: true
+    };
+    this.unansweredBrainQuestions$ = this.gameCollectionService.gameClass$.pipe(
+      map(game =>
+        game.getUnansweredBrainQuestions(this.playerService.player.id)
+      )
+    );
+    this.currentQuestion$ = this.unansweredBrainQuestions$.pipe(
+      map(questions => questions[0])
+    );
 
-  get brainQuestions(): IGameQuestion[] {
-    //No this.game here
-    // return this.game.getPlayersBrainQuestions(this.localPlayer.id);
+    // this.currentQuestion$.subscribe(console.log);
   }
+
+  // get currentBrainQuestion$() {
+  //No this.game here
+  // return this.game.getPlayersBrainQuestions(this.localPlayer.id);
+  // }
 
   submit(answers: IAnswer[]) {
-    this.active = false;
-    this.gs.addAnswer(answers);
+    // this.active = false;
+    // this.gs.addAnswer(answers);
   }
-
   handleAnswer($event) {}
-
-  get activeQuestion() {
-    return this.questions[this.answers.length];
-  }
-
-  get localPlayerId() {
-    return this.gs.localPlayer.id;
-  }
 }

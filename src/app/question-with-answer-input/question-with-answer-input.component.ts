@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IAnswer } from '../types/IAnswer';
 import { IGameQuestion } from '../types/IGameQuestion';
@@ -6,7 +12,8 @@ import { IGameQuestion } from '../types/IGameQuestion';
 @Component({
   selector: 'app-question-with-answer-input',
   templateUrl: './question-with-answer-input.component.html',
-  styleUrls: ['./question-with-answer-input.component.scss']
+  styleUrls: ['./question-with-answer-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionWithAnswerInputComponent {
   @Input()
