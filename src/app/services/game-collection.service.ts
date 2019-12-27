@@ -10,11 +10,7 @@ import { map, shareReplay } from 'rxjs/operators';
 export class GameCollectionService {
   private gameRef: DocumentReference;
   private _gameState$: Observable<IGame>;
-  constructor(private angularFirestore: AngularFirestore) {
-    (window as any).foo = this;
-    this.setDocumentById('0Akbp8AGAfMsc9pX8WeS');
-    this.gameState$.subscribe(console.log);
-  }
+  constructor(private angularFirestore: AngularFirestore) {}
 
   private get collection() {
     return this.angularFirestore.collection('games');
@@ -27,13 +23,14 @@ export class GameCollectionService {
       status: 'LOBBY'
     };
     this.gameRef = await this.collection.add(game);
+    return this.gameRef;
   }
 
   setDocumentById(id: string) {
     this.gameRef = this.collection.doc(id).ref;
   }
 
-  update(partialGame: Partial<IGame>) {
+  update(partialGame) {
     return this.currentDocument.update(partialGame);
   }
 

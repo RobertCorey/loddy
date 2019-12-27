@@ -11,6 +11,6 @@ export class JoinGameFormComponent {
   name: FormControl = new FormControl('');
   constructor(private gameService: GameService) {}
   onSubmit() {
-    this.gameService.join({ name: this.name.value });
+    this.gameService.join({ name: this.name.value }).subscribe();
   }
 }
