@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { IGame } from '../types/IGame';
-import { ReplaySubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { Game } from '../types/Game';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,9 @@ export class GameCollectionService {
       );
     }
     return this._gameState$;
+  }
+
+  get gameClass$() {
+    return this.gameState$.pipe(map(game => new Game(game)));
   }
 }
