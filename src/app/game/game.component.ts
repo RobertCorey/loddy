@@ -7,6 +7,7 @@ import { Game } from '../types/Game';
 import { IPlayer } from '../types/IPlayer';
 import { IQuestion } from '../types/IQuestion';
 import { IGameQuestion } from '../types/IGameQuestion';
+import { GameCollectionService } from '../services/game-collection.service';
 
 @Component({
   selector: 'app-game',
@@ -19,12 +20,14 @@ export class GameComponent implements OnInit {
   public game: Game;
   constructor(
     private route: ActivatedRoute,
+    private gameCollectionService: GameCollectionService,
     private gameService: GameService
   ) {}
 
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.$game = this.gameService.get(this.id);
+    this.gameCollectionService.setDocumentById(this.id);
+    this.$game = this.gameCollectionService.gameState$;
     this.$game.subscribe(game => (this.game = new Game(game)));
   }
 
