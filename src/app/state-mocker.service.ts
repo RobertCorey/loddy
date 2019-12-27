@@ -4,6 +4,7 @@ import { Game } from './types/Game';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { brainQuestionsStart } from 'src/mocks/game/brain-questions-start';
 import { Router } from '@angular/router';
+import { PlayerService } from './services/player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class StateMockerService {
   constructor(
     private gs: GameService,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private playerService: PlayerService
   ) {
     (window as any).mocker = this;
   }
@@ -26,7 +28,7 @@ export class StateMockerService {
   async setupMockState(gameState, localPlayer) {
     const gameRef = await this.afs.collection('games').add(gameState);
     this.gs.gameRef = gameRef.id;
-    this.gs.localPlayer = localPlayer;
+    this.playerService.player = localPlayer;
 
     this.router.navigate(['game', gameRef.id]);
   }

@@ -10,16 +10,17 @@ import { IAnswer } from './types/IAnswer';
 import { Game } from './types/Game';
 import { GameCollectionService } from './services/game-collection.service';
 import { take, switchMap } from 'rxjs/operators';
+import { PlayerService } from './services/player.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   gameRef: any;
-  localPlayer: IPlayer;
   constructor(
     private qs: QuestionService,
-    private gameCollectionService: GameCollectionService
+    private gameCollectionService: GameCollectionService,
+    private playerService: PlayerService
   ) {}
 
   join(player: { name: string }) {
@@ -35,7 +36,7 @@ export class GameService {
           .update({
             players: firestore.FieldValue.arrayUnion(playerWithId)
           })
-          .then(_ => (this.localPlayer = playerWithId));
+          .then(_ => (this.playerService.player = playerWithId));
       })
     );
   }
@@ -51,7 +52,7 @@ export class GameService {
         })
       )
       .subscribe(questions => {
-        if (this.localPlayer.host) {
+        if (this.playerService.isHost) {
           this.gameCollectionService.update({
             status: 'BRAIN_QUESTIONS',
             questions,

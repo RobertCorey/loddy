@@ -8,6 +8,7 @@ import { IPlayer } from '../types/IPlayer';
 import { IQuestion } from '../types/IQuestion';
 import { IGameQuestion } from '../types/IGameQuestion';
 import { GameCollectionService } from '../services/game-collection.service';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-game',
@@ -21,7 +22,8 @@ export class GameComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private gameCollectionService: GameCollectionService,
-    private gameService: GameService
+    private gameService: GameService,
+    private playerService: PlayerService
   ) {}
 
   async ngOnInit() {
@@ -32,11 +34,11 @@ export class GameComponent implements OnInit {
   }
 
   get hasPlayerJoined(): boolean {
-    return !!this.gameService.localPlayer;
+    return !!this.playerService.player;
   }
 
   get isLocalPlayerHost(): boolean {
-    return this.gameService.localPlayer.host;
+    return this.playerService.player.host;
   }
 
   get canPlayerStartGame(): boolean {
@@ -44,7 +46,7 @@ export class GameComponent implements OnInit {
   }
 
   get localPlayer(): IPlayer {
-    return this.gameService.localPlayer;
+    return this.playerService.player;
   }
 
   get brainQuestions(): IGameQuestion[] {
