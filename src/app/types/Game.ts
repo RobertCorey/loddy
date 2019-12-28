@@ -49,6 +49,12 @@ export class Game {
     return this._game.answers.filter(a => a.questionId === questionId);
   }
 
+  playerHasAnsweredCurrentQuestion(playerID) {
+    return this.getAnswersByQuestionId(this.currentQuestion).find(
+      answer => answer.playerId === playerID
+    );
+  }
+
   getPlayersYetToAnswerQuestion() {
     const answerPlayerId = this.getAnswersByQuestionId(
       this.currentQuestion.id

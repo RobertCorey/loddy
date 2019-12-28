@@ -17,7 +17,8 @@
     *ngIf="rawGame.status === 'BRAIN_QUESTIONS'"
   ></app-answer-brain-questions>
   <span *ngIf="rawGame.status === 'GAME_LOOP'">
-    How did
+    <app-game-loop></app-game-loop>
+    <!-- How did
     <strong>{{ game.getPlayerById(currentQuestion.brainId).name }}</strong>
     answer:
     <br />
@@ -46,8 +47,12 @@
           </td>
         </tr>
       </table>
-    </span>
+    </span> -->
   </span>
+  <h2>game</h2>
+  {{ rawGame | json }}
+  <h2>player</h2>
+  {{ localPlayer | json }}
 </span>
 
 <ng-template #loading>

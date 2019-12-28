@@ -11,7 +11,9 @@ import { Game } from '../types/Game';
 export class GameCollectionService {
   private gameRef: DocumentReference;
   private _gameState$: Observable<IGame>;
-  constructor(private angularFirestore: AngularFirestore) {}
+  constructor(private angularFirestore: AngularFirestore) {
+    (window as any).gcs = this;
+  }
 
   private get collection() {
     return this.angularFirestore.collection('games');
