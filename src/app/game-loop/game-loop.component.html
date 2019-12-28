@@ -1,0 +1,18 @@
+<ng-container *ngIf="!(localPlayerIsBrain$ | async); else brain">
+  <ng-container *ngIf="currentBrain$ | async as currentBrain">
+    {{ currentBrain.name }} is the brain!<br />
+  </ng-container>
+  <ng-container *ngIf="currentQuestion$ | async as currentQuestion">
+    How Did the answer this question?:<br />
+    {{ currentQuestion.text }} <br />
+  </ng-container>
+  <ng-container *ngIf="answerFormVisible$ | async as visible">
+    <app-question-with-answer-input
+      (answerEmitter)="handleAnswer($event)"
+    ></app-question-with-answer-input>
+  </ng-container>
+  <ng-container *ngIf="loading$ | async">Loading...</ng-container>
+</ng-container>
+<ng-template #brain>
+  You were the brain for this question.
+</ng-template>

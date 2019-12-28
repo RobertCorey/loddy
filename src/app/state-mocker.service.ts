@@ -6,6 +6,7 @@ import { brainQuestionsStart } from 'src/mocks/game/brain-questions-start';
 import { Router } from '@angular/router';
 import { PlayerService } from './services/player.service';
 import { fullLobby } from 'src/mocks/game/full-lobby';
+import { firstQuestion } from 'src/mocks/game/game-loop/first-question';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,9 @@ export class StateMockerService {
       name: 'rob'
     };
     this.setupMockState(fullLobby, localPlayer);
+  }
+
+  firstQuestion() {
+    this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }
 }

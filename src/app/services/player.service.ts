@@ -6,7 +6,9 @@ import { IPlayer } from '../types/IPlayer';
 })
 export class PlayerService {
   player: IPlayer;
-
+  constructor() {
+    (window as any).ps = this;
+  }
   get isHost() {
     return !!this.player.host;
   }

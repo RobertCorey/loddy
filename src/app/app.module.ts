@@ -20,6 +20,7 @@ import { AnswerBrainQuestionsComponent } from './answer-brain-questions/answer-b
 import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
 import { AnswerQuestionFormComponent } from './answer-question-form/answer-question-form.component';
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
+import { GameLoopComponent } from './game-loop/game-loop.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { QuestionWithAnswerInputComponent } from './question-with-answer-input/q
     AnswerBrainQuestionsComponent,
     MockAnswerBrainQuestionsComponent,
     AnswerQuestionFormComponent,
-    QuestionWithAnswerInputComponent
+    QuestionWithAnswerInputComponent,
+    GameLoopComponent
   ],
   imports: [
     BrowserModule,
