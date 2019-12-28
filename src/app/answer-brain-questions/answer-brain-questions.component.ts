@@ -24,11 +24,6 @@ export class AnswerBrainQuestionsComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.playerService.player = {
-      name: 'a',
-      id: 'u1jO_U1P',
-      host: true
-    };
     this.unansweredBrainQuestions$ = this.gameCollectionService.gameClass$.pipe(
       map(game =>
         game.getUnansweredBrainQuestions(this.playerService.player.id)
@@ -42,7 +37,6 @@ export class AnswerBrainQuestionsComponent implements OnInit {
     this.currentQuestion$.subscribe(() => {
       this.loading = false;
     });
-    this.gameCollectionService.gameState$.subscribe(console.log);
   }
 
   handleAnswer($event) {

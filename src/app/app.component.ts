@@ -9,6 +9,6 @@ import { StateMockerService } from './state-mocker.service';
 export class AppComponent implements OnInit {
   constructor(private stateMockerService: StateMockerService) {}
   ngOnInit() {
-    this.stateMockerService.answerBrainQuestionsInitial();
+    // this.stateMockerService.answerBrainQuestionsInitial();
   }
 }
