@@ -11,7 +11,9 @@
       (answerEmitter)="handleAnswer($event)"
     ></app-question-with-answer-input>
   </ng-container>
-  <ng-container *ngIf="loading$ | async">Loading...</ng-container>
+  <ng-container *ngIf="loading$ | async"
+    >Waiting for other players to answer...</ng-container
+  >
 </ng-container>
 <ng-template #brain>
   You were the brain for this question.
