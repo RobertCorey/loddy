@@ -1,13 +1,15 @@
-<span *ngIf="active; else finished">
-  <header>Answer these questions as best you know</header>
-  <sub>Don't worry it doesn't affect your score</sub>
-  <br />
-  <app-answer-question-form
-    [questions]="questions"
-    [playerId]="localPlayerId"
-    (answerEmitter)="submit($event)"
-  ></app-answer-question-form>
-</span>
+Answer these questions the best you can.Later other players will guess what you
+entered. Remember it's what <b>YOU</b> think so don't worry about the exact
+right answer.
+<ng-container
+  *ngIf="!loading && currentQuestion$ | async as question; else finished"
+>
+  <app-question-with-answer-input
+    [question]="question"
+    (answerEmitter)="handleAnswer($event)"
+  ></app-question-with-answer-input>
+</ng-container>
+<ng-container *ngIf="loading">Loading...</ng-container>
 <ng-template #finished>
   <header>Finished being the brain</header>
   <sub>Waiting for other players to finish 😴</sub>

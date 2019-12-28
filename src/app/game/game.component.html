@@ -13,12 +13,9 @@
     {{ rawGame.status }}
     {{ rawGame | json }}
   </span>
-  <span *ngIf="rawGame.status === 'BRAIN_QUESTIONS'">
-    let's brain up gamers!
-    <app-answer-brain-questions
-      [questions]="brainQuestions"
-    ></app-answer-brain-questions>
-  </span>
+  <app-answer-brain-questions
+    *ngIf="rawGame.status === 'BRAIN_QUESTIONS'"
+  ></app-answer-brain-questions>
   <span *ngIf="rawGame.status === 'GAME_LOOP'">
     How did
     <strong>{{ game.getPlayerById(currentQuestion.brainId).name }}</strong>

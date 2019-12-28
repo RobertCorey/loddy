@@ -49,10 +49,6 @@ export class GameComponent implements OnInit {
     return this.playerService.player;
   }
 
-  get brainQuestions(): IGameQuestion[] {
-    return this.game.getPlayersBrainQuestions(this.localPlayer.id);
-  }
-
   get currentQuestion(): IGameQuestion {
     return this.game.currentQuestion;
   }

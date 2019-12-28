@@ -19,6 +19,18 @@ export class Game {
     );
   }
 
+  getUnansweredBrainQuestions(playerId: string) {
+    const possible = this.getPlayersBrainQuestions(playerId);
+    const answers = this.getPlayersAnswers(playerId);
+    return possible.filter(question => {
+      return !answers.find(answer => answer.questionId === question.id);
+    });
+  }
+
+  getPlayersAnswers(playerId: string) {
+    return this._game.answers.filter(answer => answer.playerId === playerId);
+  }
+
   get currentQuestion() {
     const question = this._game.questions.find(
       q => q.id === this._game.activeQuestionId
