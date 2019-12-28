@@ -27,9 +27,9 @@ export class StateMockerService {
   }
 
   async setupMockState(gameState, localPlayer) {
+    this.playerService.player = localPlayer;
     const gameRef = await this.afs.collection('games').add(gameState);
     this.gs.gameRef = gameRef.id;
-    this.playerService.player = localPlayer;
 
     this.router.navigate(['game', gameRef.id]);
   }
