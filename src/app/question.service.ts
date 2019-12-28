@@ -66,6 +66,7 @@ export class QuestionService {
     };
 
     return this.getQuestions().pipe(
+      take(1),
       map(shuffle),
       map((shuffledQuestions: IQuestion[]) =>
         shuffledQuestions.slice(0, numberOfQuestions)

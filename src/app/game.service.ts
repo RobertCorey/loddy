@@ -21,7 +21,9 @@ export class GameService {
     private qs: QuestionService,
     private gameCollectionService: GameCollectionService,
     private playerService: PlayerService
-  ) {}
+  ) {
+    (window as any).foo = this;
+  }
 
   join(player: { name: string }) {
     return this.gameCollectionService.gameState$.pipe(
@@ -44,6 +46,7 @@ export class GameService {
   startLobby() {
     return this.gameCollectionService.gameState$
       .pipe(
+        take(1),
         switchMap(game => {
           return this.qs.getGameQuestions(
             game.players,

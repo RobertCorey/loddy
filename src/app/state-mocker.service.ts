@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { brainQuestionsStart } from 'src/mocks/game/brain-questions-start';
 import { Router } from '@angular/router';
 import { PlayerService } from './services/player.service';
+import { fullLobby } from 'src/mocks/game/full-lobby';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,14 @@ export class StateMockerService {
       host: true
     };
     this.setupMockState(brainQuestionsStart, localPlayer);
+  }
+
+  fullLobbyAsHost() {
+    const localPlayer = {
+      host: true,
+      id: 'hW3CuubX',
+      name: 'rob'
+    };
+    this.setupMockState(fullLobby, localPlayer);
   }
 }
