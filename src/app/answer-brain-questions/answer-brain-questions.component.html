@@ -19,8 +19,10 @@ hello
   <sub>Waiting for other players to finish 😴</sub>
 </ng-template>
 -->
-<ng-container *ngIf="currentQuestion$ | async as question">
+<ng-container *ngIf="!loading && currentQuestion$ | async as question">
   <app-question-with-answer-input
-    [question]="question.text"
+    [question]="question"
+    (answerEmitter)="handleAnswer($event)"
   ></app-question-with-answer-input>
 </ng-container>
+<ng-container *ngIf="loading">Loading...</ng-container>

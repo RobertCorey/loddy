@@ -19,11 +19,14 @@ export class QuestionWithAnswerInputComponent {
   @Input()
   public question: IGameQuestion;
   @Output()
-  private answerEmitter = new EventEmitter<IAnswer>();
+  private answerEmitter = new EventEmitter<Partial<IAnswer>>();
   public answerInput = new FormControl('');
 
   emitAnswer() {
+    this.answerEmitter.emit({
+      questionId: this.question.id,
+      text: this.answerInput.value
+    });
     this.answerInput.reset();
-    this.answerEmitter.emit(this.answerInput.value);
   }
 }
