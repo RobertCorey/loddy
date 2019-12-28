@@ -4,7 +4,7 @@ import { GameService } from '../game.service';
 import { IAnswer } from '../types/IAnswer';
 import { PlayerService } from '../services/player.service';
 import { GameCollectionService } from '../services/game-collection.service';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -40,11 +40,14 @@ export class AnswerBrainQuestionsComponent implements OnInit {
   }
 
   handleAnswer($event) {
-    const answer: IAnswer = {
-      playerId: this.playerService.player.id,
-      ...$event
-    };
-    this.loading = true;
-    this.gs.addAnswer([answer]);
+    this.currentQuestion$.pipe(take(1)).subscribe(question => {
+      const answer: IAnswer = {
+        questionId: question.id,
+        playerId: this.playerService.player.id,
+        text: $event
+      };
+      this.loading = true;
+      this.gs.addAnswer([answer]);
+    });
   }
 }
