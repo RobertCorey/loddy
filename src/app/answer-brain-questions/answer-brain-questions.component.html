@@ -4,8 +4,8 @@ right answer.
 <ng-container
   *ngIf="!loading && currentQuestion$ | async as question; else finished"
 >
+  {{ question.text }}
   <app-question-with-answer-input
-    [question]="question"
     (answerEmitter)="handleAnswer($event)"
   ></app-question-with-answer-input>
 </ng-container>
