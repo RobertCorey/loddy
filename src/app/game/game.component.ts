@@ -30,39 +30,9 @@ export class GameComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.gameCollectionService.setDocumentById(this.id);
     this.$game = this.gameCollectionService.gameState$;
-    this.$game.subscribe(game => (this.game = new Game(game)));
-  }
-
-  get hasPlayerJoined(): boolean {
-    return !!this.playerService.player;
-  }
-
-  get isLocalPlayerHost(): boolean {
-    return this.playerService.player.host;
-  }
-
-  get canPlayerStartGame(): boolean {
-    return this.game.canGameBeStarted && this.isLocalPlayerHost;
   }
 
   get localPlayer(): IPlayer {
     return this.playerService.player;
-  }
-
-  get currentQuestion(): IGameQuestion {
-    return this.game.currentQuestion;
-  }
-
-  get localPlayerIsBrain(): boolean {
-    return this.game.isPlayerBrain(this.localPlayer.id);
-  }
-
-  startLobby() {
-    this.gameService.startLobby();
-  }
-
-  addAnswers(answers) {
-    console.log(answers);
-    this.gameService.addAnswer(answers);
   }
 }
