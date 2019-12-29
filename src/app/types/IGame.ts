@@ -1,6 +1,7 @@
 import { IPlayer } from './IPlayer';
 import { IGameQuestion, getXMockGameQuestions } from './IGameQuestion';
 import { IAnswer } from './IAnswer';
+import { IScore } from './IScore';
 
 export interface IGame {
   status:
@@ -14,6 +15,7 @@ export interface IGame {
   players: IPlayer[];
   questions?: IGameQuestion[];
   answers?: IAnswer[];
+  scores?: IScore[];
   activeQuestionId?: string;
   answeredQuestions?: string[];
 }
