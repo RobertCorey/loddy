@@ -11,12 +11,14 @@ import { Game } from './types/Game';
 import { GameCollectionService } from './services/game-collection.service';
 import { take, switchMap } from 'rxjs/operators';
 import { PlayerService } from './services/player.service';
+import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   gameRef: any;
+  mock: boolean;
   constructor(
     private qs: QuestionService,
     private gameCollectionService: GameCollectionService,
@@ -54,7 +56,7 @@ export class GameService {
         })
       )
       .subscribe(questions => {
-        if (this.playerService.isHost) {
+        if (this.playerService.isHost || this.mock) {
           this.gameCollectionService.update({
             status: 'BRAIN_QUESTIONS',
             questions,
@@ -73,6 +75,7 @@ export class GameService {
 
   initGameRunner() {
     this.gameCollectionService.gameState$.subscribe((game: IGame) => {
+      console.log(game.status);
       switch (game.status) {
         case 'BRAIN_QUESTIONS':
           this.handleBrainQuestionsStatus(game);
@@ -80,8 +83,27 @@ export class GameService {
         case 'GAME_LOOP':
           this.handleGameLoopStatus(game);
           break;
+        case 'SCORE_SCREEN':
+          this.handleScoreScreenStatus(game);
+          break;
         default:
           break;
+      }
+    });
+  }
+  handleScoreScreenStatus(game: IGame) {
+    const gameInstance = new Game(game);
+    timer(3000).subscribe(_ => {
+      const nextQuestionId = gameInstance.getNextQuestionId();
+      if (nextQuestionId) {
+        this.gameCollectionService.update({
+          activeQuestionId: nextQuestionId,
+          status: 'GAME_LOOP'
+        });
+      } else {
+        this.gameCollectionService.update({
+          status: 'FINISHED'
+        });
       }
     });
   }
@@ -94,14 +116,9 @@ export class GameService {
       this.gameCollectionService.update({
         answeredQuestions: firestore.FieldValue.arrayUnion(
           game.activeQuestionId
-        )
+        ),
+        status: 'SCORE_SCREEN'
       });
-      const nextQuestionId = gameInstance.getNextQuestionId();
-      if (nextQuestionId) {
-        this.gameCollectionService.update({ activeQuestionId: nextQuestionId });
-      } else {
-        this.gameCollectionService.update({ status: 'FINISHED' });
-      }
     }
   }
 

@@ -23,6 +23,7 @@ import { QuestionWithAnswerInputComponent } from './question-with-answer-input/q
 import { GameLoopComponent } from './game-loop/game-loop.component';
 import { PlayersYetToAnswerComponent } from './players-yet-to-answer/players-yet-to-answer.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { ScoreScreenComponent } from './score-screen/score-screen.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LobbyComponent } from './lobby/lobby.component';
     QuestionWithAnswerInputComponent,
     GameLoopComponent,
     PlayersYetToAnswerComponent,
-    LobbyComponent
+    LobbyComponent,
+    ScoreScreenComponent
   ],
   imports: [
     BrowserModule,

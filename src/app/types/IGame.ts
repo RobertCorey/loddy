@@ -8,7 +8,8 @@ export interface IGame {
     | 'BRAIN_QUESTIONS'
     | 'GAME_LOOP'
     | 'IN_PROGRESS'
-    | 'FINISHED';
+    | 'FINISHED'
+    | 'SCORE_SCREEN';
   createdAt: number;
   players: IPlayer[];
   questions?: IGameQuestion[];

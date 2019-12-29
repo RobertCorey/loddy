@@ -4,10 +4,16 @@
     *ngIf="game.status === 'BRAIN_QUESTIONS'"
   ></app-answer-brain-questions>
   <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
+  <app-score-screen *ngIf="game.status === 'SCORE_SCREEN'"></app-score-screen>
   <h2>game</h2>
   {{ game | json }}
   <h2>player</h2>
   {{ localPlayer | json }}
+  <h2>answers</h2>
+  <ng-container *ngFor="let answer of game.answers">
+    {{ answer | json }}
+    <br />
+  </ng-container>
 </span>
 
 <ng-template #loading>

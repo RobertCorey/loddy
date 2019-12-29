@@ -32,7 +32,8 @@ export class StateMockerService {
     const gameRef = await this.afs.collection('games').add(gameState);
     this.gs.gameRef = gameRef.id;
 
-    this.router.navigate(['game', gameRef.id]);
+    await this.router.navigate(['game', gameRef.id]);
+    this.gs.mock = true;
   }
   answerBrainQuestionsInitial() {
     const localPlayer = {

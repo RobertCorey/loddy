@@ -31,6 +31,11 @@ export const firstQuestion = {
       playerId: 'XvfISzWa',
       questionId: '5',
       text: '123'
+    },
+    {
+      playerId: 'XvfISzWa',
+      questionId: '0',
+      text: '123'
     }
   ],
   createdAt: 1577560345573,
