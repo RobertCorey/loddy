@@ -22,6 +22,7 @@ import { AnswerQuestionFormComponent } from './answer-question-form/answer-quest
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
 import { GameLoopComponent } from './game-loop/game-loop.component';
 import { PlayersYetToAnswerComponent } from './players-yet-to-answer/players-yet-to-answer.component';
+import { LobbyComponent } from './lobby/lobby.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PlayersYetToAnswerComponent } from './players-yet-to-answer/players-yet
     AnswerQuestionFormComponent,
     QuestionWithAnswerInputComponent,
     GameLoopComponent,
-    PlayersYetToAnswerComponent
+    PlayersYetToAnswerComponent,
+    LobbyComponent
   ],
   imports: [
     BrowserModule,
