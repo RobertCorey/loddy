@@ -34,11 +34,10 @@ export class GameService {
           id: shortid.generate(),
           host: !game.players.length
         };
-        return this.gameCollectionService
-          .update({
-            players: firestore.FieldValue.arrayUnion(playerWithId)
-          })
-          .then(_ => (this.playerService.player = playerWithId));
+        this.playerService.player = playerWithId;
+        return this.gameCollectionService.update({
+          players: firestore.FieldValue.arrayUnion(playerWithId)
+        });
       })
     );
   }
