@@ -9,7 +9,7 @@ right answer.
     (answerEmitter)="handleAnswer($event)"
   ></app-question-with-answer-input>
 </ng-container>
-<ng-container *ngIf="loading">Loading...</ng-container>
+<ng-container *ngIf="loading">Waiting for other players</ng-container>
 <ng-template #finished>
   <header>Finished being the brain</header>
   <sub>Waiting for other players to finish 😴</sub>

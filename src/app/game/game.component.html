@@ -10,45 +10,11 @@
         Start Game
       </button>
     </ng-template>
-    {{ rawGame.status }}
-    {{ rawGame | json }}
   </span>
   <app-answer-brain-questions
     *ngIf="rawGame.status === 'BRAIN_QUESTIONS'"
   ></app-answer-brain-questions>
-  <span *ngIf="rawGame.status === 'GAME_LOOP'">
-    <app-game-loop></app-game-loop>
-    <!-- How did
-    <strong>{{ game.getPlayerById(currentQuestion.brainId).name }}</strong>
-    answer:
-    <br />
-    "{{ currentQuestion.text }}"
-    <span *ngIf="localPlayerIsBrain; else notBrain">
-      <br />
-      You answered this question as the brain so you don't do anything this
-      round. that's boring. all games have boring parts
-    </span>
-    <ng-template #notBrain>
-      <app-answer-question-form
-        [questions]="[currentQuestion]"
-        [playerId]="localPlayer.id"
-        (answerEmitter)="addAnswers($event)"
-      ></app-answer-question-form>
-    </ng-template>
-    <br />
-    <span>
-      <table class="table">
-        <tr>
-          <th>Players Yet To Answer</th>
-        </tr>
-        <tr *ngFor="let player of game.getPlayersYetToAnswerQuestion()">
-          <td>
-            {{ player.name }}
-          </td>
-        </tr>
-      </table>
-    </span> -->
-  </span>
+  <app-game-loop *ngIf="rawGame.status === 'GAME_LOOP'"></app-game-loop>
   <h2>game</h2>
   {{ rawGame | json }}
   <h2>player</h2>

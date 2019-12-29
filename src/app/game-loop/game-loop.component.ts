@@ -75,4 +75,10 @@ export class GameLoopComponent implements OnInit {
       });
     });
   }
+
+  get playersYetToAnswer() {
+    return this.gameCollectionService.gameClass$.pipe(
+      map(game => game.getPlayersYetToAnswerQuestion)
+    );
+  }
 }

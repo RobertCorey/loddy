@@ -18,3 +18,7 @@
 <ng-template #brain>
   You were the brain for this question.
 </ng-template>
+
+<app-players-yet-to-answer
+  [players]="playersYetToAnswer | async"
+></app-players-yet-to-answer>
