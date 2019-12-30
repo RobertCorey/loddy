@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PlayerService } from './services/player.service';
 import { fullLobby } from 'src/mocks/game/full-lobby';
 import { firstQuestion } from 'src/mocks/game/game-loop/first-question';
+import { firstRound } from 'src/mocks/game/score-screen/first-round';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,8 @@ export class StateMockerService {
     const gameRef = await this.afs.collection('games').add(gameState);
     this.gs.gameRef = gameRef.id;
 
-    this.router.navigate(['game', gameRef.id]);
+    await this.router.navigate(['game', gameRef.id]);
+    this.gs.mock = true;
   }
   answerBrainQuestionsInitial() {
     const localPlayer = {
@@ -54,5 +56,9 @@ export class StateMockerService {
 
   firstQuestion() {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
+  }
+
+  firstScoreScreen() {
+    this.setupMockState(firstRound, firstRound.players[0]);
   }
 }

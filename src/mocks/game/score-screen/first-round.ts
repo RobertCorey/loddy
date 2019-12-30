@@ -1,60 +1,21 @@
-export const firstQuestion = {
-  activeQuestionId: '0',
-  answeredQuestions: [],
+export const firstRound = {
+  activeQuestionId: '1',
+  answeredQuestions: ['0'],
   answers: [
-    {
-      playerId: '87yOnGzh',
-      questionId: '0',
-      text: '123'
-    },
-    {
-      playerId: '87yOnGzh',
-      questionId: '3',
-      text: '123'
-    },
-    {
-      playerId: '1md3K5ik',
-      questionId: '1',
-      text: '123'
-    },
-    {
-      playerId: '1md3K5ik',
-      questionId: '4',
-      text: '123'
-    },
-    {
-      playerId: 'XvfISzWa',
-      questionId: '2',
-      text: '123'
-    },
-    {
-      playerId: 'XvfISzWa',
-      questionId: '5',
-      text: '123'
-    },
-    {
-      playerId: 'XvfISzWa',
-      questionId: '0',
-      text: '123'
-    }
+    { playerId: '87yOnGzh', questionId: '0', text: '123' },
+    { playerId: '87yOnGzh', questionId: '3', text: '123' },
+    { playerId: '1md3K5ik', questionId: '1', text: '123' },
+    { playerId: '1md3K5ik', questionId: '4', text: '123' },
+    { playerId: 'XvfISzWa', questionId: '2', text: '123' },
+    { playerId: 'XvfISzWa', questionId: '5', text: '123' },
+    { playerId: 'XvfISzWa', questionId: '0', text: '123' },
+    { playerId: '1md3K5ik', questionId: '0', text: '500' }
   ],
   createdAt: 1577560345573,
   players: [
-    {
-      host: true,
-      id: '87yOnGzh',
-      name: 'r'
-    },
-    {
-      host: false,
-      id: '1md3K5ik',
-      name: 't'
-    },
-    {
-      host: false,
-      id: 'XvfISzWa',
-      name: 'L'
-    }
+    { host: true, id: '87yOnGzh', name: 'r' },
+    { host: false, id: '1md3K5ik', name: 't' },
+    { host: false, id: 'XvfISzWa', name: 'L' }
   ],
   questions: [
     {
@@ -94,5 +55,9 @@ export const firstQuestion = {
       unit: 'farts'
     }
   ],
-  status: 'GAME_LOOP'
+  scores: [
+    { playerId: '1md3K5ik', score: 0 },
+    { playerId: 'XvfISzWa', score: 100 }
+  ],
+  status: 'SCORE_SCREEN'
 };

@@ -1,6 +1,12 @@
 import { IGame } from './IGame';
 import { debug } from 'util';
 import { IPlayer } from './IPlayer';
+import { IScore } from './IScore';
+export interface ITotalScore {
+  player: IPlayer;
+  score: number;
+}
+
 export class Game {
   constructor(private _game: IGame) {}
 
@@ -45,12 +51,12 @@ export class Game {
     return this._game.players.find(p => p.id === playerID);
   }
 
-  getAnswersByQuestionId(questionId) {
+  getAnswersByQuestionId(questionId: string) {
     return this._game.answers.filter(a => a.questionId === questionId);
   }
 
   playerHasAnsweredCurrentQuestion(playerID) {
-    return this.getAnswersByQuestionId(this.currentQuestion).find(
+    return this.getAnswersByQuestionId(this.currentQuestion.id).find(
       answer => answer.playerId === playerID
     );
   }
@@ -70,5 +76,65 @@ export class Game {
     } else {
       return false;
     }
+  }
+  /**
+   * Intended for use during score screen. Calculates the score for the current round
+   */
+  get currentRoundScores(): IScore[] {
+    const brainAnswer = this.brainAnswerToCurrentQuestion;
+    const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
+
+    const abs = nonBrainAnswers.map(a => {
+      return { ...a, abs: Math.abs(+brainAnswer.text - +a.text) };
+    });
+    abs.sort((a, b) => b.abs - a.abs);
+    let scoreMultiple = -1;
+    let last = Infinity;
+    let scores = [];
+    abs.forEach(ans => {
+      if (ans.abs < last) {
+        last = ans.abs;
+        scoreMultiple++;
+      }
+      scores = [
+        ...scores,
+        {
+          playerId: ans.playerId,
+          score: scoreMultiple * 100,
+          questionId: this.currentQuestion.id
+        }
+      ];
+    });
+    return scores;
+  }
+
+  get totalScores(): ITotalScore[] {
+    return this._game.players.map(player => {
+      return { player, score: this.groupedScoresByPlayerId[player.id] || 0 };
+    });
+  }
+
+  private get groupedScoresByPlayerId() {
+    return this._game.scores.reduce((acc, score) => {
+      return {
+        ...acc,
+        [score.playerId]: (acc[score.playerId] || 0) + score.score
+      };
+    }, {});
+  }
+
+  get nonBrainAnswersToCurrentQuestion() {
+    return this.currentAnswers.filter(
+      q => q.playerId !== this.currentQuestion.brainId
+    );
+  }
+
+  get brainAnswerToCurrentQuestion() {
+    const answers = this.currentAnswers;
+    return answers.find(q => q.playerId === this.currentQuestion.brainId);
+  }
+
+  private get currentAnswers() {
+    return this.getAnswersByQuestionId(this.currentQuestion.id);
   }
 }

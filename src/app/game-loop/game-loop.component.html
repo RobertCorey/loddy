@@ -19,6 +19,6 @@
   You were the brain for this question.
 </ng-template>
 
-<app-players-yet-to-answer
-  [players]="playersYetToAnswer | async"
-></app-players-yet-to-answer>
+<ng-container *ngIf="playersYetToAnswer | async as players">
+  <app-players-yet-to-answer [players]="players"></app-players-yet-to-answer>
+</ng-container>

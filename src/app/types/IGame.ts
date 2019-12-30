@@ -1,6 +1,7 @@
 import { IPlayer } from './IPlayer';
 import { IGameQuestion, getXMockGameQuestions } from './IGameQuestion';
 import { IAnswer } from './IAnswer';
+import { IScore } from './IScore';
 
 export interface IGame {
   status:
@@ -8,11 +9,14 @@ export interface IGame {
     | 'BRAIN_QUESTIONS'
     | 'GAME_LOOP'
     | 'IN_PROGRESS'
-    | 'FINISHED';
+    | 'FINISHED'
+    | 'SCORE_SCREEN';
   createdAt: number;
   players: IPlayer[];
   questions?: IGameQuestion[];
   answers?: IAnswer[];
+  scores?: IScore[];
+  // This can also be used as the current "round"
   activeQuestionId?: string;
   answeredQuestions?: string[];
 }

@@ -35,7 +35,6 @@ export class GameLoopComponent implements OnInit {
     );
 
     this.currentQuestion$.subscribe(_ => this.updateLoading(false));
-    this.currentQuestion$.subscribe(console.log);
 
     this.currentBrain$ = this.gameCollectionService.gameClass$.pipe(
       map(game => game.getPlayerById(game.currentQuestion.brainId))
@@ -78,7 +77,7 @@ export class GameLoopComponent implements OnInit {
 
   get playersYetToAnswer() {
     return this.gameCollectionService.gameClass$.pipe(
-      map(game => game.getPlayersYetToAnswerQuestion)
+      map(game => game.getPlayersYetToAnswerQuestion())
     );
   }
 }

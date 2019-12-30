@@ -1,0 +1,14 @@
+<ng-container *ngIf="totalScores$ | async as totalScore">
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Player</th>
+      <th>Score</th>
+    </tr>
+    <tr *ngFor="let item of totalScore; index as i">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.player.name }}</td>
+      <td>{{ item.score }}</td>
+    </tr>
+  </table>
+</ng-container>

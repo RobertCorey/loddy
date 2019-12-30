@@ -11,12 +11,14 @@ import { Game } from './types/Game';
 import { GameCollectionService } from './services/game-collection.service';
 import { take, switchMap } from 'rxjs/operators';
 import { PlayerService } from './services/player.service';
+import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
   gameRef: any;
+  mock: boolean;
   constructor(
     private qs: QuestionService,
     private gameCollectionService: GameCollectionService,
@@ -34,11 +36,10 @@ export class GameService {
           id: shortid.generate(),
           host: !game.players.length
         };
-        return this.gameCollectionService
-          .update({
-            players: firestore.FieldValue.arrayUnion(playerWithId)
-          })
-          .then(_ => (this.playerService.player = playerWithId));
+        this.playerService.player = playerWithId;
+        return this.gameCollectionService.update({
+          players: firestore.FieldValue.arrayUnion(playerWithId)
+        });
       })
     );
   }
@@ -55,7 +56,7 @@ export class GameService {
         })
       )
       .subscribe(questions => {
-        if (this.playerService.isHost) {
+        if (this.playerService.isHost || this.mock) {
           this.gameCollectionService.update({
             status: 'BRAIN_QUESTIONS',
             questions,
@@ -74,6 +75,7 @@ export class GameService {
 
   initGameRunner() {
     this.gameCollectionService.gameState$.subscribe((game: IGame) => {
+      console.log(game.status);
       switch (game.status) {
         case 'BRAIN_QUESTIONS':
           this.handleBrainQuestionsStatus(game);
@@ -81,8 +83,27 @@ export class GameService {
         case 'GAME_LOOP':
           this.handleGameLoopStatus(game);
           break;
+        case 'SCORE_SCREEN':
+          this.handleScoreScreenStatus(game);
+          break;
         default:
           break;
+      }
+    });
+  }
+  handleScoreScreenStatus(game: IGame) {
+    const gameInstance = new Game(game);
+    timer(3000).subscribe(_ => {
+      const nextQuestionId = gameInstance.getNextQuestionId();
+      if (nextQuestionId) {
+        this.gameCollectionService.update({
+          activeQuestionId: nextQuestionId,
+          status: 'GAME_LOOP'
+        });
+      } else {
+        this.gameCollectionService.update({
+          status: 'FINISHED'
+        });
       }
     });
   }
@@ -92,17 +113,14 @@ export class GameService {
     const playersLeftCount = gameInstance.getPlayersYetToAnswerQuestion()
       .length;
     if (playersLeftCount === 0) {
+      const scores = gameInstance.currentRoundScores;
       this.gameCollectionService.update({
         answeredQuestions: firestore.FieldValue.arrayUnion(
           game.activeQuestionId
-        )
+        ),
+        status: 'SCORE_SCREEN',
+        scores: firestore.FieldValue.arrayUnion(...scores)
       });
-      const nextQuestionId = gameInstance.getNextQuestionId();
-      if (nextQuestionId) {
-        this.gameCollectionService.update({ activeQuestionId: nextQuestionId });
-      } else {
-        this.gameCollectionService.update({ status: 'FINISHED' });
-      }
     }
   }
 
@@ -118,7 +136,8 @@ export class GameService {
       this.gameCollectionService.update({
         status: 'GAME_LOOP',
         activeQuestionId: game.questions[0].id,
-        answeredQuestions: []
+        answeredQuestions: [],
+        scores: []
       } as Partial<IGame>);
     }
   }
