@@ -21,7 +21,7 @@ export class ScoreScreenComponent implements OnInit {
 
   ngOnInit() {
     this.totalScores$ = this.gameCollectionService.gameClass$.pipe(
-      map(game => game.totalScores)
+      map(game => game.totalScores.reverse())
     );
   }
 }
