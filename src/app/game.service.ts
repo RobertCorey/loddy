@@ -92,12 +92,6 @@ export class GameService {
     });
   }
   handleScoreScreenStatus(game: IGame) {
-    // TODO abstract this
-    this.gameCollectionService.gameClass$.pipe(take(1)).subscribe(game => {
-      this.gameCollectionService.update({
-        scores: firestore.FieldValue.arrayUnion(...game.currentRoundScores)
-      });
-    });
     const gameInstance = new Game(game);
     timer(3000).subscribe(_ => {
       const nextQuestionId = gameInstance.getNextQuestionId();

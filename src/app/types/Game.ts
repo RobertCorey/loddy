@@ -98,7 +98,11 @@ export class Game {
       }
       scores = [
         ...scores,
-        { playerId: ans.playerId, score: scoreMultiple * 100 }
+        {
+          playerId: ans.playerId,
+          score: scoreMultiple * 100,
+          questionId: this.currentQuestion.id
+        }
       ];
     });
     return scores;
