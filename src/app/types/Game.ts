@@ -80,9 +80,20 @@ export class Game {
       return { ...a, abs: Math.abs(+brainAnswer.text - +a.text) };
     });
     abs.sort((a, b) => b.abs - a.abs);
-    return abs.map((value, index) => {
-      return { playerId: value.playerId, score: index * 100 };
+    let scoreMultiple = -1;
+    let last = Infinity;
+    let scores = [];
+    abs.forEach(ans => {
+      if (ans.abs < last) {
+        last = ans.abs;
+        scoreMultiple++;
+      }
+      scores = [
+        ...scores,
+        { playerId: ans.playerId, score: scoreMultiple * 100 }
+      ];
     });
+    return scores;
   }
 
   get nonBrainAnswersToCurrentQuestion() {
