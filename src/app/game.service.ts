@@ -119,11 +119,13 @@ export class GameService {
     const playersLeftCount = gameInstance.getPlayersYetToAnswerQuestion()
       .length;
     if (playersLeftCount === 0) {
+      const scores = gameInstance.currentRoundScores;
       this.gameCollectionService.update({
         answeredQuestions: firestore.FieldValue.arrayUnion(
           game.activeQuestionId
         ),
-        status: 'SCORE_SCREEN'
+        status: 'SCORE_SCREEN',
+        scores: firestore.FieldValue.arrayUnion(...scores)
       });
     }
   }
@@ -140,7 +142,8 @@ export class GameService {
       this.gameCollectionService.update({
         status: 'GAME_LOOP',
         activeQuestionId: game.questions[0].id,
-        answeredQuestions: []
+        answeredQuestions: [],
+        scores: []
       } as Partial<IGame>);
     }
   }

@@ -1,1 +1,3 @@
-<p>score-screen works!</p>
+<ng-container *ngIf="totalScores$ | async as totalScore">
+  {{ totalScore | json }}
+</ng-container>
