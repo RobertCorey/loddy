@@ -16,6 +16,7 @@ export interface IGame {
   questions?: IGameQuestion[];
   answers?: IAnswer[];
   scores?: IScore[];
+  // This can also be used as the current "round"
   activeQuestionId?: string;
   answeredQuestions?: string[];
 }
