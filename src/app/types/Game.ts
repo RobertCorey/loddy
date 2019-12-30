@@ -1,6 +1,7 @@
 import { IGame } from './IGame';
 import { debug } from 'util';
 import { IPlayer } from './IPlayer';
+import { IScore } from './IScore';
 export class Game {
   constructor(private _game: IGame) {}
 
@@ -45,12 +46,12 @@ export class Game {
     return this._game.players.find(p => p.id === playerID);
   }
 
-  getAnswersByQuestionId(questionId) {
+  getAnswersByQuestionId(questionId: string) {
     return this._game.answers.filter(a => a.questionId === questionId);
   }
 
   playerHasAnsweredCurrentQuestion(playerID) {
-    return this.getAnswersByQuestionId(this.currentQuestion).find(
+    return this.getAnswersByQuestionId(this.currentQuestion.id).find(
       answer => answer.playerId === playerID
     );
   }
@@ -70,5 +71,32 @@ export class Game {
     } else {
       return false;
     }
+  }
+  get scores(): IScore[] {
+    const brainAnswer = this.brainAnswerToCurrentQuestion;
+    const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
+
+    const abs = nonBrainAnswers.map(a => {
+      return { ...a, abs: Math.abs(+brainAnswer.text - +a.text) };
+    });
+    abs.sort((a, b) => b.abs - a.abs);
+    return abs.map((value, index) => {
+      return { playerId: value.playerId, score: index * 100 };
+    });
+  }
+
+  get nonBrainAnswersToCurrentQuestion() {
+    return this.currentAnswers.filter(
+      q => q.playerId !== this.currentQuestion.brainId
+    );
+  }
+
+  get brainAnswerToCurrentQuestion() {
+    const answers = this.currentAnswers;
+    return answers.find(q => q.playerId === this.currentQuestion.brainId);
+  }
+
+  private get currentAnswers() {
+    return this.getAnswersByQuestionId(this.currentQuestion.id);
   }
 }
