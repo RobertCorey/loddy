@@ -6,9 +6,11 @@ import { MockComponent } from './mock/mock.component';
 import { QuestionTestingComponent } from './question-testing/question-testing.component';
 import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
+import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/start', pathMatch: 'full' },
+  { path: 'button', component: LoddyButtonComponent },
   {
     path: 'start',
     component: StartGameComponent
