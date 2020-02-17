@@ -24,6 +24,7 @@ import { GameLoopComponent } from './game-loop/game-loop.component';
 import { PlayersYetToAnswerComponent } from './players-yet-to-answer/players-yet-to-answer.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { ScoreScreenComponent } from './score-screen/score-screen.component';
+import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ScoreScreenComponent } from './score-screen/score-screen.component';
     GameLoopComponent,
     PlayersYetToAnswerComponent,
     LobbyComponent,
-    ScoreScreenComponent
+    ScoreScreenComponent,
+    LoddyButtonComponent
   ],
   imports: [
     BrowserModule,
