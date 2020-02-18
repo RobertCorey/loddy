@@ -113,8 +113,17 @@ export class Game {
       return { player, score: this.groupedScoresByPlayerId[player.id] || 0 };
     });
   }
+  // sorted from highest score to lowest
+  get sortedTotalScores(): ITotalScore[] {
+    const unsorted = this.totalScores;
+    unsorted.sort((a, b) => b.score - a.score);
+    return unsorted;
+  }
 
   private get groupedScoresByPlayerId() {
+    if (!this._game.scores) {
+      return [];
+    }
     return this._game.scores.reduce((acc, score) => {
       return {
         ...acc,

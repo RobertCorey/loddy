@@ -1,0 +1,27 @@
+:host {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.player-card {
+  width: 256px;
+  min-height: 128px;
+  background-color: #caf7e2;
+  border: solid white 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.local {
+  background-color: #386150;
+}
+
+.player-name {
+  text-overflow: clip;
+  font-size: 36px;
+}
+.host {
+  font-size: 24px;
+}

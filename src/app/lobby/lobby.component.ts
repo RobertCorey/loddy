@@ -31,6 +31,10 @@ export class LobbyComponent implements OnInit {
     return !!this.playerService.player;
   }
 
+  get localPlayerId(): string {
+    return this.playerService.player.id;
+  }
+
   get players() {
     return this.gameCollectionService.gameState$.pipe(
       map(game => game.players)

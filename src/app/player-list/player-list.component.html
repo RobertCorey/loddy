@@ -1,12 +1,12 @@
-<span *ngIf="players.length < 3">
-  A minimum of 3 players are needed to start the game! (try making more friends
-  lmao)<br />
-  {{ 3 - players.length }} more player(s) are needed to start the game!
-</span>
-<Header>PLAYERS</Header>
-<ul>
-  <li *ngFor="let player of players">
-    {{ player.name }}
-    <span *ngIf="player.host">(HOST) 👑</span>
-  </li>
-</ul>
+<ng-container *ngIf="this.state$ | async as state">
+  <div
+    class="player-card"
+    *ngFor="let foo of state"
+    [ngClass]="getPlayerCardClass(foo.player)"
+  >
+    <div class="player-name">
+      {{ foo.player.name }}
+      <span class="host" *ngIf="foo.player.host">(HOST)</span>
+    </div>
+  </div>
+</ng-container>
