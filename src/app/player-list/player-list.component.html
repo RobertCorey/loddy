@@ -1,12 +1,35 @@
-<ng-container *ngIf="this.state$ | async as state">
+<ng-container *ngIf="this.game$ | async as game">
   <div
     class="player-card"
-    *ngFor="let foo of state"
-    [ngClass]="getPlayerCardClass(foo.player)"
+    *ngFor="let score of game.sortedTotalScores; index as i"
+    [ngClass]="getPlayerCardClass(score.player)"
   >
-    <div class="player-name">
-      {{ foo.player.name }}
-      <span class="host" *ngIf="foo.player.host">(HOST)</span>
+    <div class="top-row">
+      <div class="place">{{ i + 1 }}</div>
+      <div class="player-name">
+        {{ score.player.name }}
+        <span class="host" *ngIf="score.player.host">(HOST)</span>
+      </div>
+    </div>
+    <div class="bid-box">
+      <span *ngIf="game.status === 'LOBBY'" class="lobby">
+        😴 Waiting for game to start
+      </span>
+      <ng-container *ngIf="game.status === 'BRAIN_QUESTIONS'">
+        <ng-container
+          *ngIf="
+            game.playerHasAnsweredAllBrainQuestions(score.player.id);
+            else answering
+          "
+        >
+          waiting for other players to finish
+        </ng-container>
+        <ng-template #answering>
+          Still answering questions
+        </ng-template>
+      </ng-container>
     </div>
   </div>
 </ng-container>
+
+<!-- <span *ngIf="this.sleep$ | async as sleep">hi {{ sleep }}</span> -->

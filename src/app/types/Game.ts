@@ -14,6 +14,10 @@ export class Game {
     return this._game.status === 'LOBBY' && this._game.players.length >= 3;
   }
 
+  get status() {
+    return this._game.status;
+  }
+
   isPlayerHost(playerId: string) {
     const host = this._game.players.find(player => player.host);
     return host.id === playerId;
@@ -33,7 +37,7 @@ export class Game {
     });
   }
 
-  getPlayersAnswers(playerId: string) {
+  getPlayersAnswers(playerId: IPlayer['id']) {
     return this._game.answers.filter(answer => answer.playerId === playerId);
   }
 
@@ -55,9 +59,20 @@ export class Game {
     return this._game.answers.filter(a => a.questionId === questionId);
   }
 
-  playerHasAnsweredCurrentQuestion(playerID) {
+  playerHasAnsweredCurrentQuestion(playerID: IPlayer['id']) {
     return this.getAnswersByQuestionId(this.currentQuestion.id).find(
       answer => answer.playerId === playerID
+    );
+  }
+  /**
+   * returns if the player has answered all of their brain questions,
+   * used to display status during brain questions stage
+   * @param playerId
+   */
+  playerHasAnsweredAllBrainQuestions(playerId: IPlayer['id']): boolean {
+    return (
+      this.getPlayersAnswers(playerId).length >=
+      this.getPlayersBrainQuestions(playerId).length
     );
   }
 
