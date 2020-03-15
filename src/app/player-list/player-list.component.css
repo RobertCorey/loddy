@@ -6,7 +6,6 @@
 
 .player-card {
   width: 256px;
-  min-height: 128px;
   background-color: #caf7e2;
   border: solid white 4px;
   display: flex;
@@ -48,4 +47,7 @@
 }
 .bid-box .lobby {
   font-size: 32px;
+}
+.brain-emoji {
+  font-size: 96px;
 }

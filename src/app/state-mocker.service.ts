@@ -53,7 +53,9 @@ export class StateMockerService {
     };
     this.setupMockState(fullLobby, localPlayer);
   }
-
+  /**
+   * first question of game loop as last player to answer
+   */
   firstQuestion() {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }

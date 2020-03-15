@@ -16,7 +16,7 @@ import { IGameQuestion } from '../types/IGameQuestion';
 })
 export class QuestionWithAnswerInputComponent {
   @Input()
-  public question: IGameQuestion;
+  public unit: string;
   @Output()
   private answerEmitter = new EventEmitter();
   public answerInput = new FormControl('');

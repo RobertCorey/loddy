@@ -7,8 +7,8 @@
     <div class="top-row">
       <div class="place">{{ i + 1 }}</div>
       <div class="player-name">
-        {{ score.player.name }}
-        <span class="host" *ngIf="score.player.host">(HOST)</span>
+        {{ score.player.name }} <br />
+        {{ score.score }}
       </div>
     </div>
     <div class="bid-box">
@@ -24,12 +24,30 @@
         >
           Waiting...
         </ng-container>
-        <ng-template #answering>
-          Answering...
+      </ng-container>
+      <ng-container *ngIf="game.status === 'GAME_LOOP'">
+        <span
+          class="brain-emoji"
+          *ngIf="game.isPlayerBrain(score.player.id); else notBrain"
+        >
+          🧠
+        </span>
+        <ng-template #notBrain>
+          <ng-container
+            *ngIf="
+              game.playerHasAnsweredCurrentQuestion(score.player.id);
+              else answering
+            "
+          >
+            Waiting...
+          </ng-container>
         </ng-template>
       </ng-container>
     </div>
   </div>
 </ng-container>
 
+<ng-template #answering>
+  Thinking...
+</ng-template>
 <!-- <span *ngIf="this.sleep$ | async as sleep">hi {{ sleep }}</span> -->

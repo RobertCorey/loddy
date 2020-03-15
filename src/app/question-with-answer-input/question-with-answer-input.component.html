@@ -1,7 +1,10 @@
-<input
-  type="tel"
-  class="answer-input"
-  [formControl]="answerInput"
-  placeholder="Enter a number here"
-/>
+<div>
+  <input
+    type="tel"
+    class="answer-input"
+    [formControl]="answerInput"
+    placeholder=""
+  />
+  {{ unit }}
+</div>
 <button (click)="emitAnswer()">Answer</button>

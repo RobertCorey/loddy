@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
-    "explorer.compactFolders": false
+    "explorer.compactFolders": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
   }
 }
