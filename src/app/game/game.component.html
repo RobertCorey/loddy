@@ -1,10 +1,12 @@
 <ng-container *ngIf="$game | async as game; else loading">
-  <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
-  <app-answer-brain-questions
-    *ngIf="game.status === 'BRAIN_QUESTIONS'"
-  ></app-answer-brain-questions>
-  <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
-  <app-score-screen *ngIf="game.status === 'SCORE_SCREEN'"></app-score-screen>
+  <div class="game-form-wrapper">
+    <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
+    <app-answer-brain-questions
+      *ngIf="game.status === 'BRAIN_QUESTIONS'"
+    ></app-answer-brain-questions>
+    <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
+    <app-score-screen *ngIf="game.status === 'SCORE_SCREEN'"></app-score-screen>
+  </div>
   <app-player-list></app-player-list>
   <!-- <h2>game</h2>
   {{ game | json }}

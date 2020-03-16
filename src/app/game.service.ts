@@ -19,6 +19,7 @@ import { timer } from 'rxjs';
 export class GameService {
   gameRef: any;
   mock: boolean;
+  gameRunnerFlag: boolean;
   constructor(
     private qs: QuestionService,
     private gameCollectionService: GameCollectionService,
@@ -72,8 +73,15 @@ export class GameService {
       answers: firestore.FieldValue.arrayUnion(...answers)
     });
   }
-
+  /**
+   * inits observable to gameState changes depending on the game status. Should only ever be active on one client.
+   * needs to eventually moved
+   */
   initGameRunner() {
+    if (this.gameRunnerFlag) {
+      throw Error('game runner already started');
+    }
+    this.gameRunnerFlag = true;
     this.gameCollectionService.gameState$.subscribe((game: IGame) => {
       console.log(game.status);
       switch (game.status) {

@@ -35,6 +35,7 @@ export class StateMockerService {
 
     await this.router.navigate(['game', gameRef.id]);
     this.gs.mock = true;
+    this.gs.initGameRunner();
   }
   answerBrainQuestionsInitial() {
     const localPlayer = {
@@ -60,7 +61,8 @@ export class StateMockerService {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }
 
-  firstScoreScreen() {
-    this.setupMockState(firstRound, firstRound.players[0]);
+  async firstScoreScreen() {
+    await this.setupMockState(firstRound, firstRound.players[0]);
+    // this.gs.handleScoreScreenStatus(firstRound as any);
   }
 }
