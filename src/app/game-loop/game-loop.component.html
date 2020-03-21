@@ -1,16 +1,20 @@
 <ng-container *ngIf="!(localPlayerIsBrain$ | async); else brain">
-  <span class="title" *ngIf="currentBrain$ | async as currentBrain">
-    How did {{ currentBrain.name }} answer the following question?<br />
-  </span>
-  <span *ngIf="currentQuestion$ | async as currentQuestion">
-    <span class="current-question">{{ currentQuestion.text }} ?<br /></span>
+  <div class="title" *ngIf="currentBrain$ | async as currentBrain">
+    How did <span class="player-name">{{ currentBrain.name }} </span>answer the
+    following question?<br />
+  </div>
+  <div
+    class="input-wrapper"
+    *ngIf="currentQuestion$ | async as currentQuestion"
+  >
+    <div class="current-question">{{ currentQuestion.text }} ?<br /></div>
     <ng-container *ngIf="answerFormVisible$ | async as visible">
       <app-question-with-answer-input
         [unit]="currentQuestion.unit"
         (answerEmitter)="handleAnswer($event)"
       ></app-question-with-answer-input>
     </ng-container>
-  </span>
+  </div>
   <ng-container *ngIf="loading$ | async"
     >Waiting for other players to answer...</ng-container
   >

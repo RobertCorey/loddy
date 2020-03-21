@@ -1,4 +1,22 @@
 * {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   box-sizing: border-box;
+}
+
+body {
+  background: rgb(0, 206, 209);
+}
+
+.button-primary {
+  border: none;
+  background: #f0ad4e;
+  box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+  border-radius: 10px;
+  padding: 13px;
+  transition: 0.5s;
+}
+
+.button-primary:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }

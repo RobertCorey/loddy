@@ -5,6 +5,8 @@
     [formControl]="answerInput"
     placeholder=""
   />
-  {{ unit }}
+  <span class="unit">
+    {{ unit }}
+  </span>
 </div>
-<button (click)="emitAnswer()">Answer</button>
+<button class="button-primary" (click)="emitAnswer()">Answer</button>
