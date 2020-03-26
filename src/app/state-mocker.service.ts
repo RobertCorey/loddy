@@ -8,6 +8,7 @@ import { PlayerService } from './services/player.service';
 import { fullLobby } from 'src/mocks/game/full-lobby';
 import { firstQuestion } from 'src/mocks/game/game-loop/first-question';
 import { firstRound } from 'src/mocks/game/score-screen/first-round';
+import { oneAnswerBeforeScoreScreen } from 'src/mocks/game/one-answer-before-score-screen';
 
 @Injectable({
   providedIn: 'root'
@@ -61,8 +62,16 @@ export class StateMockerService {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }
 
+  oneAnswerBeforeScoreScreen() {
+    const localPlayer = {
+      host: false,
+      id: 'EsM7wg5ka',
+      name: 'Tom'
+    };
+    this.setupMockState(oneAnswerBeforeScoreScreen, localPlayer);
+  }
+
   async firstScoreScreen() {
     await this.setupMockState(firstRound, firstRound.players[0]);
-    // this.gs.handleScoreScreenStatus(firstRound as any);
   }
 }
