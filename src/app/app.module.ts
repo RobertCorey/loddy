@@ -22,6 +22,7 @@ import { AnswerQuestionFormComponent } from './answer-question-form/answer-quest
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
 import { GameLoopComponent } from './game-loop/game-loop.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LobbyComponent } from './lobby/lobby.component';
     AnswerQuestionFormComponent,
     QuestionWithAnswerInputComponent,
     GameLoopComponent,
-    LobbyComponent
+    LobbyComponent,
+    LoddyButtonComponent
   ],
   imports: [
     BrowserModule,
