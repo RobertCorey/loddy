@@ -19,6 +19,10 @@ export class Game {
     return this._game.status;
   }
 
+  get players() {
+    return this._game.players;
+  }
+
   isPlayerHost(playerId: string) {
     const host = this._game.players.find(player => player.host);
     return host.id === playerId;
@@ -106,17 +110,27 @@ export class Game {
    * Gets the absolute distance between the players answers and the brains answer
    * and appends it to the answer object, then sorts based on that value
    */
-  private get currentRoundScoreInfo() {
+  get currentRoundScoreInfo() {
     const answersWithAbsoluteDistance = this.getAnswersWithAbsoluteDistance();
     const withScoreInfo = this.getAnswersWithPositionAndScore(
       answersWithAbsoluteDistance
     );
-    return withScoreInfo;
+    const withPlayer = withScoreInfo.map(si => {
+      return { ...si, player: this.getPlayerById(si.playerId) };
+    });
+    const totalScores = this.groupedScoresByPlayerId;
+    const withTotalScore = withPlayer.map(wp => ({
+      ...wp,
+      totalScore: totalScores[wp.playerId]
+    }));
+    return withTotalScore;
   }
 
   private getAnswersWithPositionAndScore(
     answersWithAbsoluteDistance: {
       absoluteDistance: number;
+      signedDistance: number;
+      isBrain: boolean;
       playerId: string;
       questionId: string;
       text: string;
@@ -126,6 +140,9 @@ export class Game {
     let last = -Infinity;
     const pointMultiplier = 10;
     const withScoreInfo = answersWithAbsoluteDistance.map(a => {
+      if (a.isBrain) {
+        return { ...a, position: 0, score: 0 };
+      }
       if (a.absoluteDistance > last) {
         last = a.absoluteDistance;
         position++;
@@ -143,11 +160,18 @@ export class Game {
     const brainAnswer = this.brainAnswerToCurrentQuestion;
     const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
     const abs = nonBrainAnswers.map(a => {
-      return { ...a, absoluteDistance: Math.abs(+brainAnswer.text - +a.text) };
+      return {
+        ...a,
+        absoluteDistance: Math.abs(+brainAnswer.text - +a.text),
+        signedDistance: +brainAnswer.text - +a.text,
+        isBrain: false
+      };
     });
-    // sort furthest to closest
-    abs.sort((a, b) => a.absoluteDistance - b.absoluteDistance);
-    return abs;
+    const withBrain = [
+      ...abs,
+      { ...brainAnswer, absoluteDistance: 0, isBrain: true, signedDistance: 0 }
+    ].sort((a, b) => a.absoluteDistance - b.absoluteDistance);
+    return withBrain;
   }
 
   get totalScores(): ITotalScore[] {
