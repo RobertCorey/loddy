@@ -1,7 +1,6 @@
 <app-join-game-form *ngIf="!hasPlayerJoined; else lobby"></app-join-game-form>
 <ng-template #lobby>
   Lobby
-  <app-player-list [players]="players | async"></app-player-list>
   <button *ngIf="canPlayerStartGame" class="button" (click)="startLobby()">
     Start Game
   </button>

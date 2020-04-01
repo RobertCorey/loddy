@@ -8,6 +8,7 @@ import { PlayerService } from './services/player.service';
 import { fullLobby } from 'src/mocks/game/full-lobby';
 import { firstQuestion } from 'src/mocks/game/game-loop/first-question';
 import { firstRound } from 'src/mocks/game/score-screen/first-round';
+import { oneAnswerBeforeScoreScreen } from 'src/mocks/game/one-answer-before-score-screen';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class StateMockerService {
 
     await this.router.navigate(['game', gameRef.id]);
     this.gs.mock = true;
+    this.gs.initGameRunner();
   }
   answerBrainQuestionsInitial() {
     const localPlayer = {
@@ -53,12 +55,23 @@ export class StateMockerService {
     };
     this.setupMockState(fullLobby, localPlayer);
   }
-
+  /**
+   * first question of game loop as last player to answer
+   */
   firstQuestion() {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }
 
-  firstScoreScreen() {
-    this.setupMockState(firstRound, firstRound.players[0]);
+  oneAnswerBeforeScoreScreen() {
+    const localPlayer = {
+      host: false,
+      id: 'EsM7wg5ka',
+      name: 'Tom'
+    };
+    this.setupMockState(oneAnswerBeforeScoreScreen, localPlayer);
+  }
+
+  async firstScoreScreen() {
+    await this.setupMockState(firstRound, firstRound.players[0]);
   }
 }

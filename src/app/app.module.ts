@@ -21,9 +21,7 @@ import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions
 import { AnswerQuestionFormComponent } from './answer-question-form/answer-question-form.component';
 import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
 import { GameLoopComponent } from './game-loop/game-loop.component';
-import { PlayersYetToAnswerComponent } from './players-yet-to-answer/players-yet-to-answer.component';
 import { LobbyComponent } from './lobby/lobby.component';
-import { ScoreScreenComponent } from './score-screen/score-screen.component';
 import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
 
 @NgModule({
@@ -41,9 +39,7 @@ import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
     AnswerQuestionFormComponent,
     QuestionWithAnswerInputComponent,
     GameLoopComponent,
-    PlayersYetToAnswerComponent,
     LobbyComponent,
-    ScoreScreenComponent,
     LoddyButtonComponent
   ],
   imports: [

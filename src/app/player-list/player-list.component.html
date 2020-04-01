@@ -1,12 +1,24 @@
-<span *ngIf="players.length < 3">
-  A minimum of 3 players are needed to start the game! (try making more friends
-  lmao)<br />
-  {{ 3 - players.length }} more player(s) are needed to start the game!
-</span>
-<Header>PLAYERS</Header>
-<ul>
-  <li *ngFor="let player of players">
-    {{ player.name }}
-    <span *ngIf="player.host">(HOST) 👑</span>
-  </li>
-</ul>
+<ng-container *ngIf="this.game$ | async as data">
+  <div
+    class="player-card"
+    *ngFor="let card of data; index as i"
+    [ngClass]="{ local: card.isLocalPlayer }"
+  >
+    <div class="top-row">
+      <div class="place">{{ i + 1 }}</div>
+      <div class="player-name">
+        {{ card.player.name }} <br />
+        {{ card.score }}
+      </div>
+    </div>
+    <div class="bid-box">
+      <span [ngClass]="card.messageClass">
+        {{ card.message }}
+      </span>
+      <br />
+      <span class="brain-emoji" *ngIf="card.isBrain">
+        🧠
+      </span>
+    </div>
+  </div>
+</ng-container>

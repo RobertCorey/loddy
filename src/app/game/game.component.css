@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.game-form-wrapper {
+  margin-bottom: 20px;
+}

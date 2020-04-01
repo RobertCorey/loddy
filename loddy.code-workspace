@@ -4,5 +4,8 @@
       "path": "."
     }
   ],
-  "settings": {}
+  "settings": {
+    "explorer.compactFolders": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
 }

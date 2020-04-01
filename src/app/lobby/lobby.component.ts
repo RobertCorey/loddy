@@ -28,7 +28,11 @@ export class LobbyComponent implements OnInit {
   }
 
   get hasPlayerJoined(): boolean {
-    return !!this.playerService.player;
+    return !!(this.playerService.player && this.playerService.player.id);
+  }
+
+  get localPlayerId(): string {
+    return this.playerService.player.id;
   }
 
   get players() {
