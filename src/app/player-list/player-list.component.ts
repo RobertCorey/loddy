@@ -80,7 +80,27 @@ export class PlayerListComponent implements OnInit {
   }
 
   finishedState(game: Game): any {
-    throw new Error('Method not implemented.');
+    const partialPlayerBox = this.getPlayerBox(game);
+    const final = partialPlayerBox.map((p, index) => {
+      let message;
+      switch (index) {
+        case 0:
+          message = '1st';
+          break;
+        case 1:
+          message = '2nd';
+          break;
+        case 2:
+          message = '3rd';
+          break;
+        default:
+          message = `${index + 1}th`;
+          break;
+      }
+      message += ' place!';
+      return { ...p, message, isBrain: false, messageClass: '' };
+    });
+    return of(final);
   }
 
   scoreScreenState(game: Game): any {
@@ -174,7 +194,6 @@ export class PlayerListComponent implements OnInit {
       timer(6000).pipe(mapTo(position)),
       timer(9000).pipe(mapTo(points))
     );
-    return of(answerStage);
   }
   brainQuestionsState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);
