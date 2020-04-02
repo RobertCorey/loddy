@@ -20,5 +20,13 @@
   >
 </ng-container>
 <ng-template #brain>
-  You were the brain for this question.
+  You were the brain for this question:
+  <div
+    class="input-wrapper"
+    *ngIf="currentQuestion$ | async as currentQuestion"
+  >
+    <div class="current-question">
+      {{ currentQuestion.text }}
+    </div>
+  </div>
 </ng-template>
