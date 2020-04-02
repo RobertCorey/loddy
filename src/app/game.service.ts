@@ -83,7 +83,6 @@ export class GameService {
     }
     this.gameRunnerFlag = true;
     this.gameCollectionService.gameState$.subscribe((game: IGame) => {
-      console.log(game.status);
       switch (game.status) {
         case 'BRAIN_QUESTIONS':
           this.handleBrainQuestionsStatus(game);
@@ -101,7 +100,7 @@ export class GameService {
   }
   handleScoreScreenStatus(game: IGame) {
     const gameInstance = new Game(game);
-    timer(3000).subscribe(_ => {
+    timer(12000).subscribe(_ => {
       const nextQuestionId = gameInstance.getNextQuestionId();
       if (nextQuestionId) {
         this.gameCollectionService.update({

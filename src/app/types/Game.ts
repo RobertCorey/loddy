@@ -2,6 +2,7 @@ import { IGame } from './IGame';
 import { debug } from 'util';
 import { IPlayer } from './IPlayer';
 import { IScore } from './IScore';
+import { IAnswer } from './IAnswer';
 export interface ITotalScore {
   player: IPlayer;
   score: number;
@@ -18,6 +19,9 @@ export class Game {
     return this._game.status;
   }
 
+  get players() {
+    return this._game.players;
+  }
   isPlayerHost(playerId: string) {
     const host = this._game.players.find(player => player.host);
     return host.id === playerId;
@@ -96,31 +100,77 @@ export class Game {
    * Intended for use during score screen. Calculates the score for the current round
    */
   get currentRoundScores(): IScore[] {
+    return this.currentRoundScoreInfo.map(scoreInfo => {
+      const { playerId, score, questionId } = scoreInfo;
+      return { playerId, score, questionId };
+    });
+  }
+  /**
+   * Gets the absolute distance between the players answers and the brains answer
+   * and appends it to the answer object, then sorts based on that value
+   */
+  get currentRoundScoreInfo() {
+    const answersWithAbsoluteDistance = this.getAnswersWithAbsoluteDistance();
+    const withScoreInfo = this.getAnswersWithPositionAndScore(
+      answersWithAbsoluteDistance
+    );
+    const withPlayer = withScoreInfo.map(si => {
+      return { ...si, player: this.getPlayerById(si.playerId) };
+    });
+    const totalScores = this.groupedScoresByPlayerId;
+    const withTotalScore = withPlayer.map(wp => ({
+      ...wp,
+      totalScore: totalScores[wp.playerId]
+    }));
+    return withTotalScore;
+  }
+
+  private getAnswersWithPositionAndScore(
+    answersWithAbsoluteDistance: {
+      absoluteDistance: number;
+      signedDistance: number;
+      isBrain: boolean;
+      playerId: string;
+      questionId: string;
+      text: string;
+    }[]
+  ) {
+    let position = -1;
+    let last = -Infinity;
+    const pointMultiplier = 10;
+    const withScoreInfo = answersWithAbsoluteDistance.map(a => {
+      if (a.isBrain) {
+        return { ...a, position: 0, score: 0 };
+      }
+      if (a.absoluteDistance > last) {
+        last = a.absoluteDistance;
+        position++;
+      }
+      return {
+        ...a,
+        position,
+        score: (answersWithAbsoluteDistance.length - position) * pointMultiplier
+      };
+    });
+    return withScoreInfo;
+  }
+
+  private getAnswersWithAbsoluteDistance() {
     const brainAnswer = this.brainAnswerToCurrentQuestion;
     const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
-
     const abs = nonBrainAnswers.map(a => {
-      return { ...a, abs: Math.abs(+brainAnswer.text - +a.text) };
+      return {
+        ...a,
+        absoluteDistance: Math.abs(+brainAnswer.text - +a.text),
+        signedDistance: +brainAnswer.text - +a.text,
+        isBrain: false
+      };
     });
-    abs.sort((a, b) => b.abs - a.abs);
-    let scoreMultiple = -1;
-    let last = Infinity;
-    let scores = [];
-    abs.forEach(ans => {
-      if (ans.abs < last) {
-        last = ans.abs;
-        scoreMultiple++;
-      }
-      scores = [
-        ...scores,
-        {
-          playerId: ans.playerId,
-          score: scoreMultiple * 100,
-          questionId: this.currentQuestion.id
-        }
-      ];
-    });
-    return scores;
+    const withBrain = [
+      ...abs,
+      { ...brainAnswer, absoluteDistance: 0, isBrain: true, signedDistance: 0 }
+    ].sort((a, b) => a.absoluteDistance - b.absoluteDistance);
+    return withBrain;
   }
 
   get totalScores(): ITotalScore[] {
