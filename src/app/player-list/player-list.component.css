@@ -42,13 +42,11 @@
 .bid-box {
   background-color: #bcaaa4;
   width: 100%;
+  min-height: 128px;
   height: 100%;
   text-align: center;
-  font-size: 64px;
+  font-size: 48px;
   border-top: 10px solid black;
-}
-.bid-box .lobby {
-  font-size: 32px;
 }
 .brain-emoji {
   font-size: 96px;

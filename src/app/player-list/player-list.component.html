@@ -15,7 +15,9 @@
       <span [ngClass]="card.messageClass">
         {{ card.message }}
       </span>
-      <br />
+      <span *ngIf="card.isBrain && card.message.length > 0">
+        <br />
+      </span>
       <span class="brain-emoji" *ngIf="card.isBrain">
         🧠
       </span>
