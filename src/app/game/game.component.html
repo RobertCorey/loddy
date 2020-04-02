@@ -1,6 +1,6 @@
 <div class="container">
   <ng-container *ngIf="$game | async as game; else loading">
-    <div class="game-form-wrapper">
+    <div class="game-form-wrapper" *ngIf="localPlayer.id; else observer">
       <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
       <app-answer-brain-questions
         *ngIf="game.status === 'BRAIN_QUESTIONS'"
@@ -28,6 +28,10 @@
       <br /> 
     </ng-container> -->
   </ng-container>
+
+  <ng-template #observer>
+    Enjoy the game!
+  </ng-template>
 
   <ng-template #loading>
     Loading...
