@@ -3,3 +3,27 @@
   flex-direction: column;
   align-items: center;
 }
+
+:root {
+  text-align: center;
+}
+.title {
+  font-size: 2rem;
+  text-align: center;
+  color: hsl(0, 0%, 45%);
+  font-style: italic;
+}
+.player-name {
+  color: red;
+}
+.current-question {
+  color: hsl(0, 0%, 13%);
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.input-wrapper {
+  text-align: center;
+}

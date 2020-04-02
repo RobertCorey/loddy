@@ -6,9 +6,6 @@
         *ngIf="game.status === 'BRAIN_QUESTIONS'"
       ></app-answer-brain-questions>
       <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
-      <app-score-screen
-        *ngIf="game.status === 'SCORE_SCREEN'"
-      ></app-score-screen>
       <ng-container *ngIf="game.status === 'FINISHED'">
         <h1>Game Over!</h1>
         <h3>Thanks for playing!</h3>

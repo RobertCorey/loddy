@@ -1,16 +1,13 @@
-Answer these questions the best you can.Later other players will guess what you
-entered. Remember it's what <b>YOU</b> think so don't worry about the exact
-right answer.
-<ng-container
-  *ngIf="!loading && currentQuestion$ | async as question; else finished"
->
-  {{ question.text }}
+<div class="title">
+  What do you think about the following question? The real answer doesn't
+  matter!
+</div>
+<ng-container *ngIf="!loading && currentQuestion$ | async as question">
+  <div class="current-question">
+    {{ question.text }}
+  </div>
   <app-question-with-answer-input
     (answerEmitter)="handleAnswer($event)"
+    [unit]="question.unit"
   ></app-question-with-answer-input>
 </ng-container>
-<ng-container *ngIf="loading">Waiting for other players</ng-container>
-<ng-template #finished>
-  <header>Finished being the brain</header>
-  <sub>Waiting for other players to finish 😴</sub>
-</ng-template>
