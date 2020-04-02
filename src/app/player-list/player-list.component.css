@@ -1,15 +1,16 @@
 :host {
-  background-color: white;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  /* flex-wrap: wrap; */
 }
 
 .player-card {
-  width: 256px;
+  width: 99%;
   background-color: #caf7e2;
-  border: solid white 4px;
   display: flex;
   flex-direction: column;
+  border: 10px solid black;
 }
 
 .local {
@@ -44,6 +45,7 @@
   height: 100%;
   text-align: center;
   font-size: 24px;
+  border-top: 10px solid black;
 }
 .bid-box .lobby {
   font-size: 32px;

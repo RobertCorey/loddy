@@ -22,7 +22,6 @@ export class Game {
   get players() {
     return this._game.players;
   }
-
   isPlayerHost(playerId: string) {
     const host = this._game.players.find(player => player.host);
     return host.id === playerId;
