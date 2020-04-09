@@ -62,6 +62,10 @@ export class StateMockerService {
     this.setupMockState(firstQuestion, firstQuestion.players[1]);
   }
 
+  firstQuestionAsBrain() {
+    this.setupMockState(firstQuestion, firstQuestion.players[2]);
+  }
+
   oneAnswerBeforeScoreScreen() {
     const localPlayer = {
       host: false,

@@ -1,11 +1,13 @@
 <div class="container">
   <ng-container *ngIf="$game | async as game; else loading">
-    <div class="game-form-wrapper" *ngIf="localPlayer.id; else observer">
+    <div class="game-form-wrapper">
       <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
-      <app-answer-brain-questions
-        *ngIf="game.status === 'BRAIN_QUESTIONS'"
-      ></app-answer-brain-questions>
-      <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
+      <ng-container *ngIf="localPlayer.id; else observer">
+        <app-answer-brain-questions
+          *ngIf="game.status === 'BRAIN_QUESTIONS'"
+        ></app-answer-brain-questions>
+        <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
+      </ng-container>
       <ng-container *ngIf="game.status === 'FINISHED'">
         <h1>Game Over!</h1>
         <h3>Thanks for playing!</h3>

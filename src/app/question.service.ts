@@ -3,7 +3,7 @@ import * as samp from 'lodash.sample';
 import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreDocument
+  AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { map, take, tap, share, reduce } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { IGameQuestion } from './types/IGameQuestion';
 import { firestore } from 'firebase';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuestionService {
   private documentId: string;
@@ -51,6 +51,7 @@ export class QuestionService {
     players: IPlayer[],
     numberOfQuestions: number = 10
   ): Observable<IGameQuestion[]> {
+    numberOfQuestions = players.length * 2;
     const compileQuestion = (question: string, playerName: string) =>
       question.replace('#player', playerName);
 
@@ -79,7 +80,7 @@ export class QuestionService {
 
   public addQuestion(text: string, unit: string) {
     return this.getDocument().update({
-      questions: firestore.FieldValue.arrayUnion({ text, unit })
+      questions: firestore.FieldValue.arrayUnion({ text, unit }),
     });
   }
 }
