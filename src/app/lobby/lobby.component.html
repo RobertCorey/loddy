@@ -1,3 +1,12 @@
+<ng-container *ngIf="state$ | async as state">
+  <h1 *ngIf="!state.numberOfPlayers">
+    New Game
+  </h1>
+  <h1 *ngIf="state.numberOfPlayers">
+    <h2>{{ state.numberOfPlayers || 0 }} / 8 Players</h2>
+  </h1>
+</ng-container>
+
 <app-join-game-form *ngIf="!hasPlayerJoined; else lobby"></app-join-game-form>
 <ng-template #lobby>
   Lobby

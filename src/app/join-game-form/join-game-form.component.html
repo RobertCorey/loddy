@@ -1,11 +1,25 @@
 <div class="game-container">
   <div class="game-form">
-    <h1>LODDY</h1>
     <h1>Enter your name</h1>
+    <h3>
+      The game depends on other players knowing who you are so we suggest using
+      your real name or a nickname
+    </h3>
+    <input
+      style="width: 70vw; height: 20vh; font-size: 10vh;"
+      type="text"
+      [formControl]="name"
+      maxlength="50"
+    />
     <br />
-    <input type="text" [formControl]="name" maxlength="50" />
-    <button type="submit" (click)="onSubmit()">Submit</button>
     <br />
-    <h3>warning this game is for true gamers only</h3>
+    <br />
+    <button
+      style="width: 70vw; height: 20vh; font-size: 10vh;"
+      type="submit"
+      (click)="onSubmit()"
+    >
+      Join
+    </button>
   </div>
 </div>
