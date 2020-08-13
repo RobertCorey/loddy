@@ -4,12 +4,16 @@
   </h1>
   <h1 *ngIf="state.numberOfPlayers">
     <h2>{{ state.numberOfPlayers || 0 }} / 8 Players</h2>
+    <h4 *ngIf="state.numberOfPlayers < 3">
+      {{ 3 - state.numberOfPlayers }} more players needed
+    </h4>
   </h1>
+  <app-join-game-form
+    *ngIf="!hasPlayerJoined && state.numberOfPlayers < 8; else lobby"
+  ></app-join-game-form>
 </ng-container>
 
-<app-join-game-form *ngIf="!hasPlayerJoined; else lobby"></app-join-game-form>
 <ng-template #lobby>
-  Lobby
   <button *ngIf="canPlayerStartGame" class="button" (click)="startLobby()">
     Start Game
   </button>

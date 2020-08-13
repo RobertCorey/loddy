@@ -20,3 +20,9 @@ body {
   cursor: pointer;
   opacity: 0.8;
 }
+
+.big {
+  width: 70vw;
+  height: 20vh;
+  font-size: 10vh;
+}
