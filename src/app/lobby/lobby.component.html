@@ -14,7 +14,11 @@
 </ng-container>
 
 <ng-template #lobby>
-  <button *ngIf="canPlayerStartGame" class="button" (click)="startLobby()">
+  <button
+    *ngIf="canPlayerStartGame"
+    class="event-element"
+    (click)="startLobby()"
+  >
     Start Game
   </button>
 </ng-template>

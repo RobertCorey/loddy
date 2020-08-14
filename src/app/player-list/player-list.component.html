@@ -4,23 +4,20 @@
     *ngFor="let card of data; index as i"
     [ngClass]="{ local: card.isLocalPlayer }"
   >
-    <div class="top-row">
-      <div class="place">{{ i + 1 }}</div>
-      <div class="player-name">
-        {{ card.player.name }} <br />
-        {{ card.score }}
-      </div>
+    <div class="place">{{ i + 1 }}</div>
+    <div class="player-name">{{ card.player.name }} <br /></div>
+    <span [ngClass]="card.messageClass">
+      {{ card.message }}
+    </span>
+
+    <div class="score">
+      {{ card.score }}
     </div>
-    <div class="bid-box">
-      <span [ngClass]="card.messageClass">
-        {{ card.message }}
-      </span>
-      <span *ngIf="card.isBrain && card.message.length > 0">
-        <br />
-      </span>
-      <span class="brain-emoji" *ngIf="card.isBrain">
-        🧠
-      </span>
-    </div>
+    <span *ngIf="card.isBrain && card.message.length > 0">
+      <br />
+    </span>
+    <span class="brain-emoji" *ngIf="card.isBrain">
+      🧠
+    </span>
   </div>
 </ng-container>

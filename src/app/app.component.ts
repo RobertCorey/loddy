@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { StateMockerService } from './state-mocker.service';
+import { Component, OnInit } from "@angular/core";
+import { StateMockerService } from "./state-mocker.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
   constructor(private stateMockerService: StateMockerService) {}
@@ -12,5 +12,7 @@ export class AppComponent implements OnInit {
     // this.stateMockerService.answerBrainQuestionsInitial();
     // this.stateMockerService.fullLobbyAsHost();
     // this.stateMockerService.firstQuestionAsBrain();
+    // this.stateMockerService.firstScoreScreen();
+    this.stateMockerService.oneAnswerBeforeScoreScreen();
   }
 }

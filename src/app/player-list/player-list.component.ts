@@ -1,32 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { IPlayer } from '../types/IPlayer';
-import { PlayerService } from '../services/player.service';
-import { GameCollectionService } from '../services/game-collection.service';
-import {
-  map,
-  filter,
-  switchMap,
-  mapTo,
-  take,
-  tap,
-  distinctUntilChanged
-} from 'rxjs/operators';
-import { Observable, timer, merge, from, of, combineLatest } from 'rxjs';
-import { ITotalScore, Game } from '../types/Game';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { IPlayer } from "../types/IPlayer";
+import { PlayerService } from "../services/player.service";
+import { GameCollectionService } from "../services/game-collection.service";
+import { map, switchMap, mapTo } from "rxjs/operators";
+import { Observable, timer, merge, of } from "rxjs";
+import { ITotalScore, Game } from "../types/Game";
 
 interface PlayerBox {
-  player: IPlayer;
-  isLocalPlayer: boolean;
-  message: string;
-  messageClass: string;
-  score: number | string;
+  player?: IPlayer;
+  isLocalPlayer?: boolean;
+  message?: string;
+  messageClass?: string;
+  score?: number | string;
 }
 
 @Component({
-  selector: 'app-player-list',
-  templateUrl: './player-list.component.html',
-  styleUrls: ['./player-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-player-list",
+  templateUrl: "./player-list.component.html",
+  styleUrls: ["./player-list.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerListComponent implements OnInit {
   public players$: Observable<IPlayer[]>;
@@ -51,17 +43,17 @@ export class PlayerListComponent implements OnInit {
 
   ngOnInit() {
     this.game$ = this.gameCollectionService.gameClass$.pipe(
-      switchMap(game => {
+      switchMap((game) => {
         switch (game.status) {
-          case 'LOBBY':
+          case "LOBBY":
             return this.lobbyState(game);
-          case 'BRAIN_QUESTIONS':
+          case "BRAIN_QUESTIONS":
             return this.brainQuestionsState(game);
-          case 'GAME_LOOP':
+          case "GAME_LOOP":
             return this.gameLoopState(game);
-          case 'SCORE_SCREEN':
+          case "SCORE_SCREEN":
             return this.scoreScreenState(game);
-          case 'FINISHED':
+          case "FINISHED":
             return this.finishedState(game);
           default:
             break;
@@ -71,11 +63,11 @@ export class PlayerListComponent implements OnInit {
       })
     );
     this.players$ = this.gameCollectionService.gameState$.pipe(
-      map(game => game.players)
+      map((game) => game.players)
     );
 
     this.state$ = this.gameCollectionService.gameClass$.pipe(
-      map(game => game.sortedTotalScores)
+      map((game) => game.sortedTotalScores)
     );
   }
 
@@ -85,20 +77,20 @@ export class PlayerListComponent implements OnInit {
       let message;
       switch (index) {
         case 0:
-          message = '1st';
+          message = "1st";
           break;
         case 1:
-          message = '2nd';
+          message = "2nd";
           break;
         case 2:
-          message = '3rd';
+          message = "3rd";
           break;
         default:
           message = `${index + 1}th`;
           break;
       }
-      message += ' place!';
-      return { ...p, message, isBrain: false, messageClass: '' };
+      message += " place!";
+      return { ...p, message, isBrain: false, messageClass: "" };
     });
     return of(final);
   }
@@ -107,34 +99,34 @@ export class PlayerListComponent implements OnInit {
     const scoreScreenInfo = game.currentRoundScoreInfo;
     //Answer
     const answerStage: PlayerBox[] = scoreScreenInfo
-      .map(s => {
+      .map((s) => {
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
           message: `Bid: ${s.text}`,
           player: s.player,
           isBrain: s.isBrain,
-          score: '',
-          messageClass: ''
+          score: "",
+          messageClass: "",
         };
       })
       .sort((a, b) => +b.score - +a.score);
     //Absolute Distance
     const absoluteDistance: PlayerBox[] = [...scoreScreenInfo]
       .sort((a, b) => b.signedDistance - a.signedDistance)
-      .map(s => {
+      .map((s) => {
         let message = `Distance: ${s.signedDistance}`;
         if (s.isBrain) {
-          message = '';
+          message = "";
         } else if (s.signedDistance === 0) {
-          message = 'SPOT ON!';
+          message = "SPOT ON!";
         }
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
           message,
           player: s.player,
           isBrain: s.isBrain,
-          score: '',
-          messageClass: ''
+          score: "",
+          messageClass: "",
         };
       });
     // Position
@@ -148,18 +140,18 @@ export class PlayerListComponent implements OnInit {
         }
         return a.position - b.position;
       })
-      .map(s => {
+      .map((s) => {
         let message = `Position: ${s.position}`;
         if (s.isBrain) {
-          message = '';
+          message = "";
         }
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
           message,
           player: s.player,
           isBrain: s.isBrain,
-          score: '',
-          messageClass: ''
+          score: "",
+          messageClass: "",
         };
       });
     // Points
@@ -173,18 +165,18 @@ export class PlayerListComponent implements OnInit {
         }
         return a.position - b.position;
       })
-      .map(s => {
+      .map((s) => {
         let message = `Points Awarded: ${s.score}`;
         if (s.isBrain) {
-          message = '';
+          message = "";
         }
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
           message,
           player: s.player,
           isBrain: s.isBrain,
-          score: '',
-          messageClass: ''
+          score: "",
+          messageClass: "",
         };
       });
 
@@ -198,38 +190,36 @@ export class PlayerListComponent implements OnInit {
   brainQuestionsState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);
     return of(
-      partialPlayerBox.map(pb => {
+      partialPlayerBox.map((pb) => {
         const message = game.playerHasAnsweredAllBrainQuestions(pb.player.id)
-          ? 'Waiting for other players to finish answering...'
-          : 'Answering...';
-        return { ...pb, message, score: '' };
+          ? "Waiting for other players to finish answering..."
+          : "Answering...";
+        return { ...pb, message, score: "" };
       })
     );
   }
-  private lobbyState(game: Game): any {
+  private lobbyState(game: Game): Observable<PlayerBox[]> {
     const partialPlayerBox = this.getPlayerBox(game);
     return of(
-      partialPlayerBox.map(pb => {
-        const message = game.isPlayerHost(pb.player.id)
-          ? 'Host of the game!'
-          : 'Waiting for the host to start the game...';
-        return { ...pb, message, score: '' };
+      partialPlayerBox.map((pb) => {
+        return { ...pb, score: "" };
       })
     );
   }
+
   private gameLoopState(game: Game) {
     const partialPlayerBox = this.getPlayerBox(game);
     return of(
-      partialPlayerBox.map(pb => {
-        let message = '';
-        let messageClass = '';
+      partialPlayerBox.map((pb) => {
+        let message = "";
+        let messageClass = "";
         let isBrain = false;
         if (game.isPlayerBrain(pb.player.id)) {
           isBrain = true;
         } else if (game.playerHasAnsweredCurrentQuestion(pb.player.id)) {
-          message = 'Waiting...';
+          message = "Waiting...";
         } else {
-          message = 'Thinking...';
+          message = "Thinking...";
         }
         return { ...pb, message, messageClass, isBrain };
       })
@@ -241,7 +231,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   private getPlayerBox(game: Game): Partial<PlayerBox>[] {
-    return game.sortedTotalScores.map(s => {
+    return game.sortedTotalScores.map((s) => {
       return { ...s, isLocalPlayer: this.isLocalPlayer(s.player) };
     });
   }

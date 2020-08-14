@@ -6,19 +6,12 @@
       your real name or a nickname
     </h3>
     <input
-      style="width: 70vw; height: 20vh; font-size: 10vh;"
+      class="event-element"
       type="text"
       [formControl]="name"
       maxlength="50"
     />
-    <br />
-    <br />
-    <br />
-    <button
-      style="width: 70vw; height: 20vh; font-size: 10vh;"
-      type="submit"
-      (click)="onSubmit()"
-    >
+    <button class="event-element" type="submit" (click)="onSubmit()">
       Join
     </button>
   </div>
