@@ -214,15 +214,17 @@ export class PlayerListComponent implements OnInit {
       partialPlayerBox.map((pb) => {
         let message = "";
         let messageClass = "";
+        let emoji = "";
         let isBrain = false;
         if (game.isPlayerBrain(pb.player.id)) {
           isBrain = true;
+          emoji = "🧠";
         } else if (game.playerHasAnsweredCurrentQuestion(pb.player.id)) {
-          message = "Waiting...";
+          emoji = "😐";
         } else {
-          message = "Thinking...";
+          emoji = "🤔";
         }
-        return { ...pb, message, messageClass, isBrain };
+        return { ...pb, message, messageClass, isBrain, emoji };
       })
     );
   }
