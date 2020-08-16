@@ -1,8 +1,4 @@
 <ng-container *ngIf="!(localPlayerIsBrain$ | async); else brain">
-  <div class="title" *ngIf="currentBrain$ | async as currentBrain">
-    How did <span class="player-name">{{ currentBrain.name }} </span>answer the
-    following question?<br />
-  </div>
   <div
     class="input-wrapper"
     *ngIf="currentQuestion$ | async as currentQuestion"
@@ -20,13 +16,10 @@
   >
 </ng-container>
 <ng-template #brain>
-  You were the brain for this question:
   <div
     class="input-wrapper"
     *ngIf="currentQuestion$ | async as currentQuestion"
   >
-    <div class="current-question">
-      {{ currentQuestion.text }}
-    </div>
+    <div class="current-question">{{ currentQuestion.text }}?</div>
   </div>
 </ng-template>
