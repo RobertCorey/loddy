@@ -21,7 +21,14 @@
   display: flex;
   align-items: center;
 }
-
+.emoji {
+  font-size: 36px;
+}
 .place {
   margin-right: 5px;
+  font-size: 36px;
+}
+.score {
+  font-size: 36px;
+  margin-left: auto;
 }

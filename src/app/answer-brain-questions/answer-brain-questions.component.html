@@ -1,9 +1,5 @@
 <ng-container *ngIf="!loading && currentQuestion$ | async as question">
-  <div class="title">
-    What do you think about the following question? The real answer doesn't
-    matter!
-  </div>
-  <div class="current-question">{{ question.text }} ?</div>
+  <div class="current-question">{{ question.text }}?</div>
   <app-question-with-answer-input
     (answerEmitter)="handleAnswer($event)"
     [unit]="question.unit"

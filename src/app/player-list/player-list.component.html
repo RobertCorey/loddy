@@ -5,6 +5,9 @@
     [ngClass]="{ local: card.isLocalPlayer }"
   >
     <div class="place">{{ i + 1 }}</div>
+    <div class="emoji">
+      {{ card.emoji }}
+    </div>
     <div class="player-name">{{ card.player.name }} <br /></div>
     <span [ngClass]="card.messageClass">
       {{ card.message }}

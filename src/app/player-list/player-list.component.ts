@@ -12,6 +12,7 @@ interface PlayerBox {
   message?: string;
   messageClass?: string;
   score?: number | string;
+  emoji?: string;
 }
 
 @Component({
@@ -191,10 +192,10 @@ export class PlayerListComponent implements OnInit {
     const partialPlayerBox = this.getPlayerBox(game);
     return of(
       partialPlayerBox.map((pb) => {
-        const message = game.playerHasAnsweredAllBrainQuestions(pb.player.id)
-          ? "Waiting for other players to finish answering..."
-          : "Answering...";
-        return { ...pb, message, score: "" };
+        const emoji = game.playerHasAnsweredAllBrainQuestions(pb.player.id)
+          ? "😐"
+          : "🤔";
+        return { ...pb, emoji, score: "20" };
       })
     );
   }
