@@ -59,7 +59,6 @@ export class PlayerListComponent implements OnInit {
           default:
             break;
         }
-        // return of({});
         return this.gameLoopState(game);
       })
     );
@@ -97,96 +96,36 @@ export class PlayerListComponent implements OnInit {
   }
 
   scoreScreenState(game: Game): any {
+    const signedDistanceToEmojiDistance = (signedDistance) => {
+      if (signedDistance < 0) return `${Math.abs(signedDistance)} under!`;
+      if (signedDistance > 0) return `${signedDistance} over!`;
+      return `SPOT ON!`;
+    };
+
     const scoreScreenInfo = game.currentRoundScoreInfo;
     //Answer
     const answerStage: PlayerBox[] = scoreScreenInfo
       .map((s) => {
+        const bid = s.text;
+        const emojiDistance = signedDistanceToEmojiDistance(s.signedDistance);
+        const points = s.score;
+        const message = s.isBrain
+          ? `(the brain) guessed ${bid}!`
+          : ` guessed ${bid}! ${emojiDistance}`;
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
-          message: `Bid: ${s.text}`,
+          message,
           player: s.player,
           isBrain: s.isBrain,
-          score: "",
+          score: points ? `+${points}` : "",
           messageClass: "",
+          hidePlace: true,
         };
       })
       .sort((a, b) => +b.score - +a.score);
-    //Absolute Distance
-    const absoluteDistance: PlayerBox[] = [...scoreScreenInfo]
-      .sort((a, b) => b.signedDistance - a.signedDistance)
-      .map((s) => {
-        let message = `Distance: ${s.signedDistance}`;
-        if (s.isBrain) {
-          message = "";
-        } else if (s.signedDistance === 0) {
-          message = "SPOT ON!";
-        }
-        return {
-          isLocalPlayer: this.isLocalPlayer(s.player),
-          message,
-          player: s.player,
-          isBrain: s.isBrain,
-          score: "",
-          messageClass: "",
-        };
-      });
-    // Position
-    const position: PlayerBox[] = [...scoreScreenInfo]
-      .sort((a, b) => {
-        if (a.isBrain) {
-          return -1;
-        }
-        if (b.isBrain) {
-          return 1;
-        }
-        return a.position - b.position;
-      })
-      .map((s) => {
-        let message = `Position: ${s.position}`;
-        if (s.isBrain) {
-          message = "";
-        }
-        return {
-          isLocalPlayer: this.isLocalPlayer(s.player),
-          message,
-          player: s.player,
-          isBrain: s.isBrain,
-          score: "",
-          messageClass: "",
-        };
-      });
-    // Points
-    const points: PlayerBox[] = [...scoreScreenInfo]
-      .sort((a, b) => {
-        if (a.isBrain) {
-          return -1;
-        }
-        if (b.isBrain) {
-          return 1;
-        }
-        return a.position - b.position;
-      })
-      .map((s) => {
-        let message = `Points Awarded: ${s.score}`;
-        if (s.isBrain) {
-          message = "";
-        }
-        return {
-          isLocalPlayer: this.isLocalPlayer(s.player),
-          message,
-          player: s.player,
-          isBrain: s.isBrain,
-          score: "",
-          messageClass: "",
-        };
-      });
 
-    return merge(
-      timer(0).pipe(mapTo(answerStage)),
-      timer(3000).pipe(mapTo(absoluteDistance)),
-      timer(6000).pipe(mapTo(position)),
-      timer(9000).pipe(mapTo(points))
-    );
+    of(answerStage);
+    return merge(timer(0).pipe(mapTo(answerStage)));
   }
   brainQuestionsState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);

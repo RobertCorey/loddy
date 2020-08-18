@@ -15,9 +15,9 @@ export class AppComponent implements OnInit {
 
     // this.stateMockerService.fullLobbyAsHost();
     // this.stateMockerService.answerBrainQuestionsInitial();
-    this.stateMockerService.firstQuestion();
+    // this.stateMockerService.firstQuestion();
     // this.stateMockerService.firstQuestionAsBrain();
     // this.stateMockerService.firstScoreScreen();
-    // this.stateMockerService.oneAnswerBeforeScoreScreen();
+    this.stateMockerService.oneAnswerBeforeScoreScreen();
   }
 }

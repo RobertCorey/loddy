@@ -1,23 +1,21 @@
 <ng-container *ngIf="this.game$ | async as data">
+  <span *ngIf="data"></span>
   <div
     class="player-card"
     *ngFor="let card of data; index as i"
     [ngClass]="{ local: card.isLocalPlayer }"
   >
-    <div class="place">{{ i + 1 }}</div>
+    <div class="place" *ngIf="!card.hidePlace">{{ i + 1 }}</div>
     <div class="emoji">
       {{ card.emoji }}
     </div>
-    <div class="player-name">{{ card.player.name }} <br /></div>
-    <span [ngClass]="card.messageClass">
-      {{ card.message }}
+    <span class="player-name">{{ card.player.name }}&nbsp;</span>
+    <span [ngClass]="card.messageClass">{{ card.message }} </span>
+    <span>
+      {{ card.emojiDistance }}
     </span>
-
     <div class="score">
       {{ card.score }}
     </div>
-    <span *ngIf="card.isBrain && card.message.length > 0">
-      <br />
-    </span>
   </div>
 </ng-container>

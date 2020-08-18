@@ -1,4 +1,3 @@
-Hide answer form if everything has already been answered
-add score screen
-
-answer-question should be converted to be a dumb component. It is taking too much state
+add some hilighting to the text
+decide how to arrange the rows
+display the question during the scoring too
