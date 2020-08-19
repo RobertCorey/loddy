@@ -109,12 +109,14 @@ export class PlayerListComponent implements OnInit {
         const bid = s.text;
         const emojiDistance = signedDistanceToEmojiDistance(s.signedDistance);
         const points = s.score;
-        const message = s.isBrain
-          ? `(the brain) guessed ${bid}!`
-          : ` guessed ${bid}! ${emojiDistance}`;
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
-          message,
+          scoreScreen: {
+            bid,
+            signedDistance: signedDistanceToEmojiDistance(s.signedDistance),
+            points,
+          },
+          emoji: s.isBrain ? "🧠" : "",
           player: s.player,
           isBrain: s.isBrain,
           score: points ? `+${points}` : "",

@@ -1,3 +1,4 @@
-add some hilighting to the text
-decide how to arrange the rows
 display the question during the scoring too
+make spot on rainbow
+
+Add tutorial screens before brain questions and game loop

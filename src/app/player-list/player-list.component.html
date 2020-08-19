@@ -1,16 +1,36 @@
 <ng-container *ngIf="this.game$ | async as data">
-  <span *ngIf="data"></span>
   <div
     class="player-card"
     *ngFor="let card of data; index as i"
     [ngClass]="{ local: card.isLocalPlayer }"
   >
+    <!-- bid,
+  emojiDistance,
+  points, -->
     <div class="place" *ngIf="!card.hidePlace">{{ i + 1 }}</div>
     <div class="emoji">
       {{ card.emoji }}
     </div>
     <span class="player-name">{{ card.player.name }}&nbsp;</span>
-    <span [ngClass]="card.messageClass">{{ card.message }} </span>
+    <div class="scorescreen-message">
+      <div *ngIf="card.scoreScreen?.bid" class="bid-container">
+        <span>
+          Bid:&nbsp;
+        </span>
+        <span class="bid">
+          {{ card.scoreScreen?.bid }}
+        </span>
+      </div>
+      <div
+        *ngIf="
+          card.scoreScreen?.signedDistance ||
+          card.scoreScreen?.signedDistance === 0
+        "
+        class="distance"
+      >
+        {{ card.scoreScreen?.signedDistance }}
+      </div>
+    </div>
     <span>
       {{ card.emojiDistance }}
     </span>

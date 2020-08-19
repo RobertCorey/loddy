@@ -23,6 +23,7 @@ import { QuestionWithAnswerInputComponent } from './question-with-answer-input/q
 import { GameLoopComponent } from './game-loop/game-loop.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
+import { ScoreScreenInfoComponent } from './player-list/score-screen-info/score-screen-info.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
     QuestionWithAnswerInputComponent,
     GameLoopComponent,
     LobbyComponent,
-    LoddyButtonComponent
+    LoddyButtonComponent,
+    ScoreScreenInfoComponent
   ],
   imports: [
     BrowserModule,

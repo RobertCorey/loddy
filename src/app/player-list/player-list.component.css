@@ -17,19 +17,48 @@
   padding-right: 10px;
 }
 
-.player-card * {
+.player-name {
   display: flex;
   align-items: center;
 }
+
 .emoji {
   font-size: 36px;
   margin-right: 5px;
+  display: flex;
+  align-items: center;
 }
 .place {
   margin-right: 5px;
   font-size: 36px;
 }
 .score {
+  display: flex;
+  align-items: center;
   font-size: 36px;
   margin-left: auto;
+  justify-self: flex-end;
+}
+
+.bid {
+  color: #50b5ff;
+  font-size: 32px;
+}
+.distance {
+  color: #50ff97;
+  font-size: 32px;
+}
+.bid-container {
+  /* width: 100%; */
+}
+.distance {
+  /* width: 100%; */
+}
+.scorescreen-message {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
 }
