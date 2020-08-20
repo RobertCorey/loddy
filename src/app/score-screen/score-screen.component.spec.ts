@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoddyButtonComponent } from './loddy-button.component';
+import { ScoreScreenComponent } from './score-screen.component';
 
-describe('LoddyButtonComponent', () => {
-  let component: LoddyButtonComponent;
-  let fixture: ComponentFixture<LoddyButtonComponent>;
+describe('ScoreScreenComponent', () => {
+  let component: ScoreScreenComponent;
+  let fixture: ComponentFixture<ScoreScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoddyButtonComponent ]
+      declarations: [ ScoreScreenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoddyButtonComponent);
+    fixture = TestBed.createComponent(ScoreScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

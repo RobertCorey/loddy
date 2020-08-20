@@ -22,9 +22,22 @@
         </span>
       </div>
       <div
+        *ngIf="card.scoreScreen?.signedDistance === 'spoton'"
+        class="distance"
+      >
+        <span style="color: #ff5050;">S</span>
+        <span style="color: #ffba50;">P</span>
+        <span style="color: #ebff50;">O</span>
+        <span style="color: #50ff5e;">T</span>
+        -
+        <span style="color: #509dff;">O</span>
+        <span style="color: #d550ff;">N</span>
+      </div>
+      <div
         *ngIf="
-          card.scoreScreen?.signedDistance ||
-          card.scoreScreen?.signedDistance === 0
+          (card.scoreScreen?.signedDistance ||
+            card.scoreScreen?.signedDistance === 0) &&
+          card.scoreScreen?.signedDistance !== 'spoton'
         "
         class="distance"
       >

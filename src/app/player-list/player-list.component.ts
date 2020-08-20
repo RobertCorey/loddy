@@ -99,7 +99,7 @@ export class PlayerListComponent implements OnInit {
     const signedDistanceToEmojiDistance = (signedDistance) => {
       if (signedDistance < 0) return `${Math.abs(signedDistance)} under!`;
       if (signedDistance > 0) return `${signedDistance} over!`;
-      return `SPOT ON!`;
+      return `spoton`;
     };
 
     const scoreScreenInfo = game.currentRoundScoreInfo;
@@ -107,7 +107,6 @@ export class PlayerListComponent implements OnInit {
     const answerStage: PlayerBox[] = scoreScreenInfo
       .map((s) => {
         const bid = s.text;
-        const emojiDistance = signedDistanceToEmojiDistance(s.signedDistance);
         const points = s.score;
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
@@ -124,10 +123,10 @@ export class PlayerListComponent implements OnInit {
           hidePlace: true,
         };
       })
+      .filter((x) => !x.isBrain)
       .sort((a, b) => +b.score - +a.score);
 
-    of(answerStage);
-    return merge(timer(0).pipe(mapTo(answerStage)));
+    return of(answerStage);
   }
   brainQuestionsState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);

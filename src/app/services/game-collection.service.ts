@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { IGame } from '../types/IGame';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { Game } from '../types/Game';
+import { Injectable } from "@angular/core";
+import { AngularFirestore, DocumentReference } from "@angular/fire/firestore";
+import { IGame } from "../types/IGame";
+import { Observable } from "rxjs";
+import { map, shareReplay, tap } from "rxjs/operators";
+import { Game } from "../types/Game";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class GameCollectionService {
   private gameRef: DocumentReference;
@@ -16,14 +16,14 @@ export class GameCollectionService {
   }
 
   private get collection() {
-    return this.angularFirestore.collection('games');
+    return this.angularFirestore.collection("games");
   }
 
   async create() {
     const game: IGame = {
       createdAt: Date.now(),
       players: [],
-      status: 'LOBBY'
+      status: "LOBBY",
     };
     this.gameRef = await this.collection.add(game);
     return this.gameRef;
@@ -39,7 +39,7 @@ export class GameCollectionService {
 
   get currentDocument() {
     if (!this.gameRef) {
-      throw Error('game reference not set');
+      throw Error("game reference not set");
     }
     return this.collection.doc(this.gameRef.id);
   }
@@ -51,10 +51,10 @@ export class GameCollectionService {
         shareReplay(1)
       );
     }
-    return this._gameState$;
+    return this._gameState$.pipe(tap((x) => console.log(x)));
   }
 
   get gameClass$() {
-    return this.gameState$.pipe(map(game => new Game(game)));
+    return this.gameState$.pipe(map((game) => new Game(game)));
   }
 }

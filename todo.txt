@@ -1,4 +1,3 @@
 display the question during the scoring too
-make spot on rainbow
 
 Add tutorial screens before brain questions and game loop

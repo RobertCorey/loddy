@@ -1,39 +1,37 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { StartGameComponent } from './start-game/start-game.component';
-import { GameComponent } from './game/game.component';
-import { MockComponent } from './mock/mock.component';
-import { QuestionTestingComponent } from './question-testing/question-testing.component';
-import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions/mock-answer-brain-questions.component';
-import { QuestionWithAnswerInputComponent } from './question-with-answer-input/question-with-answer-input.component';
-import { LoddyButtonComponent } from './loddy-button/loddy-button.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { StartGameComponent } from "./start-game/start-game.component";
+import { GameComponent } from "./game/game.component";
+import { MockComponent } from "./mock/mock.component";
+import { QuestionTestingComponent } from "./question-testing/question-testing.component";
+import { MockAnswerBrainQuestionsComponent } from "./mock-answer-brain-questions/mock-answer-brain-questions.component";
+import { QuestionWithAnswerInputComponent } from "./question-with-answer-input/question-with-answer-input.component";
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/start', pathMatch: 'full' },
-  { path: 'button', component: LoddyButtonComponent },
+  { path: "", redirectTo: "/start", pathMatch: "full" },
   {
-    path: 'start',
-    component: StartGameComponent
+    path: "start",
+    component: StartGameComponent,
   },
   {
-    path: 'game/:id',
+    path: "game/:id",
     component: GameComponent,
-    children: []
+    children: [],
   },
   {
-    path: 'mock',
-    component: MockComponent
+    path: "mock",
+    component: MockComponent,
   },
-  { path: 'mock/questions', component: QuestionTestingComponent },
+  { path: "mock/questions", component: QuestionTestingComponent },
   {
-    path: 'mock/answerbrainquestions',
-    component: MockAnswerBrainQuestionsComponent
+    path: "mock/answerbrainquestions",
+    component: MockAnswerBrainQuestionsComponent,
   },
-  { path: 'mock/qwai', component: QuestionWithAnswerInputComponent }
+  { path: "mock/qwai", component: QuestionWithAnswerInputComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

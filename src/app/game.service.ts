@@ -100,16 +100,16 @@ export class GameService {
   }
   handleScoreScreenStatus(game: IGame) {
     // const gameInstance = new Game(game);
-    // timer(12000).subscribe(_ => {
+    // timer(12000).subscribe((_) => {
     //   const nextQuestionId = gameInstance.getNextQuestionId();
     //   if (nextQuestionId) {
     //     this.gameCollectionService.update({
     //       activeQuestionId: nextQuestionId,
-    //       status: 'GAME_LOOP'
+    //       status: "GAME_LOOP",
     //     });
     //   } else {
     //     this.gameCollectionService.update({
-    //       status: 'FINISHED'
+    //       status: "FINISHED",
     //     });
     //   }
     // });

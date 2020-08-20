@@ -9,6 +9,7 @@ import { fullLobby } from "src/mocks/game/full-lobby";
 import { firstQuestion } from "src/mocks/game/game-loop/first-question";
 import { firstRound } from "src/mocks/game/score-screen/first-round";
 import { oneAnswerBeforeScoreScreen } from "src/mocks/game/one-answer-before-score-screen";
+import { generic } from "src/mocks/game/score-screen/generic";
 
 @Injectable({
   providedIn: "root",
@@ -66,6 +67,10 @@ export class StateMockerService {
     this.setupMockState(firstQuestion, firstQuestion.players[2]);
   }
 
+  scoreScreenNatural() {
+    this.setupMockState(generic, generic.players[0]);
+  }
+
   oneAnswerBeforeScoreScreen() {
     const localPlayer = {
       host: false,
@@ -85,7 +90,7 @@ export class StateMockerService {
       name: "Tom",
     };
     this.setupMockState(oneAnswerBeforeScoreScreen, localPlayer).then((_) => {
-      window.document.querySelector(".answer-input").value = "123";
+      (window.document.querySelector(".answer-input") as any).value = "123";
       document.querySelector("button").click();
     });
   }
