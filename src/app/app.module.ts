@@ -23,6 +23,7 @@ import { QuestionWithAnswerInputComponent } from "./question-with-answer-input/q
 import { GameLoopComponent } from "./game-loop/game-loop.component";
 import { LobbyComponent } from "./lobby/lobby.component";
 import { ScoreScreenComponent } from "./score-screen/score-screen.component";
+import { DigitOnlyModule } from "@uiowa/digit-only";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ScoreScreenComponent } from "./score-screen/score-screen.component";
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
+    DigitOnlyModule,
   ],
   providers: [AngularFirestore],
   bootstrap: [AppComponent],

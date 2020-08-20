@@ -1,5 +1,15 @@
 <div>
-  <input type="tel" class="answer-input" [formControl]="answerInput" />
+  <input
+    type="text"
+    placeholder="0000000"
+    maxlength="7"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    digitOnly
+    type="tel"
+    class="answer-input"
+    [formControl]="answerInput"
+  />
   <span class="unit">
     {{ unit }}
   </span>
