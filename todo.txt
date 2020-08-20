@@ -1,3 +1,0 @@
-display the question during the scoring too
-
-Add tutorial screens before brain questions and game loop

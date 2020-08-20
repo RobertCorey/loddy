@@ -29,6 +29,8 @@
   align-items: center;
 }
 .place {
+  display: flex;
+  align-items: center;
   margin-right: 5px;
   font-size: 36px;
 }
