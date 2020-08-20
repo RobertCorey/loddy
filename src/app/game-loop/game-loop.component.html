@@ -1,4 +1,9 @@
 <ng-container *ngIf="!(localPlayerIsBrain$ | async); else brain">
+  <div *ngIf="currentBrain$ | async as currentBrain" class="how-did">
+    How Did
+    <span class="player-name">{{ currentBrain.name }}</span>
+    Answer:
+  </div>
   <div
     class="input-wrapper"
     *ngIf="currentQuestion$ | async as currentQuestion"

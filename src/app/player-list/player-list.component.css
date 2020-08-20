@@ -39,7 +39,9 @@
   margin-left: auto;
   justify-self: flex-end;
 }
-
+.local {
+  background-color: hsl(108deg 100% 24%);
+}
 .bid {
   color: #50b5ff;
   font-size: 32px;

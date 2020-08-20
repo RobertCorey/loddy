@@ -97,8 +97,8 @@ export class PlayerListComponent implements OnInit {
 
   scoreScreenState(game: Game): any {
     const signedDistanceToEmojiDistance = (signedDistance) => {
-      if (signedDistance < 0) return `${Math.abs(signedDistance)} under!`;
-      if (signedDistance > 0) return `${signedDistance} over!`;
+      if (signedDistance < 0) return `${Math.abs(signedDistance)} over!`;
+      if (signedDistance > 0) return `${signedDistance} under!`;
       return `spoton`;
     };
 
