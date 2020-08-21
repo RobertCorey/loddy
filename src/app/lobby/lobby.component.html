@@ -2,12 +2,19 @@
   <h1 *ngIf="!state.numberOfPlayers">
     New Game
   </h1>
-  <h1 *ngIf="state.numberOfPlayers">
-    <h2>{{ state.numberOfPlayers || 0 }} / 8 Players</h2>
-    <h4 *ngIf="state.numberOfPlayers < 3">
+  <h1>Share link to invite Players</h1>
+  <div>
+    <div>
+      <input type="text" value="{{ route }}" style="width: 400px;" />
+      <button ngxClipboard="" [cbContent]="route">Copy Link</button>
+    </div>
+  </div>
+  <span *ngIf="state.numberOfPlayers">
+    <h1>{{ state.numberOfPlayers || 0 }} / 8 Players</h1>
+    <h2 *ngIf="state.numberOfPlayers < 3">
       {{ 3 - state.numberOfPlayers }} more players needed
-    </h4>
-  </h1>
+    </h2>
+  </span>
   <app-join-game-form
     *ngIf="!hasPlayerJoined && state.numberOfPlayers < 8; else lobby"
   ></app-join-game-form>

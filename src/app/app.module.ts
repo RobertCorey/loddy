@@ -24,6 +24,7 @@ import { GameLoopComponent } from "./game-loop/game-loop.component";
 import { LobbyComponent } from "./lobby/lobby.component";
 import { ScoreScreenComponent } from "./score-screen/score-screen.component";
 import { DigitOnlyModule } from "@uiowa/digit-only";
+import { ClipboardModule } from "ngx-clipboard";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { DigitOnlyModule } from "@uiowa/digit-only";
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
     DigitOnlyModule,
+    ClipboardModule,
   ],
   providers: [AngularFirestore],
   bootstrap: [AppComponent],

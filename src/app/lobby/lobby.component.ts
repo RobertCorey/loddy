@@ -5,6 +5,7 @@ import { PlayerService } from "../services/player.service";
 import { Observable, from } from "rxjs";
 import { IPlayer } from "../types/IPlayer";
 import { map } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-lobby",
@@ -13,10 +14,12 @@ import { map } from "rxjs/operators";
 })
 export class LobbyComponent implements OnInit {
   canPlayerStartGame: boolean = false;
+  route: string;
   constructor(
     private gameCollectionService: GameCollectionService,
     private gameService: GameService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -25,6 +28,7 @@ export class LobbyComponent implements OnInit {
         this.canPlayerStartGame = true;
       }
     });
+    this.route = window.location.href;
   }
 
   get hasPlayerJoined(): boolean {
