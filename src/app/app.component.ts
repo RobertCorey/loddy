@@ -12,12 +12,13 @@ export class AppComponent implements OnInit {
     /**
      * keep in order of appearance
      */
-    this.stateMockerService.fullLobbyAsHost();
+    // this.stateMockerService.fullLobbyAsHost();
     // this.stateMockerService.answerBrainQuestionsInitial();
     // this.stateMockerService.firstQuestion();
     // this.stateMockerService.firstQuestionAsBrain();
     // this.stateMockerService.oneAnswerBeforeScoreScreen();
     // this.stateMockerService.scoreScreenNatural();
     // this.stateMockerService.scoreScreen();
+    this.stateMockerService.finished();
   }
 }

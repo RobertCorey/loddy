@@ -5,8 +5,14 @@
   <h1>Share link to invite Players</h1>
   <div>
     <div>
-      <input type="text" value="{{ route }}" style="width: 400px;" />
-      <button ngxClipboard="" [cbContent]="route">Copy Link</button>
+      <input
+        type="text"
+        value="{{ route }}"
+        style="width: 100%; max-width: 400px;"
+      />
+      <button ngxClipboard="" [cbContent]="route" style="font-size: 36px;">
+        Copy Link
+      </button>
     </div>
   </div>
   <span *ngIf="state.numberOfPlayers">

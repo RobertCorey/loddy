@@ -10,6 +10,7 @@ import { firstQuestion } from "src/mocks/game/game-loop/first-question";
 import { firstRound } from "src/mocks/game/score-screen/first-round";
 import { oneAnswerBeforeScoreScreen } from "src/mocks/game/one-answer-before-score-screen";
 import { generic } from "src/mocks/game/score-screen/generic";
+import { finished } from "src/mocks/game/finished";
 
 @Injectable({
   providedIn: "root",
@@ -97,5 +98,9 @@ export class StateMockerService {
 
   async firstScoreScreen() {
     await this.setupMockState(firstRound, firstRound.players[0]);
+  }
+
+  finished() {
+    this.setupMockState(finished, finished.players[0]);
   }
 }
