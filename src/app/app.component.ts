@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
      * keep in order of appearance
      */
     // this.stateMockerService.fullLobbyAsHost();
-    this.stateMockerService.answerBrainQuestionsInitial();
+    // this.stateMockerService.answerBrainQuestionsInitial();
     // this.stateMockerService.firstQuestion();
     // this.stateMockerService.firstQuestionAsBrain();
     // this.stateMockerService.oneAnswerBeforeScoreScreen();
