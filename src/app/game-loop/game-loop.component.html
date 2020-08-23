@@ -27,4 +27,11 @@
   >
     <div class="current-question">{{ currentQuestion.text }}?</div>
   </div>
+  <div *ngIf="state$ | async as state">
+    <span class="brain">You said: </span>
+    <span class="bid">
+      {{ state.brainAnswerToCurrentQuestion.text }}
+    </span>
+    <h2>Will the others be able to guess what you said?</h2>
+  </div>
 </ng-template>

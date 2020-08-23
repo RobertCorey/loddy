@@ -65,7 +65,7 @@ export class StateMockerService {
   }
 
   firstQuestionAsBrain() {
-    this.setupMockState(firstQuestion, firstQuestion.players[2]);
+    this.setupMockState(firstQuestion, firstQuestion.players[0]);
   }
 
   scoreScreenNatural() {

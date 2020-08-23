@@ -20,18 +20,24 @@ export class GameLoopComponent implements OnInit {
   localPlayerIsBrain$: Observable<boolean>;
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   answerFormVisible$: Observable<boolean>;
+  state$: Observable<{ brainAnswerToCurrentQuestion: IAnswer }>;
   constructor(
     private gs: GameService,
     private playerService: PlayerService,
     private gameCollectionService: GameCollectionService
-  ) {
-    (window as any).foo = this;
-  }
+  ) {}
 
   ngOnInit() {
     this.currentQuestion$ = this.gameCollectionService.gameClass$.pipe(
       map((game) => game.currentQuestion),
       distinctUntilKeyChanged("id")
+    );
+
+    this.state$ = this.gameCollectionService.gameClass$.pipe(
+      map((game) => {
+        const { brainAnswerToCurrentQuestion } = game;
+        return { brainAnswerToCurrentQuestion };
+      })
     );
 
     this.currentQuestion$.subscribe((_) => this.updateLoading(false));
