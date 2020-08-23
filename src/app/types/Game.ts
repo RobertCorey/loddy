@@ -137,10 +137,9 @@ export class Game {
   ) {
     let position = -1;
     let last = -Infinity;
-    const pointMultiplier = 10;
-    const withScoreInfo = answersWithAbsoluteDistance.map((a) => {
+    const withPositionInfo = answersWithAbsoluteDistance.map((a) => {
       if (a.isBrain) {
-        return { ...a, position: 0, score: 0 };
+        return { ...a, position: -1, score: 0 };
       }
       if (a.absoluteDistance > last) {
         last = a.absoluteDistance;
@@ -149,10 +148,18 @@ export class Game {
       return {
         ...a,
         position,
-        score:
-          (answersWithAbsoluteDistance.length - position) * pointMultiplier,
       };
     });
+    //oh lord i'm sorry
+    //nm actually wasnt too bad
+    const points = [20, 15, 12, 10, 9, 8, 7, 6, 5, 4, 3];
+
+    const withScoreInfo = withPositionInfo.map((x) => {
+      if (x.isBrain) return { ...x, score: 0 };
+      const score = points[x.position];
+      return { ...x, score };
+    });
+
     return withScoreInfo;
   }
 
