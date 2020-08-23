@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { QuestionWithAnswerInputComponent } from './question-with-answer-input.component';
+import { QuestionWithAnswerInputComponent } from "./question-with-answer-input.component";
 
-describe('QuestionWithAnswerInputComponent', () => {
+describe("QuestionWithAnswerInputComponent", () => {
   let component: QuestionWithAnswerInputComponent;
   let fixture: ComponentFixture<QuestionWithAnswerInputComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuestionWithAnswerInputComponent ]
-    })
-    .compileComponents();
+      declarations: [QuestionWithAnswerInputComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('QuestionWithAnswerInputComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

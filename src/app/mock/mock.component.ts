@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { mockPlayerList1, mockPlayerList3 } from '../types/IPlayer';
-import { QuestionService } from '../question.service';
-import { GameService } from '../game.service';
-import { StateMockerService } from '../state-mocker.service';
-import { IGameBrainQuestionsAllAnswered } from '../types/IGame';
-import { GameCollectionService } from '../services/game-collection.service';
+import { Component, OnInit } from "@angular/core";
+import { mockPlayerList1, mockPlayerList3 } from "../types/IPlayer";
+import { QuestionService } from "../question.service";
+import { GameService } from "../game.service";
+import { StateMockerService } from "../state-mocker.service";
+import { IGameBrainQuestionsAllAnswered } from "../types/IGame";
+import { GameCollectionService } from "../services/game-collection.service";
 
 @Component({
-  selector: 'app-mock',
-  templateUrl: './mock.component.html',
-  styleUrls: ['./mock.component.css']
+  selector: "app-mock",
+  templateUrl: "./mock.component.html",
+  styleUrls: ["./mock.component.css"],
 })
 export class MockComponent implements OnInit {
   public a: any;

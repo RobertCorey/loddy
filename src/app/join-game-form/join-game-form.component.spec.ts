@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { JoinGameFormComponent } from './join-game-form.component';
+import { JoinGameFormComponent } from "./join-game-form.component";
 
-describe('JoinGameFormComponent', () => {
+describe("JoinGameFormComponent", () => {
   let component: JoinGameFormComponent;
   let fixture: ComponentFixture<JoinGameFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JoinGameFormComponent ]
-    })
-    .compileComponents();
+      declarations: [JoinGameFormComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('JoinGameFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

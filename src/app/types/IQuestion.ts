@@ -4,8 +4,8 @@ export interface IQuestion {
 }
 
 export const getXMockQuestions = (num): IQuestion[] => {
-  return [...Array(num)].map(_ => ({
-    text: 'how many are there #player ' + Math.random(),
-    unit: 'units'
+  return [...Array(num)].map((_) => ({
+    text: "how many are there #player " + Math.random(),
+    unit: "units",
   }));
 };

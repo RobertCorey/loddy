@@ -1,8 +1,8 @@
-import { IQuestion, getXMockQuestions } from './IQuestion';
-import { IPlayer } from './IPlayer';
+import { IQuestion, getXMockQuestions } from "./IQuestion";
+import { IPlayer } from "./IPlayer";
 
 export interface IGameQuestion extends IQuestion {
-  brainId: IPlayer['id'];
+  brainId: IPlayer["id"];
   id: string;
 }
 

@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MockAnswerBrainQuestionsComponent } from './mock-answer-brain-questions.component';
+import { MockAnswerBrainQuestionsComponent } from "./mock-answer-brain-questions.component";
 
-describe('MockAnswerBrainQuestionsComponent', () => {
+describe("MockAnswerBrainQuestionsComponent", () => {
   let component: MockAnswerBrainQuestionsComponent;
   let fixture: ComponentFixture<MockAnswerBrainQuestionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MockAnswerBrainQuestionsComponent ]
-    })
-    .compileComponents();
+      declarations: [MockAnswerBrainQuestionsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('MockAnswerBrainQuestionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

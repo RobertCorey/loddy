@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GameLoopComponent } from './game-loop.component';
+import { GameLoopComponent } from "./game-loop.component";
 
-describe('GameLoopComponent', () => {
+describe("GameLoopComponent", () => {
   let component: GameLoopComponent;
   let fixture: ComponentFixture<GameLoopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameLoopComponent ]
-    })
-    .compileComponents();
+      declarations: [GameLoopComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('GameLoopComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

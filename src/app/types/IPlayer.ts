@@ -6,26 +6,26 @@ export interface IPlayer {
 
 export const mockPlayerList1: IPlayer[] = [
   {
-    name: 'Rob',
-    id: '1',
-    host: true
-  }
+    name: "Rob",
+    id: "1",
+    host: true,
+  },
 ];
 
 export const mockPlayerList3: IPlayer[] = [
   {
-    name: 'Rob',
-    id: '1',
-    host: true
+    name: "Rob",
+    id: "1",
+    host: true,
   },
   {
-    name: 'Tom',
-    id: '2',
-    host: false
+    name: "Tom",
+    id: "2",
+    host: false,
   },
   {
-    name: 'Lela',
-    id: '3',
-    host: false
-  }
+    name: "Lela",
+    id: "3",
+    host: false,
+  },
 ];

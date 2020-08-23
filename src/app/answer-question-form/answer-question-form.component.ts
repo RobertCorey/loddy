@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IGameQuestion } from '../types/IGameQuestion';
-import { FormControl } from '@angular/forms';
-import { IAnswer } from '../types/IAnswer';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { IGameQuestion } from "../types/IGameQuestion";
+import { FormControl } from "@angular/forms";
+import { IAnswer } from "../types/IAnswer";
 
 @Component({
-  selector: 'app-answer-question-form',
-  templateUrl: './answer-question-form.component.html',
-  styleUrls: ['./answer-question-form.component.css']
+  selector: "app-answer-question-form",
+  templateUrl: "./answer-question-form.component.html",
+  styleUrls: ["./answer-question-form.component.css"],
 })
 export class AnswerQuestionFormComponent implements OnInit {
   @Input()
@@ -15,7 +15,7 @@ export class AnswerQuestionFormComponent implements OnInit {
   private playerId: string;
   @Output()
   answerEmitter = new EventEmitter<IAnswer[]>();
-  public answerInput = new FormControl('');
+  public answerInput = new FormControl("");
   private answers: IAnswer[] = [];
   constructor() {}
 
@@ -35,8 +35,8 @@ export class AnswerQuestionFormComponent implements OnInit {
       {
         playerId: this.playerId,
         questionId: this.currentQuestion.id,
-        text: this.answerInput.value
-      }
+        text: this.answerInput.value,
+      },
     ];
     this.answerInput.reset();
     if (!this.unansweredQuestionsExist) {

@@ -3,19 +3,19 @@ export const fullLobby = {
   players: [
     {
       host: true,
-      id: 'hW3CuubX',
-      name: 'rob'
+      id: "hW3CuubX",
+      name: "rob",
     },
     {
       host: false,
-      id: 'l3rRiQk7',
-      name: 'tom'
+      id: "l3rRiQk7",
+      name: "tom",
     },
     {
       host: false,
-      id: '4mSUqGX-',
-      name: 'lela'
-    }
+      id: "4mSUqGX-",
+      name: "lela",
+    },
   ],
-  status: 'LOBBY'
+  status: "LOBBY",
 };
