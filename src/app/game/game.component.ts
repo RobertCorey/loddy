@@ -35,4 +35,11 @@ export class GameComponent implements OnInit {
   get localPlayer(): IPlayer {
     return this.playerService.player;
   }
+
+  playerListVisible(game: IGame) {
+    if (game.status !== "BRAIN_QUESTIONS_RULES") {
+      return true;
+    }
+    return false;
+  }
 }

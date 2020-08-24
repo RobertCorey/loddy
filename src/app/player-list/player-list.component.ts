@@ -57,9 +57,9 @@ export class PlayerListComponent implements OnInit {
           case "FINISHED":
             return this.finishedState(game);
           default:
+            return of({ hidden: true });
             break;
         }
-        return this.gameLoopState(game);
       })
     );
     this.players$ = this.gameCollectionService.gameState$.pipe(
@@ -135,7 +135,7 @@ export class PlayerListComponent implements OnInit {
         const emoji = game.playerHasAnsweredAllBrainQuestions(pb.player.id)
           ? "😐"
           : "🤔";
-        return { ...pb, emoji, score: "20" };
+        return { ...pb, emoji, score: "" };
       })
     );
   }

@@ -3,9 +3,39 @@
     <div class="game-form-wrapper">
       <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
       <ng-container *ngIf="localPlayer.id; else observer">
+        <ng-container *ngIf="game.status === 'BRAIN_QUESTIONS_RULES'">
+          <h1>🧠 Brain Question Round!</h1>
+          <h2>
+            <p>
+              Answer the following questions as best you can.
+            </p>
+            <p>
+              Don't worry! Your answers during this part of the game won't count
+              towards your score.
+            </p>
+            <p>
+              The round will start soon.
+            </p>
+          </h2>
+        </ng-container>
         <app-answer-brain-questions
           *ngIf="game.status === 'BRAIN_QUESTIONS'"
         ></app-answer-brain-questions>
+        <ng-container *ngIf="game.status === 'GAME_LOOP_RULES'">
+          <h1>🙋‍♀️ Answer Round!</h1>
+          <h2>
+            <p>
+              You will now be shown the questions other players answered
+            </p>
+            <p>Do your best to guess how <b>they</b> answered the question</p>
+            <p>
+              The closer you get to their answer, the more points you earn!
+            </p>
+            <p>
+              The game will start soon!
+            </p>
+          </h2>
+        </ng-container>
         <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
         <app-score-screen *ngIf="game.status === 'SCORE_SCREEN'">
         </app-score-screen>
@@ -24,7 +54,7 @@
         </ul>
       </ng-container>
     </div>
-    <app-player-list></app-player-list>
+    <app-player-list *ngIf="playerListVisible(game)"></app-player-list>
     <!-- <h2>game</h2>
     {{ game | json }}
     <h2>player</h2>

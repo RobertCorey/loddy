@@ -11,6 +11,7 @@ import { firstRound } from "src/mocks/game/score-screen/first-round";
 import { oneAnswerBeforeScoreScreen } from "src/mocks/game/one-answer-before-score-screen";
 import { generic } from "src/mocks/game/score-screen/generic";
 import { finished } from "src/mocks/game/finished";
+import { oneAnswerBeforeGameLoop } from "src/mocks/game/brain-questions/one-answer-before-game-loop";
 
 @Injectable({
   providedIn: "root",
@@ -47,6 +48,13 @@ export class StateMockerService {
       host: true,
     };
     this.setupMockState(brainQuestionsStart, localPlayer);
+  }
+
+  oneAnswerBeforeGameLoop() {
+    this.setupMockState(
+      oneAnswerBeforeGameLoop,
+      oneAnswerBeforeGameLoop.players[2]
+    );
   }
 
   fullLobbyAsHost() {

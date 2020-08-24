@@ -59,7 +59,7 @@ export class GameService {
       .subscribe((questions) => {
         if (this.playerService.isHost || this.mock) {
           this.gameCollectionService.update({
-            status: "BRAIN_QUESTIONS",
+            status: "BRAIN_QUESTIONS_RULES",
             questions,
             answers: [],
           } as Partial<IGame>);
@@ -84,8 +84,14 @@ export class GameService {
     this.gameRunnerFlag = true;
     this.gameCollectionService.gameState$.subscribe((game: IGame) => {
       switch (game.status) {
+        case "BRAIN_QUESTIONS_RULES":
+          this.handleBrainQuestionsRulesStatus(game);
+          break;
         case "BRAIN_QUESTIONS":
           this.handleBrainQuestionsStatus(game);
+          break;
+        case "GAME_LOOP_RULES":
+          this.handleGameLoopRulesStatus(game);
           break;
         case "GAME_LOOP":
           this.handleGameLoopStatus(game);
@@ -96,6 +102,20 @@ export class GameService {
         default:
           break;
       }
+    });
+  }
+  handleGameLoopRulesStatus(game: IGame) {
+    timer(10000).subscribe((_) => {
+      this.gameCollectionService.update({
+        status: "GAME_LOOP",
+      });
+    });
+  }
+  handleBrainQuestionsRulesStatus(game: IGame) {
+    timer(10000).subscribe((_) => {
+      this.gameCollectionService.update({
+        status: "BRAIN_QUESTIONS",
+      });
     });
   }
   handleScoreScreenStatus(game: IGame) {
@@ -142,7 +162,7 @@ export class GameService {
     ).length;
     if (numberOfQuestionsWithBrainAnswers === game.questions.length) {
       this.gameCollectionService.update({
-        status: "GAME_LOOP",
+        status: "GAME_LOOP_RULES",
         activeQuestionId: game.questions[0].id,
         answeredQuestions: [],
         scores: [],

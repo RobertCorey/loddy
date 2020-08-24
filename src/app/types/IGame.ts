@@ -6,8 +6,10 @@ import { IScore } from "./IScore";
 export interface IGame {
   status:
     | "LOBBY"
+    | "BRAIN_QUESTIONS_RULES"
     | "BRAIN_QUESTIONS"
     | "GAME_LOOP"
+    | "GAME_LOOP_RULES"
     | "SCORE_SCREEN"
     | "FINISHED";
   createdAt: number;

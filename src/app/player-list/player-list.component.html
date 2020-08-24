@@ -1,54 +1,56 @@
 <ng-container *ngIf="this.game$ | async as data">
-  <div
-    class="player-card"
-    *ngFor="let card of data; index as i"
-    [ngClass]="{ local: card.isLocalPlayer }"
-  >
-    <!-- bid,
-  emojiDistance,
-  points, -->
-    <div class="place" *ngIf="!card.hidePlace">{{ i + 1 }}</div>
-    <div class="emoji">
-      {{ card.emoji }}
-    </div>
-    <span class="player-name">{{ card.player.name }}&nbsp;</span>
-    <div class="scorescreen-message">
-      <div *ngIf="card.scoreScreen?.bid" class="bid-container">
-        <span>
-          Bid:&nbsp;
-        </span>
-        <span class="bid">
-          {{ card.scoreScreen?.bid }}
-        </span>
+  <ng-container *ngIf="!data.hidden">
+    <div
+      class="player-card"
+      *ngFor="let card of data; index as i"
+      [ngClass]="{ local: card.isLocalPlayer }"
+    >
+      <!-- bid,
+    emojiDistance,
+    points, -->
+      <div class="place" *ngIf="!card.hidePlace">{{ i + 1 }}</div>
+      <div class="emoji">
+        {{ card.emoji }}
       </div>
-      <div
-        *ngIf="card.scoreScreen?.signedDistance === 'spoton'"
-        class="distance"
-      >
-        <span style="color: #ff5050;">S</span>
-        <span style="color: #ffba50;">P</span>
-        <span style="color: #ebff50;">O</span>
-        <span style="color: #50ff5e;">T</span>
-        -
-        <span style="color: #509dff;">O</span>
-        <span style="color: #d550ff;">N</span>
+      <span class="player-name">{{ card.player.name }}&nbsp;</span>
+      <div class="scorescreen-message">
+        <div *ngIf="card.scoreScreen?.bid" class="bid-container">
+          <span>
+            Bid:&nbsp;
+          </span>
+          <span class="bid">
+            {{ card.scoreScreen?.bid }}
+          </span>
+        </div>
+        <div
+          *ngIf="card.scoreScreen?.signedDistance === 'spoton'"
+          class="distance"
+        >
+          <span style="color: #ff5050;">S</span>
+          <span style="color: #ffba50;">P</span>
+          <span style="color: #ebff50;">O</span>
+          <span style="color: #50ff5e;">T</span>
+          -
+          <span style="color: #509dff;">O</span>
+          <span style="color: #d550ff;">N</span>
+        </div>
+        <div
+          *ngIf="
+            (card.scoreScreen?.signedDistance ||
+              card.scoreScreen?.signedDistance === 0) &&
+            card.scoreScreen?.signedDistance !== 'spoton'
+          "
+          class="distance"
+        >
+          {{ card.scoreScreen?.signedDistance }}
+        </div>
       </div>
-      <div
-        *ngIf="
-          (card.scoreScreen?.signedDistance ||
-            card.scoreScreen?.signedDistance === 0) &&
-          card.scoreScreen?.signedDistance !== 'spoton'
-        "
-        class="distance"
-      >
-        {{ card.scoreScreen?.signedDistance }}
+      <span>
+        {{ card.emojiDistance }}
+      </span>
+      <div class="score">
+        {{ card.score }}
       </div>
     </div>
-    <span>
-      {{ card.emojiDistance }}
-    </span>
-    <div class="score">
-      {{ card.score }}
-    </div>
-  </div>
+  </ng-container>
 </ng-container>

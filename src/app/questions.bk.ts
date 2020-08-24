@@ -108,7 +108,7 @@ export const questions: Question[] = [
     unit: "Angels",
   },
   {
-    text: "How much money should I charge people for this game",
+    text: "How much money would you pay for this game",
     unit: "dollars",
   },
   {
