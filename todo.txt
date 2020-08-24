@@ -1,5 +1,5 @@
-different colors for over and under
 Gold Silver Bronze for top 3
 sound effects
 add a timer so people play quicker
 more exciting personal questions
+make create new game button not overflow text on start screen
