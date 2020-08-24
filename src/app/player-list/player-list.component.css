@@ -48,8 +48,12 @@
   color: #50b5ff;
   font-size: 32px;
 }
-.distance {
+.over {
   color: #50ff97;
+  font-size: 32px;
+}
+.under {
+  color: #f3ff50;
   font-size: 32px;
 }
 .bid-container {

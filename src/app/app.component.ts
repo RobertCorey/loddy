@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     // this.stateMockerService.firstQuestion();
     // this.stateMockerService.firstQuestionAsBrain();
     // this.stateMockerService.oneAnswerBeforeScoreScreen();
-    // this.stateMockerService.scoreScreenNatural();
+    this.stateMockerService.scoreScreenNatural();
     // this.stateMockerService.scoreScreen();
     // this.stateMockerService.finished();
   }
