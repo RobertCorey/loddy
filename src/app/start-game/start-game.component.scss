@@ -6,7 +6,15 @@
   width: 90%;
   height: 640px;
   position: relative;
-
+  .logo {
+    font-family: Reem Kufi;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 108px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 1.5rem;
+  }
   .content {
     position: absolute;
     width: 80%;
@@ -16,16 +24,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-
-    .logo {
-      font-family: Reem Kufi;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 108px;
-      text-align: center;
-      color: #000000;
-      margin-bottom: 1.5rem;
-    }
 
     .button {
       padding: 1rem;

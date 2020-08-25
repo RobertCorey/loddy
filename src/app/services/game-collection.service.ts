@@ -51,7 +51,7 @@ export class GameCollectionService {
         shareReplay(1)
       );
     }
-    return this._gameState$.pipe(tap((x) => console.log(x)));
+    return this._gameState$;
   }
 
   get gameClass$() {
