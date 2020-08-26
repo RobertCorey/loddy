@@ -10,6 +10,8 @@ import { IGameQuestion } from "../types/IGameQuestion";
 import { GameCollectionService } from "../services/game-collection.service";
 import { PlayerService } from "../services/player.service";
 
+declare var twttr: any;
+
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.html",
@@ -19,6 +21,7 @@ export class GameComponent implements OnInit {
   public id;
   public $game: Observable<IGame>;
   public game: Game;
+  flag: any = true;
   constructor(
     private route: ActivatedRoute,
     private gameCollectionService: GameCollectionService,
@@ -41,5 +44,11 @@ export class GameComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  hack() {
+    twttr.widgets.load();
+    this.flag = false;
+    return true;
   }
 }

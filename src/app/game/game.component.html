@@ -41,6 +41,7 @@
         </app-score-screen>
       </ng-container>
       <ng-container *ngIf="game.status === 'FINISHED'">
+        {{ flag && hack() ? "" : "" }}
         <h1>Game Over!</h1>
         <h3>Thanks for playing!</h3>
         <ul>
@@ -59,6 +60,16 @@
             alt="Buy Me A Coffee"
             style="height: 51px !important; width: 217px !important;"
         /></a>
+        <blockquote class="twitter-tweet">
+          <p lang="en" dir="ltr">
+            What are your ideas for Post Truth Trivia questions?
+          </p>
+          &mdash; Post Truth Trivia (@TriviaTruth)
+          <a
+            href="https://twitter.com/TriviaTruth/status/1298759201150382080?ref_src=twsrc%5Etfw"
+            >August 26, 2020</a
+          >
+        </blockquote>
       </ng-container>
     </div>
     <app-player-list *ngIf="playerListVisible(game)"></app-player-list>
