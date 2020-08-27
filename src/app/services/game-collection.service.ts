@@ -11,6 +11,7 @@ import { Game } from "../types/Game";
 export class GameCollectionService {
   private gameRef: DocumentReference;
   private _gameState$: Observable<IGame>;
+  count: number = 0;
   constructor(private angularFirestore: AngularFirestore) {
     (window as any).gcs = this;
   }
@@ -48,6 +49,11 @@ export class GameCollectionService {
     if (!this._gameState$) {
       this._gameState$ = this.currentDocument.valueChanges().pipe(
         map((x: IGame) => x),
+        tap((x) => {
+          this.count += 1;
+          console.log(this.count);
+          return console.log(x);
+        }),
         shareReplay(1)
       );
     }
