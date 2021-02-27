@@ -6,16 +6,12 @@
         <ng-container *ngIf="game.status === 'BRAIN_QUESTIONS_RULES'">
           <h1>🧠 Brain Question Round!</h1>
           <h2>
-            <p>
-              Answer the following questions as best you can.
-            </p>
+            <p>Answer the following questions as best you can.</p>
             <p>
               Don't worry! Your answers during this part of the game won't count
               towards your score.
             </p>
-            <p>
-              The round will start soon.
-            </p>
+            <p>The round will start soon.</p>
           </h2>
         </ng-container>
         <app-answer-brain-questions
@@ -24,16 +20,10 @@
         <ng-container *ngIf="game.status === 'GAME_LOOP_RULES'">
           <h1>🙋‍♀️ Answer Round!</h1>
           <h2>
-            <p>
-              You will now be shown the questions other players answered.
-            </p>
+            <p>You will now be shown the questions other players answered.</p>
             <p>Guess how <b>they</b> answered the question.</p>
-            <p>
-              The closer you get to their answer, the more points you earn!
-            </p>
-            <p>
-              The game will start soon!
-            </p>
+            <p>The closer you get to their answer, the more points you earn!</p>
+            <p>The game will start soon!</p>
           </h2>
         </ng-container>
         <app-game-loop *ngIf="game.status === 'GAME_LOOP'"></app-game-loop>
@@ -54,11 +44,13 @@
           <li>Lela Kulkarni</li>
         </ul>
 
+        <button (click)="restartGame()">Restart Game</button>
+
         <a href="https://www.buymeacoffee.com/robcorey" target="_blank"
           ><img
             src="https://cdn.buymeacoffee.com/buttons/default-orange.png"
             alt="Buy Me A Coffee"
-            style="height: 51px !important; width: 217px !important;"
+            style="height: 51px !important; width: 217px !important"
         /></a>
         <blockquote class="twitter-tweet">
           <p lang="en" dir="ltr">
@@ -86,7 +78,5 @@
 
   <ng-template #observer> </ng-template>
 
-  <ng-template #loading>
-    Loading...
-  </ng-template>
+  <ng-template #loading> Loading... </ng-template>
 </div>

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { IGame } from "./types/IGame";
 import { IPlayer } from "./types/IPlayer";
-import { firestore } from "firebase";
+import firebase from "firebase";
 
 import * as shortid from "shortid";
 import { QuestionService } from "./question.service";
@@ -39,7 +39,7 @@ export class GameService {
         };
         this.playerService.player = playerWithId;
         return this.gameCollectionService.update({
-          players: firestore.FieldValue.arrayUnion(playerWithId),
+          players: firebase.firestore.FieldValue.arrayUnion(playerWithId),
         });
       })
     );
@@ -70,7 +70,7 @@ export class GameService {
 
   addAnswer(answers: IAnswer[]) {
     return this.gameCollectionService.update({
-      answers: firestore.FieldValue.arrayUnion(...answers),
+      answers: firebase.firestore.FieldValue.arrayUnion(...answers),
     });
   }
   /**
@@ -142,11 +142,11 @@ export class GameService {
     if (playersLeftCount === 0) {
       const scores = gameInstance.currentRoundScores;
       this.gameCollectionService.update({
-        answeredQuestions: firestore.FieldValue.arrayUnion(
+        answeredQuestions: firebase.firestore.FieldValue.arrayUnion(
           game.activeQuestionId
         ),
         status: "SCORE_SCREEN",
-        scores: firestore.FieldValue.arrayUnion(...scores),
+        scores: firebase.firestore.FieldValue.arrayUnion(...scores),
       });
     }
   }

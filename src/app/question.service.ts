@@ -10,8 +10,8 @@ import { of, Observable } from "rxjs";
 import { IQuestion, getXMockQuestions } from "./types/IQuestion";
 import { IPlayer } from "./types/IPlayer";
 import { IGameQuestion } from "./types/IGameQuestion";
-import { firestore } from "firebase";
 import { questions } from "./questions.bk";
+import firebase from "firebase";
 
 @Injectable({
   providedIn: "root",
@@ -86,7 +86,7 @@ export class QuestionService {
 
   public addQuestion(text: string, unit: string) {
     return this.getDocument().update({
-      questions: firestore.FieldValue.arrayUnion({ text, unit }),
+      questions: firebase.firestore.FieldValue.arrayUnion({ text, unit }),
     });
   }
 }
