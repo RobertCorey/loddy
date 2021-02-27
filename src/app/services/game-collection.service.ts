@@ -51,8 +51,6 @@ export class GameCollectionService {
         map((x: IGame) => x),
         tap((x) => {
           this.count += 1;
-          console.log(this.count);
-          return console.log(x);
         }),
         shareReplay(1)
       );
