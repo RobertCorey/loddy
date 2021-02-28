@@ -7,7 +7,7 @@ import { combineLatest, Observable, BehaviorSubject } from "rxjs";
 import { IGameQuestion } from "../types/IGameQuestion";
 import { IPlayer } from "../types/IPlayer";
 import { IAnswer } from "../types/IAnswer";
-import { firestore } from "firebase";
+import firebase from "firebase";
 
 @Component({
   selector: "app-game-loop",
@@ -76,7 +76,7 @@ export class GameLoopComponent implements OnInit {
         text: $event,
       };
       this.gameCollectionService.update({
-        answers: firestore.FieldValue.arrayUnion(answer),
+        answers: firebase.firestore.FieldValue.arrayUnion(answer),
       });
     });
   }

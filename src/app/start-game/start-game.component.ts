@@ -18,7 +18,7 @@ export class StartGameComponent implements OnInit {
   ngOnInit() {}
 
   async startGame() {
-    const gameRef = await this.gameCollectionService.create();
+    const gameRef = await this.gameCollectionService.createAndSetRef();
     this.router.navigate(["game", gameRef.id]);
   }
 }

@@ -20,6 +20,7 @@ export interface IGame {
   // This can also be used as the current "round"
   activeQuestionId?: string;
   answeredQuestions?: string[];
+  nextLobby?: string;
 }
 
 export const IGameBrainQuestionsAllAnswered: IGame = {

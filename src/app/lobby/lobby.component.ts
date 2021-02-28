@@ -2,10 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { GameCollectionService } from "../services/game-collection.service";
 import { GameService } from "../game.service";
 import { PlayerService } from "../services/player.service";
-import { Observable, from } from "rxjs";
-import { IPlayer } from "../types/IPlayer";
 import { map } from "rxjs/operators";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-lobby",
@@ -19,7 +17,8 @@ export class LobbyComponent implements OnInit {
     private gameCollectionService: GameCollectionService,
     private gameService: GameService,
     private playerService: PlayerService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -29,6 +28,19 @@ export class LobbyComponent implements OnInit {
       }
     });
     this.route = window.location.href;
+    const snapshot = this.activatedRoute.snapshot;
+    const name = snapshot.queryParamMap.get("playerName");
+    if (name) {
+      this.gameService
+        .join({ name })
+        .toPromise()
+        .then(() => {
+          this.router.navigateByUrl(
+            `/game/${window.location.pathname.split("/")[2]}`,
+            { replaceUrl: true }
+          );
+        });
+    }
   }
 
   get hasPlayerJoined(): boolean {

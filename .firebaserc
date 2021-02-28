@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "loddy-e37f1"
+  },
+  "targets": {
+    "loddy-e37f1": {
+      "hosting": {
+        "loddy": [
+          "loddy-e37f1"
+        ]
+      }
+    }
   }
 }
