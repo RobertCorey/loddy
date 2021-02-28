@@ -39,6 +39,10 @@ export class GameComponent implements OnInit {
     return this.playerService.player;
   }
 
+  localPlayerIsHost() {
+    return this.playerService.isHost;
+  }
+
   playerListVisible(game: IGame) {
     if (game.status !== "BRAIN_QUESTIONS_RULES") {
       return true;
@@ -46,9 +50,12 @@ export class GameComponent implements OnInit {
     return false;
   }
 
+  playAgain() {
+    this.gameCollectionService.playAgain();
+  }
+
   hack() {
     twttr.widgets.load();
     this.flag = false;
     return true;
   }
-}
