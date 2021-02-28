@@ -59,3 +59,4 @@ export class GameComponent implements OnInit {
     this.flag = false;
     return true;
   }
+}
