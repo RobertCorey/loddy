@@ -23,10 +23,8 @@
       Join
     </button>
 
-    <div *ngIf="name.errors.pattern">
-      <h3>
-        Please only use A-Z in your name
-      </h3>
+    <div *ngIf="name?.errors?.pattern">
+      <h3>Please only use A-Z in your name</h3>
     </div>
   </div>
 </div>
