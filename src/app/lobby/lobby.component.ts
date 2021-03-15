@@ -22,12 +22,13 @@ export class LobbyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    document.querySelector("#tinyads_banner").remove();
     this.gameCollectionService.gameClass$.subscribe((game) => {
       if (game.canGameBeStarted && this.playerService.isHost) {
         this.canPlayerStartGame = true;
       }
     });
-    this.route = window.location.href;
+    this.route = window.location.href.split("?")[0];
     const snapshot = this.activatedRoute.snapshot;
     const name = snapshot.queryParamMap.get("playerName");
     if (name) {
