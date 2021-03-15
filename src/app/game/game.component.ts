@@ -42,6 +42,9 @@ export class GameComponent implements OnInit {
   localPlayerIsHost() {
     return this.playerService.isHost;
   }
+  localPlayerIsObserver() {
+    return this.playerService.isObserver;
+  }
 
   playerListVisible(game: IGame) {
     if (game.status !== "BRAIN_QUESTIONS_RULES") {

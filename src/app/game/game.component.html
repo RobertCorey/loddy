@@ -55,7 +55,9 @@
           style="width: fit-content; height: fit-content; font-size: 10vh"
           class="button-primary"
           (click)="playAgain()"
-          *ngIf="game.nextLobby || localPlayerIsHost()"
+          *ngIf="
+            !localPlayerIsObserver && (game.nextLobby || localPlayerIsHost())
+          "
         >
           Play Again
         </button>

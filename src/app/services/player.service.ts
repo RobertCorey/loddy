@@ -12,4 +12,7 @@ export class PlayerService {
   get isHost() {
     return !!this.player.host;
   }
+  get isObserver() {
+    return !this.player.id;
+  }
 }
