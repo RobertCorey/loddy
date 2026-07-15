@@ -53,7 +53,10 @@ export class QuestionService {
     return this.getQuestions();
   }
 
-  public getGameQuestions(players: IPlayer[]): Observable<IGameQuestion[]> {
+  public getGameQuestions(
+    players: IPlayer[],
+    pool: "all" | "corporate" = "all"
+  ): Observable<IGameQuestion[]> {
     const numberOfQuestions = players.length * 2; // two brain questions each
     const compileQuestion = (question: string, playerName: string) =>
       question.replace("#player", playerName);
@@ -73,6 +76,9 @@ export class QuestionService {
 
     return this.getQuestions().pipe(
       take(1),
+      map((all: IQuestion[]) =>
+        pool === "corporate" ? all.filter((q) => q.sfw) : all
+      ),
       map(shuffle),
       map((shuffledQuestions: IQuestion[]) =>
         shuffledQuestions.slice(0, numberOfQuestions)

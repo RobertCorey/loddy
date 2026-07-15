@@ -11,11 +11,14 @@
         style="width: 100%; max-width: 400px;"
         disabled
       />
-      <button ngxClipboard="" [cbContent]="route" style="font-size: 36px;">
-        Copy Link
+      <button (click)="copyLink()" style="font-size: 36px;">
+        {{ copied ? "Copied! ✅" : "Copy Link" }}
       </button>
     </div>
   </div>
+  <h2 *ngIf="(pool$ | async) === 'corporate'">
+    👔 Corporate-friendly questions only
+  </h2>
   <span *ngIf="state.numberOfPlayers">
     <h1>{{ state.numberOfPlayers || 0 }} / 8 Players</h1>
     <h2 *ngIf="state.numberOfPlayers < 3">

@@ -6,8 +6,11 @@ import { Observable } from "rxjs";
 import { map, shareReplay, tap } from "rxjs/operators";
 import { Game } from "../types/Game";
 import { PlayerService } from "./player.service";
+import firebase from "firebase";
 
 const MAX_PLAYERS = 8;
+// Firestore TTL: game docs older than this get garbage-collected
+const GAME_LIFETIME_MS = 30 * 24 * 60 * 60 * 1000;
 
 @Injectable({
   providedIn: "root",
@@ -28,23 +31,27 @@ export class GameCollectionService {
     return this.angularFirestore.collection("games");
   }
 
-  async createAndSetRef() {
-    const ref = await this.create();
+  async createAndSetRef(pool: IGame["questionPool"] = "all") {
+    const ref = await this.create(pool);
     this._gameState$ = null; // a new game means a new document stream
     this.gameRef = ref;
     return this.gameRef;
   }
 
-  private async create() {
-    const ref = await this.collection.add(this.freshGame());
+  private async create(pool: IGame["questionPool"]) {
+    const ref = await this.collection.add(this.freshGame(pool));
     return ref;
   }
 
-  private freshGame(): IGame {
+  private freshGame(pool: IGame["questionPool"] = "all"): IGame {
     return {
       createdAt: Date.now(),
       players: [],
       status: "LOBBY",
+      questionPool: pool,
+      expireAt: firebase.firestore.Timestamp.fromMillis(
+        Date.now() + GAME_LIFETIME_MS
+      ),
     };
   }
 
@@ -92,7 +99,10 @@ export class GameCollectionService {
         if (game && game.nextLobby) {
           return game.nextLobby;
         }
-        tx.set(firestore.collection("games").doc(newId), this.freshGame());
+        tx.set(
+          firestore.collection("games").doc(newId),
+          this.freshGame((game && game.questionPool) || "all")
+        );
         tx.update(docRef, { nextLobby: newId });
         return newId;
       });
@@ -100,6 +110,79 @@ export class GameCollectionService {
     } catch {
       this.playAgainInFlight = false;
     }
+  }
+
+  /**
+   * Claims the runner role for `playerId`. Compare-and-swap on the heartbeat
+   * value the claimant observed as stale: any beat from a live runner (or a
+   * rival claimant's win) changes it and aborts the claim, so no cross-device
+   * clock comparison is ever needed.
+   */
+  async claimRunner(playerId: string, observedBeat: number): Promise<boolean> {
+    const firestore = this.angularFirestore.firestore;
+    const docRef = firestore.collection("games").doc(this.currentDocumentId);
+    return firestore.runTransaction(async (tx) => {
+      const game = (await tx.get(docRef)).data() as IGame;
+      if (!game) {
+        return false;
+      }
+      if (game.runnerId === playerId) {
+        tx.update(docRef, { runnerHeartbeat: Date.now() });
+        return true;
+      }
+      if ((game.runnerHeartbeat || 0) !== observedBeat) {
+        return false; // the runner beat (or someone else claimed) meanwhile
+      }
+      tx.update(docRef, { runnerId: playerId, runnerHeartbeat: Date.now() });
+      return true;
+    });
+  }
+
+  /**
+   * A fenced write for the state machine: re-reads the doc inside a
+   * transaction, verifies this player still holds the runner role and the
+   * game is still in the expected state, then applies `compute(freshGame)`.
+   * This is what keeps a deposed runner (slept laptop, throttled tab) from
+   * flushing stale transitions into a game someone else now drives — and
+   * since transactions refuse to run offline, queued zombie writes die too.
+   */
+  async runnerUpdate(
+    playerId: string,
+    expected: {
+      status: IGame["status"];
+      activeQuestionId?: string;
+      answerDeadlineKey?: string;
+    },
+    // loose typing: updates mix IGame fields with FieldValue sentinels
+    compute: (fresh: IGame) => { [field: string]: any } | null
+  ): Promise<void> {
+    const firestore = this.angularFirestore.firestore;
+    const docRef = firestore.collection("games").doc(this.currentDocumentId);
+    await firestore.runTransaction(async (tx) => {
+      const game = (await tx.get(docRef)).data() as IGame;
+      if (!game || game.status !== expected.status) {
+        return;
+      }
+      if (game.runnerId && game.runnerId !== playerId) {
+        return; // deposed: someone else drives this game now
+      }
+      if (
+        expected.activeQuestionId &&
+        game.activeQuestionId !== expected.activeQuestionId
+      ) {
+        return;
+      }
+      if (
+        expected.answerDeadlineKey &&
+        game.answerDeadlineKey !== expected.answerDeadlineKey
+      ) {
+        return;
+      }
+      const partial = compute(game);
+      if (partial) {
+        tx.update(docRef, partial);
+      }
+    });
   }
 
   private transferToNewLobby(lobbyId: string) {

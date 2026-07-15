@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class LobbyComponent implements OnInit {
   canPlayerStartGame: boolean = false;
   route: string;
+  copied = false;
   constructor(
     private gameCollectionService: GameCollectionService,
     private gameService: GameService,
@@ -67,6 +68,28 @@ export class LobbyComponent implements OnInit {
     return this.gameCollectionService.gameState$.pipe(
       map((game) => game.players)
     );
+  }
+
+  get pool$() {
+    return this.gameCollectionService.gameState$.pipe(
+      map((game) => game.questionPool || "all")
+    );
+  }
+
+  async copyLink() {
+    try {
+      await navigator.clipboard.writeText(this.route);
+    } catch {
+      // clipboard API needs a secure context / permission; fall back
+      const el = document.createElement("textarea");
+      el.value = this.route;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    }
+    this.copied = true;
+    setTimeout(() => (this.copied = false), 2000);
   }
 
   startLobby() {

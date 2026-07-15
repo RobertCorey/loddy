@@ -1,6 +1,10 @@
 <div class="container">
   <ng-container *ngIf="$game | async as game; else loading">
     <div class="game-form-wrapper">
+      <app-countdown
+        *ngIf="countdownDeadline(game) as deadline"
+        [deadline]="deadline"
+      ></app-countdown>
       <app-lobby *ngIf="game.status === 'LOBBY'"></app-lobby>
       <ng-container *ngIf="localPlayer.id; else observer">
         <ng-container *ngIf="game.status === 'BRAIN_QUESTIONS_RULES'">

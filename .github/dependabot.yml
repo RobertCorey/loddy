@@ -1,0 +1,10 @@
+# The dependency tree is intentionally frozen: Angular 11 needs the
+# webpack 4 / Node 16 toolchain (see README). Bumps can't be applied
+# without a framework migration, so keep dependabot from opening PRs.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 0

@@ -1,9 +1,29 @@
 <div class="start-game-container">
   <span class="logo">Post Truth Trivia 🧠</span>
-  <button class="button" class="event-element" (click)="startGame()">
+  <div class="pool-picker">
+    <label>
+      <input
+        type="radio"
+        name="pool"
+        [checked]="pool === 'all'"
+        (change)="pool = 'all'"
+      />
+      🌶️ All questions
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="pool"
+        [checked]="pool === 'corporate'"
+        (change)="pool = 'corporate'"
+      />
+      👔 Corporate-friendly (safe for work)
+    </label>
+  </div>
+  <button class="button event-element" (click)="startGame()">
     <span class="button-text">Create New Game</span>
   </button>
-  <h2 style="margin-bottom: 300px">
+  <div class="about">
     <h1>About Post Truth Trivia</h1>
     <p>
       <i>Post Truth Trivia</i> is an online party game for 3-8 players. In
@@ -14,5 +34,5 @@
     </p>
 
     <p><i>Post Truth Trivia</i>, it’s 2020 and nothing is real anymore.</p>
-  </h2>
+  </div>
 </div>

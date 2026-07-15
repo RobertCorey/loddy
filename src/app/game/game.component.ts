@@ -39,18 +39,27 @@ export class GameComponent implements OnInit {
     this.$game.pipe(take(1)).subscribe((game) => {
       if (!game) {
         this.notFound = true; // bad link/id: the doc doesn't exist
-        return;
-      }
-      // If a refreshed host rejoins a game in progress, restart the state
-      // machine: the host's tab is the only thing driving status transitions.
-      if (
-        this.playerService.isHost &&
-        game.status !== "LOBBY" &&
-        game.status !== "FINISHED"
-      ) {
-        this.gameService.resumeGameRunner();
       }
     });
+    // Every tab binds to the state machine: only the elected runner acts,
+    // everyone else watchdogs the runner's heartbeat and can take over.
+    this.gameService.initGameRunner();
+  }
+
+  countdownDeadline(game: IGame): number | null {
+    if (
+      game.status === "GAME_LOOP" &&
+      game.answerDeadlineKey === game.activeQuestionId
+    ) {
+      return game.answerDeadline;
+    }
+    if (
+      game.status === "BRAIN_QUESTIONS" &&
+      game.answerDeadlineKey === "BRAIN"
+    ) {
+      return game.answerDeadline;
+    }
+    return null;
   }
 
   get localPlayer(): IPlayer {

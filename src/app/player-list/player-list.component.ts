@@ -74,13 +74,15 @@ export class PlayerListComponent implements OnInit {
   finishedState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);
     const scores = partialPlayerBox.map((p) => p.score as number);
+    const medals = { 1: "🥇", 2: "🥈", 3: "🥉" };
     const final = partialPlayerBox.map((p) => {
       // competition ranking, so tied players share a place
       const place = 1 + scores.filter((s) => s > p.score).length;
       const suffix =
         place === 1 ? "st" : place === 2 ? "nd" : place === 3 ? "rd" : "th";
       const message = `${place}${suffix} place!`;
-      return { ...p, message, isBrain: false, messageClass: "" };
+      const emoji = medals[place] || "";
+      return { ...p, message, emoji, isBrain: false, messageClass: "" };
     });
     return of(final);
   }
@@ -98,16 +100,19 @@ export class PlayerListComponent implements OnInit {
     //Answer
     const answerStage: PlayerBox[] = scoreScreenInfo
       .map((s) => {
+        const timedOut = s.text === "";
         const bid = s.text;
         const points = s.score;
         return {
           isLocalPlayer: this.isLocalPlayer(s.player),
           scoreScreen: {
             bid,
-            signedDistance: signedDistanceToEmojiDistance(s.signedDistance),
+            signedDistance: timedOut
+              ? { value: "toolate", text: "too slow!" }
+              : signedDistanceToEmojiDistance(s.signedDistance),
             points,
           },
-          emoji: s.isBrain ? "🧠" : "",
+          emoji: s.isBrain ? "🧠" : timedOut ? "⏰" : "",
           player: s.player,
           isBrain: s.isBrain,
           score: points ? `+${points}` : "",

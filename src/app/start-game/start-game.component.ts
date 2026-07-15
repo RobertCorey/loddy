@@ -10,6 +10,7 @@ import { GameCollectionService } from "../services/game-collection.service";
   styleUrls: ["./start-game.component.scss"],
 })
 export class StartGameComponent implements OnInit {
+  pool: "all" | "corporate" = "all";
   constructor(
     private router: Router,
     private gameCollectionService: GameCollectionService
@@ -18,7 +19,7 @@ export class StartGameComponent implements OnInit {
   ngOnInit() {}
 
   async startGame() {
-    const gameRef = await this.gameCollectionService.createAndSetRef();
+    const gameRef = await this.gameCollectionService.createAndSetRef(this.pool);
     this.router.navigate(["game", gameRef.id]);
   }
 }

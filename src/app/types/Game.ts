@@ -60,7 +60,19 @@ export class Game {
   }
 
   getAnswersByQuestionId(questionId: string) {
-    return this._game.answers.filter((a) => a.questionId === questionId);
+    // One answer per player. A buzzer race can commit both a runner-written
+    // blank and the player's real answer; the real one wins.
+    const byPlayer = new Map<string, IAnswer>();
+    for (const a of this._game.answers) {
+      if (a.questionId !== questionId) {
+        continue;
+      }
+      const existing = byPlayer.get(a.playerId);
+      if (!existing || (existing.text === "" && a.text !== "")) {
+        byPlayer.set(a.playerId, a);
+      }
+    }
+    return Array.from(byPlayer.values());
   }
 
   playerHasAnsweredCurrentQuestion(playerID: IPlayer["id"]) {
@@ -156,6 +168,8 @@ export class Game {
 
     const withScoreInfo = withPositionInfo.map((x) => {
       if (x.isBrain) return { ...x, score: 0 };
+      // a blank answer means the player timed out: no points for absence
+      if (x.text === "") return { ...x, score: 0 };
       // clamp: an out-of-range position must never write `undefined`
       // to Firestore — that rejects the update and hangs the game
       const score = points[Math.min(x.position, points.length - 1)];
@@ -174,6 +188,15 @@ export class Game {
     const brainAnswer = this.brainAnswerToCurrentQuestion;
     const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
     const abs = nonBrainAnswers.map((a) => {
+      // a blank answer is a timeout, not a guess of 0: rank it dead last
+      if (a.text === "") {
+        return {
+          ...a,
+          absoluteDistance: Infinity,
+          signedDistance: Infinity,
+          isBrain: false,
+        };
+      }
       return {
         ...a,
         absoluteDistance: Math.abs(numeric(brainAnswer.text) - numeric(a.text)),
