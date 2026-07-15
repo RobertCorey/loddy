@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { take } from "rxjs/operators";
+import { distinctUntilChanged, map, take } from "rxjs/operators";
 import { GameService } from "../game.service";
 import { Observable } from "rxjs";
 import { IGame } from "../types/IGame";
@@ -10,6 +10,7 @@ import { IQuestion } from "../types/IQuestion";
 import { IGameQuestion } from "../types/IGameQuestion";
 import { GameCollectionService } from "../services/game-collection.service";
 import { PlayerService } from "../services/player.service";
+import { SoundService } from "../services/sound.service";
 
 declare var twttr: any;
 
@@ -28,7 +29,8 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private gameCollectionService: GameCollectionService,
     private gameService: GameService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private soundService: SoundService
   ) {}
 
   async ngOnInit() {
@@ -44,6 +46,21 @@ export class GameComponent implements OnInit {
     // Every tab binds to the state machine: only the elected runner acts,
     // everyone else watchdogs the runner's heartbeat and can take over.
     this.gameService.initGameRunner();
+    // lo-fi blips on the big beats of the game
+    this.$game
+      .pipe(
+        map((game) => game && game.status),
+        distinctUntilChanged()
+      )
+      .subscribe((status) => {
+        if (status === "BRAIN_QUESTIONS" || status === "GAME_LOOP") {
+          this.soundService.question();
+        } else if (status === "SCORE_SCREEN") {
+          this.soundService.score();
+        } else if (status === "FINISHED") {
+          this.soundService.gameOver();
+        }
+      });
   }
 
   countdownDeadline(game: IGame): number | null {
