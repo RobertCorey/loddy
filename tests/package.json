@@ -1,0 +1,13 @@
+{
+  "name": "loddy-e2e",
+  "private": true,
+  "description": "Playwright end-to-end tests. Needs modern Node (18+), unlike the Angular build (Node 16). Run `npm run build -- --prod` at the repo root first: tests serve dist/loddy.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "serve": "^14.2.4"
+  }
+}

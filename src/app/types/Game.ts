@@ -156,7 +156,9 @@ export class Game {
 
     const withScoreInfo = withPositionInfo.map((x) => {
       if (x.isBrain) return { ...x, score: 0 };
-      const score = points[x.position];
+      // clamp: an out-of-range position must never write `undefined`
+      // to Firestore — that rejects the update and hangs the game
+      const score = points[Math.min(x.position, points.length - 1)];
       return { ...x, score };
     });
 
@@ -164,13 +166,18 @@ export class Game {
   }
 
   private getAnswersWithAbsoluteDistance() {
+    // non-numeric answer text must not poison the round with NaN distances
+    const numeric = (text: string) => {
+      const n = Number(text);
+      return Number.isFinite(n) ? n : 0;
+    };
     const brainAnswer = this.brainAnswerToCurrentQuestion;
     const nonBrainAnswers = this.nonBrainAnswersToCurrentQuestion;
     const abs = nonBrainAnswers.map((a) => {
       return {
         ...a,
-        absoluteDistance: Math.abs(+brainAnswer.text - +a.text),
-        signedDistance: +brainAnswer.text - +a.text,
+        absoluteDistance: Math.abs(numeric(brainAnswer.text) - numeric(a.text)),
+        signedDistance: numeric(brainAnswer.text) - numeric(a.text),
         isBrain: false,
       };
     });

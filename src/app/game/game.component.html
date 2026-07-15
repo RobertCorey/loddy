@@ -85,7 +85,25 @@
     </ng-container> -->
   </ng-container>
 
-  <ng-template #observer> </ng-template>
+  <ng-template #observer>
+    <ng-container *ngIf="$game | async as game">
+      <ng-container
+        *ngIf="game.status !== 'LOBBY' && game.status !== 'FINISHED'"
+      >
+        <h1>👀 Game in progress</h1>
+        <h2>
+          <p>This one started without you, so you're spectating.</p>
+          <p>Hang out and heckle — you can join the next lobby.</p>
+        </h2>
+      </ng-container>
+    </ng-container>
+  </ng-template>
 
-  <ng-template #loading> Loading... </ng-template>
+  <ng-template #loading>
+    <ng-container *ngIf="notFound; else stillLoading">
+      <h1>🤷 Game not found</h1>
+      <h2><a href="/start">Start a new one</a></h2>
+    </ng-container>
+    <ng-template #stillLoading> Loading... </ng-template>
+  </ng-template>
 </div>

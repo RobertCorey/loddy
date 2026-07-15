@@ -30,7 +30,7 @@ export class LobbyComponent implements OnInit {
     this.route = window.location.href.split("?")[0];
     const snapshot = this.activatedRoute.snapshot;
     const name = snapshot.queryParamMap.get("playerName");
-    if (name) {
+    if (name && !this.hasPlayerJoined) {
       this.gameService
         .join({ name })
         .toPromise()
@@ -39,6 +39,9 @@ export class LobbyComponent implements OnInit {
             `/game/${window.location.pathname.split("/")[2]}`,
             { replaceUrl: true }
           );
+        })
+        .catch(() => {
+          // lobby filled or started before we landed; stay as a spectator
         });
     }
   }

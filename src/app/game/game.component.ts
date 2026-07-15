@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { take } from "rxjs/operators";
 import { GameService } from "../game.service";
 import { Observable } from "rxjs";
 import { IGame } from "../types/IGame";
@@ -22,6 +23,7 @@ export class GameComponent implements OnInit {
   public $game: Observable<IGame>;
   public game: Game;
   flag: any = true;
+  notFound = false;
   constructor(
     private route: ActivatedRoute,
     private gameCollectionService: GameCollectionService,
@@ -32,7 +34,23 @@ export class GameComponent implements OnInit {
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get("id");
     this.gameCollectionService.setDocumentById(this.id);
+    this.playerService.bindToGame(this.id);
     this.$game = this.gameCollectionService.gameState$;
+    this.$game.pipe(take(1)).subscribe((game) => {
+      if (!game) {
+        this.notFound = true; // bad link/id: the doc doesn't exist
+        return;
+      }
+      // If a refreshed host rejoins a game in progress, restart the state
+      // machine: the host's tab is the only thing driving status transitions.
+      if (
+        this.playerService.isHost &&
+        game.status !== "LOBBY" &&
+        game.status !== "FINISHED"
+      ) {
+        this.gameService.resumeGameRunner();
+      }
+    });
   }
 
   get localPlayer(): IPlayer {

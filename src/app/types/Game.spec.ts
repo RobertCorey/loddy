@@ -30,7 +30,7 @@ describe("Game", () => {
       expect(result[2].score).toEqual(100);
     });
   });
-  fdescribe("#totalScores", () => {
+  describe("#totalScores", () => {
     let result: ITotalScore[];
     beforeEach(() => {
       const mock = {

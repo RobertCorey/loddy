@@ -11,6 +11,12 @@ export class JoinGameFormComponent {
   name: FormControl = new FormControl("", Validators.pattern("[a-zA-Z ]*"));
   constructor(private gameService: GameService) {}
   onSubmit() {
-    this.gameService.join({ name: this.name.value }).subscribe();
+    const name = (this.name.value || "").trim();
+    if (!name) {
+      return; // a whitespace-only name passes the pattern but is invisible
+    }
+    this.gameService.join({ name }).subscribe({
+      error: () => {}, // lobby filled up or started under us; form stays up
+    });
   }
 }

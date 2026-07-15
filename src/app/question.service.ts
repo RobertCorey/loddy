@@ -53,11 +53,8 @@ export class QuestionService {
     return this.getQuestions();
   }
 
-  public getGameQuestions(
-    players: IPlayer[],
-    numberOfQuestions: number = 10
-  ): Observable<IGameQuestion[]> {
-    numberOfQuestions = players.length * 2;
+  public getGameQuestions(players: IPlayer[]): Observable<IGameQuestion[]> {
+    const numberOfQuestions = players.length * 2; // two brain questions each
     const compileQuestion = (question: string, playerName: string) =>
       question.replace("#player", playerName);
 
@@ -66,9 +63,11 @@ export class QuestionService {
       players: IPlayer[]
     ): IGameQuestion[] => {
       return questions.map((question, index) => {
-        question.text = compileQuestion(question.text, samp(players).name);
+        // Never mutate the shared question bank: a #player substitution would
+        // otherwise stick to the question for every later game in this tab.
+        const text = compileQuestion(question.text, samp(players).name);
         const brainId = players[index % players.length].id;
-        return { ...question, brainId, id: index.toString() };
+        return { ...question, text, brainId, id: index.toString() };
       });
     };
 

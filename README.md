@@ -20,6 +20,20 @@ npm install
 npm start      # dev server on http://localhost:4200
 ```
 
+## Tests
+
+End-to-end tests live in `tests/` (Playwright, three headless browsers
+actually playing full games against the real Firestore). They need modern
+Node — the opposite of the build:
+
+```sh
+nvm use && npm run build -- --prod     # tests serve dist/loddy
+nvm use default
+cd tests
+npm install && npx playwright install chromium   # first time only
+npm test
+```
+
 ## Deploy
 
 Firebase CLI requires modern Node, so build and deploy use different Node

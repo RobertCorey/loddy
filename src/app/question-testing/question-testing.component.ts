@@ -14,7 +14,7 @@ export class QuestionTestingComponent implements OnInit {
 
   ngOnInit() {
     console.log(mockPlayerList3);
-    this.qs.getGameQuestions(mockPlayerList3, 10).subscribe((a) => {
+    this.qs.getGameQuestions(mockPlayerList3).subscribe((a) => {
       console.log(a);
     });
   }

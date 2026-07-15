@@ -73,23 +73,13 @@ export class PlayerListComponent implements OnInit {
 
   finishedState(game: Game): any {
     const partialPlayerBox = this.getPlayerBox(game);
-    const final = partialPlayerBox.map((p, index) => {
-      let message;
-      switch (index) {
-        case 0:
-          message = "1st";
-          break;
-        case 1:
-          message = "2nd";
-          break;
-        case 2:
-          message = "3rd";
-          break;
-        default:
-          message = `${index + 1}th`;
-          break;
-      }
-      message += " place!";
+    const scores = partialPlayerBox.map((p) => p.score as number);
+    const final = partialPlayerBox.map((p) => {
+      // competition ranking, so tied players share a place
+      const place = 1 + scores.filter((s) => s > p.score).length;
+      const suffix =
+        place === 1 ? "st" : place === 2 ? "nd" : place === 3 ? "rd" : "th";
+      const message = `${place}${suffix} place!`;
       return { ...p, message, isBrain: false, messageClass: "" };
     });
     return of(final);
