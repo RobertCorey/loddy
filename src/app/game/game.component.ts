@@ -58,7 +58,9 @@ export class GameComponent implements OnInit {
   }
 
   hack() {
-    twttr.widgets.load();
+    if (typeof twttr !== "undefined" && twttr.widgets) {
+      twttr.widgets.load();
+    }
     this.flag = false;
     return true;
   }

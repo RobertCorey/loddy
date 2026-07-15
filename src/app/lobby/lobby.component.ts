@@ -22,7 +22,6 @@ export class LobbyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    document.querySelector("#tinyads_banner").remove();
     this.gameCollectionService.gameClass$.subscribe((game) => {
       if (game.canGameBeStarted && this.playerService.isHost) {
         this.canPlayerStartGame = true;

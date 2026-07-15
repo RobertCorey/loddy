@@ -56,7 +56,7 @@
           class="button-primary"
           (click)="playAgain()"
           *ngIf="
-            !localPlayerIsObserver && (game.nextLobby || localPlayerIsHost())
+            !localPlayerIsObserver() && (game.nextLobby || localPlayerIsHost())
           "
         >
           Play Again
